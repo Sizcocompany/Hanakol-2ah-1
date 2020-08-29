@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 imageurl = data.getData();
                 isImageAdded = true ;
                 mealImage.setImageURI( imageurl );
+                
 
             }
         }
