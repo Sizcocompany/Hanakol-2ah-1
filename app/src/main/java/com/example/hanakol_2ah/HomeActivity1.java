@@ -33,7 +33,6 @@ public class HomeActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_home );
-
         databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( "breakfast" );
         inputSearch = findViewById( R.id.input_serch );
         recyclerView = findViewById( R.id.recycler_view );
