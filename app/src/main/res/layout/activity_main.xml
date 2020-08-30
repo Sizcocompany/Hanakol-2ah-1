@@ -23,20 +23,13 @@
         app:srcCompat="@drawable/ic_imageview" />
 
 
-
-    <androidx.appcompat.widget.AppCompatRatingBar
-        android:id="@+id/rating_Bar"
+    <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_below="@id/meatImage"
         android:numStars="5"
-        android:stepSize="1"
-        android:visibility="gone"
-        android:layout_below="@id/et_eatname"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="-100dp"
-        android:layout_marginRight="60dp" />
+        android:id="@+id/rating_bar"/>
 
 
     <Spinner android:id="@+id/spinner1"
