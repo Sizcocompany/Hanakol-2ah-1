@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         tvProgress = findViewById( R.id.textview_progress );
         progressBar = findViewById( R.id.progress_bar );
         uploadbtn = findViewById( R.id.upload_butn );
-        mRatingBar = findViewById( R.id.rating_Bar );
+        mRatingBar = findViewById( R.id.rating_bar );
 
         tvProgress.setVisibility( View.GONE );
         progressBar.setVisibility( View.GONE );
@@ -81,19 +81,21 @@ public class MainActivity extends AppCompatActivity {
                 final String meatName = name.getText().toString();
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
-                if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
+                final float mealRating = mRatingBar.getRating();
+                if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null ) {
 
-                    uploadData( meatName, meatDescription, meatSteps );
+                    uploadData( meatName, meatDescription, meatSteps , mealRating );
                 }
 
             }
         } );
     }
 
-    private void uploadData(final String mealName, final String meatDescription, final String mealSteps) {
+    private void uploadData(final String mealName, final String meatDescription, final String mealSteps, final float mealRating) {
 
         tvProgress.setVisibility( View.VISIBLE );
         progressBar.setVisibility( View.VISIBLE );
+        mRatingBar.setVisibility( View.GONE );
 
         final String key = databaseRef.getKey();
         storageRef.child( key + "jpg" ).putFile( imageurl ).addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         hashMap.put( "MealName", mealName );
                         hashMap.put( "description ", meatDescription );
                         hashMap.put( "Steps", mealSteps );
+                        hashMap.put( "Rating", mealRating );
                         hashMap.put( "ImageURL", uri.toString() );
 
                         databaseRef.child( key ).setValue( hashMap ).addOnSuccessListener( new OnSuccessListener<Void>() {
