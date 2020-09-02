@@ -1,4 +1,4 @@
-package com.example.hanakol_2ah;
+package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hanakol_2ah.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -110,8 +112,8 @@ public class AddActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
 
-//                                startActivity( new Intent(  getApplicationContext() , HomeActivity1.class ) );
-                           //  Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_SHORT ).show();
+                                startActivity( new Intent(  getApplicationContext() , HomeActivity.class ) );
+                             Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG ).show();
                             }
                         } );
                     }

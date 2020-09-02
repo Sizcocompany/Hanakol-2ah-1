@@ -1,4 +1,4 @@
-package com.example.hanakol_2ah;
+package com.example.hanakol_2ah.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hanakol_2ah.models.MealsDB;
+import com.example.hanakol_2ah.R;
 
 
 public class RandomMealsActivity extends AppCompatActivity {

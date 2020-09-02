@@ -1,4 +1,4 @@
-package com.example.hanakol_2ah;
+package com.example.hanakol_2ah.models;
 
 import android.widget.Spinner;
 

@@ -1,9 +1,10 @@
-package com.example.hanakol_2ah;
+package com.example.hanakol_2ah.models;
 
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.hanakol_2ah.models.Meals;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

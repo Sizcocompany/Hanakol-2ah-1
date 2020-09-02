@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <FrameLayout
         android:id="@+id/activity_home_container"
@@ -81,6 +81,7 @@
                 app:cardElevation="0dp">
 
                 <TextView
+                    android:id="@+id/input_serch"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:drawableStart="@drawable/ic_search_primary_light"
@@ -119,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/viewPagerHeader"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/meal_categories"
                 android:textColor="@color/colorPrimary"
@@ -127,21 +128,23 @@
                 android:textStyle="bold" />
 
             <!-- TODO 6 Add <RecyclerView> for display the category list -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/titleCategory"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="50dp"
-                android:scrollbars="none" />
 
 
             <!-- TODO 7 Delete comment to <include below -->
             <!-- <include android:id="@+id/shimmerCategory"
                 layout="@layout/item_recycler_category_shimmer" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="226dp"
+                android:layout_below="@+id/titleCategory"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="50dp"
+                android:scrollbars="none" />
+
             <include
                 android:id="@+id/shimmerCategory"
                 layout="@layout/item_recycler_category_shimmer" />
