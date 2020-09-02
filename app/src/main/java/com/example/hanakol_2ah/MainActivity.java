@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,12 +27,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private ImageView mealImage;
     private EditText name, description, steps;
     private TextView tvProgress;
     private Button uploadbtn;
+    private Spinner meatCategory;
     private ProgressBar progressBar;
     private RatingBar mRatingBar;
     private int REQUEST_CODE_IMAGE = 101;
@@ -55,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById( R.id.progress_bar );
         uploadbtn = findViewById( R.id.upload_butn );
         mRatingBar = findViewById( R.id.rating_bar );
+        meatCategory = findViewById( R.id.spinner1 );
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( this , R.array.meatCategory , android.R.layout.simple_spinner_item );
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        meatCategory.setAdapter( adapter );
+
 
         tvProgress.setVisibility( View.GONE );
         progressBar.setVisibility( View.GONE );
@@ -73,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         } );
 
+        final String meatCategory_str = meatCategory.getSelectedItem().toString() ;
+
         uploadbtn.setOnClickListener( new View.OnClickListener() {
 
 
@@ -81,17 +91,18 @@ public class MainActivity extends AppCompatActivity {
                 final String meatName = name.getText().toString();
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
+                final String meatCategory_string =meatCategory_str;
                 final float mealRating = mRatingBar.getRating();
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null ) {
 
-                    uploadData( meatName, meatDescription, meatSteps , mealRating );
+                    uploadData( meatName, meatDescription, meatSteps , mealRating , meatCategory_string );
                 }
 
             }
         } );
     }
 
-    private void uploadData(final String mealName, final String meatDescription, final String mealSteps, final float mealRating) {
+    private void uploadData(final String mealName, final String meatDescription, final String mealSteps, final float mealRating , final String meatCategory) {
 
         tvProgress.setVisibility( View.VISIBLE );
         progressBar.setVisibility( View.VISIBLE );
@@ -111,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         hashMap.put( "description ", meatDescription );
                         hashMap.put( "Steps", mealSteps );
                         hashMap.put( "Rating", mealRating );
+                        hashMap.put( "meatCategory" ,meatCategory );
                         hashMap.put( "ImageURL", uri.toString() );
 
                         databaseRef.child( key ).setValue( hashMap ).addOnSuccessListener( new OnSuccessListener<Void>() {
@@ -149,4 +161,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Hanakol-2ah</string>
+
+    <string-array name="meatCategory">
+        <item> Breakfast </item>
+        <item> lunch </item>
+        <item> Dinner </item>
+    </string-array>
 </resources>
