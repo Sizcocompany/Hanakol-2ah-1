@@ -25,7 +25,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity {
 
     private ImageView mealImage;
     private EditText name , description , steps ;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+        setContentView( R.layout.activity_add);
 
         mealImage = findViewById( R.id.meatImage );
         name = findViewById( R.id.et_eatname );
@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
 
-                                startActivity( new Intent(  getApplicationContext() , HomeActivity1.class ) );
-                           //  Toast.makeText( MainActivity.this, "Data successfully upload", Toast.LENGTH_SHORT ).show();
+//                                startActivity( new Intent(  getApplicationContext() , HomeActivity1.class ) );
+                           //  Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_SHORT ).show();
                             }
                         } );
                     }
