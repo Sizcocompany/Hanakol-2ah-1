@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activities.AddActivity">
+
+
+        <ImageView
+            android:id="@+id/meatImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_imageview"
+            app:srcCompat="@drawable/ic_imageview" />
+
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_Bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_eatname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="-100dp"
+            android:layout_marginRight="60dp"
+            android:foregroundGravity="center"
+            android:numStars="5"
+            android:stepSize="1"
+            android:visibility="gone" />
+
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/et_eatname" />
+
+        <EditText
+            android:id="@+id/et_eatname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/meatImage"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="40dp"
+            android:hint="Enter name " />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_eatname"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="Enter description " />
+
+        <EditText
+            android:id="@+id/et_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_description"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="Enter steps " />
+
+
+        <TextView
+            android:id="@+id/textview_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_steps"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="0.0 %"
+            android:textSize="25dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_progress"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp" />
+
+        <Button
+            android:id="@+id/upload_butn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress_bar"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="62dp"
+            android:layout_marginRight="40dp"
+            android:text="upload"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
+
+</ScrollView>

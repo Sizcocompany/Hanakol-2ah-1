@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/selected_item_image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_image" />
+
+        <TextView
+            android:id="@+id/selected_item_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="My Meal Name"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/selected_item_ingreadents_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="My Meal ingredients"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/selected_items_steps_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:text="My Meal steps"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+</ScrollView>

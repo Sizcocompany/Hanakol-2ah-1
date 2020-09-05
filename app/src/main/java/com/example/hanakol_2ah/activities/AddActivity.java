@@ -1,4 +1,4 @@
-package com.example.hanakol_2ah;
+package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hanakol_2ah.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,18 +27,18 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity {
 
     private ImageView mealImage;
-    private EditText name, description, steps;
-    private TextView tvProgress;
-    private Button uploadbtn;
+    private EditText name , description , steps ;
+    private TextView tvProgress ;
+    private Button uploadbtn ;
     private ProgressBar progressBar;
     private RatingBar mRatingBar;
     private int REQUEST_CODE_IMAGE = 101;
 
-    DatabaseReference databaseRef;
-    StorageReference storageRef;
+    DatabaseReference databaseRef ;
+    StorageReference storageRef ;
 
     Uri imageurl;
     Boolean isImageAdded = false;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+        setContentView( R.layout.activity_add);
 
         mealImage = findViewById( R.id.meatImage );
         name = findViewById( R.id.et_eatname );
@@ -54,71 +55,65 @@ public class MainActivity extends AppCompatActivity {
         tvProgress = findViewById( R.id.textview_progress );
         progressBar = findViewById( R.id.progress_bar );
         uploadbtn = findViewById( R.id.upload_butn );
-        mRatingBar = findViewById( R.id.rating_bar );
+        mRatingBar = findViewById( R.id.rating_Bar );
 
         tvProgress.setVisibility( View.GONE );
         progressBar.setVisibility( View.GONE );
 
-        databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( "breakfast" ).push();
-        storageRef =FirebaseStorage.getInstance().getReference(String.valueOf(imageurl) ).child( " MealImages");
-
+        databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( "breakfast" );
+        storageRef = FirebaseStorage.getInstance().getReference().child( " MealImages" );
 
         mealImage.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(  );
                 intent.setType( "image/*" );
                 intent.setAction( Intent.ACTION_GET_CONTENT );
-                startActivityForResult( intent, REQUEST_CODE_IMAGE );
+                startActivityForResult( intent , REQUEST_CODE_IMAGE );
             }
         } );
 
         uploadbtn.setOnClickListener( new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-                final String meatName = name.getText().toString();
-                final String meatDescription = description.getText().toString();
-                final String meatSteps = steps.getText().toString();
-                final float mealRating = mRatingBar.getRating();
-                if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null ) {
+               final String meatName = name.getText().toString();
+               final String meatDescription = description.getText().toString();
+               final String meatSteps = steps.getText().toString();
+               if(isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null){
 
-                    uploadData( meatName, meatDescription, meatSteps , mealRating );
-                }
+                   uploadImage (meatName , meatDescription , meatSteps);
+               }
 
             }
         } );
     }
 
-    private void uploadData(final String mealName, final String meatDescription, final String mealSteps, final float mealRating) {
+    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps) {
 
         tvProgress.setVisibility( View.VISIBLE );
         progressBar.setVisibility( View.VISIBLE );
-        mRatingBar.setVisibility( View.GONE );
 
-        final String key = databaseRef.getKey();
+     final    String key = databaseRef.getKey();
         storageRef.child( key + "jpg" ).putFile( imageurl ).addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                storageRef.child( key + "jpg" ).getDownloadUrl().addOnSuccessListener( new OnSuccessListener<Uri>() {
+                storageRef.child( key +"jpg" ).getDownloadUrl().addOnSuccessListener( new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        HashMap hashMap = new HashMap();
+                        HashMap hashMap = new HashMap(  );
 
-                        hashMap.put( "MealName", mealName );
-                        hashMap.put( "description ", meatDescription );
-                        hashMap.put( "Steps", mealSteps );
-                        hashMap.put( "Rating", mealRating );
-                        hashMap.put( "ImageURL", uri.toString() );
+                        hashMap.put( "MealName" , mealName);
+                        hashMap.put( "description " , meatDescription );
+                        hashMap.put( "Steps" , mealSteps );
+                        hashMap.put( "ImageURL" , uri.toString() );
 
                         databaseRef.child( key ).setValue( hashMap ).addOnSuccessListener( new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
 
-                                 startActivity( new Intent(  getApplicationContext() , Test1.class ) );
-                                //Toast.makeText( MainActivity.this, "Data successfully upload", Toast.LENGTH_SHORT ).show();
+                                startActivity( new Intent(  getApplicationContext() , HomeActivity.class ) );
+                             Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG ).show();
                             }
                         } );
                     }
@@ -129,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
 
-                double progress = (taskSnapshot.getBytesTransferred() * 100) / taskSnapshot.getTotalByteCount();
+                double progress = (taskSnapshot.getBytesTransferred()*100) / taskSnapshot.getTotalByteCount();
                 progressBar.setProgress( (int) progress );
-                tvProgress.setText( progress + " %" );
+                tvProgress.setText( progress +" %"  );
             }
         } );
     }
@@ -139,12 +134,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult( requestCode, resultCode, data );
-        if (requestCode == REQUEST_CODE_IMAGE && data != null) {
+        if(requestCode == REQUEST_CODE_IMAGE && data != null){
             {
                 imageurl = data.getData();
-                isImageAdded = true;
+                isImageAdded = true ;
                 mealImage.setImageURI( imageurl );
-
+                
 
             }
         }
