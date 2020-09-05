@@ -2,6 +2,7 @@ package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +27,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -81,11 +85,47 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         signInButton = findViewById( R.id.sign_in_google );
-//        btnSignOut = findViewById( R.id.signout_btn );
+  //  btnSignOut = findViewById( R.id.signout_btn );
         googleAuthenticationClass = new GoogleAuthenticationClass(RC_SIGN_IN , signInButton , mGoogleSignInClient , firebaseAuth ,getString( R.string.default_web_client_id ), btnSignOut, LoginActivity.this );
 
 
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                String email = user.getText().toString();
+                String pass = password.getText().toString();
+
+                //if the field is empty
+                if (TextUtils.isEmpty(email)){
+                    user.setError("Enter the Email");
+                    return;
+                }
+                if (TextUtils.isEmpty(pass)){
+                    password.setError("Enter the Password");
+                    return;
+                }
+
+                //if the lenght is shorter than 8 characters
+                if (pass.length() < 8){
+                    password.setError("The Password must be Longer than 8 Characters");
+                    return;
+                }
+
+                firebaseAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Logged in Successfully", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "ERROR" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
 
 
 //   Creat object for FacebookAuthenticationClass
