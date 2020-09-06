@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "418137280427",
+    "firebase_url": "https://hanakol-aeh.firebaseio.com",
+    "project_id": "hanakol-aeh",
+    "storage_bucket": "hanakol-aeh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418137280427:android:06731e05305aefc3430cee",
+        "android_client_info": {
+          "package_name": "com.example.hanakol_2ah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418137280427-4uu05j5ud40ip131lq88brqh2v5ag82h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGtGJSh6ah61cNRqAZUAb4XkMybEhZZmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418137280427-4uu05j5ud40ip131lq88brqh2v5ag82h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

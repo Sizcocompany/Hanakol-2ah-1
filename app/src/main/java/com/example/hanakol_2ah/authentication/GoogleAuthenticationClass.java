@@ -2,6 +2,7 @@ package com.example.hanakol_2ah.authentication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.hanakol_2ah.activities.HomeActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 
 public class GoogleAuthenticationClass {
@@ -73,7 +77,7 @@ public class GoogleAuthenticationClass {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText( context, "Successfully", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( context, "login Sucssfully ", Toast.LENGTH_SHORT ).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI( user );
                     } else {
