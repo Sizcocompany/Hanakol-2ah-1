@@ -1,5 +1,6 @@
 package com.example.hanakol_2ah.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,18 +10,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.hanakol_2ah.Login;
 import com.example.hanakol_2ah.fragments.ListMealsFragmentContainer;
 import com.example.hanakol_2ah.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class HomeActivity extends AppCompatActivity {
     ListMealsFragmentContainer fragment;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+
 
         final CardView breackfastCardView = findViewById(R.id.breackfastLayoutClick);
         final CardView launchCardView = findViewById(R.id.lunchLayoutClick);
@@ -36,7 +44,15 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, RandomMealsActivity.class);
                 startActivity(intent);
             }
+
+            public void logOut(View view){
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
         });
+
+
 
         onClickCardviews(breackfastCardView, "Breakfast");
         onClickCardviews(launchCardView, "Launch");
