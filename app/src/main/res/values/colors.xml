@@ -11,4 +11,5 @@
     <color name="colorWhiteDark">#DBDBDB</color>
     <color name="colorPrimaryLight">#CA7474</color>
     <color name="colorBackground">#F4F7F7</color>
+    <color name="signupColor">#066e8a</color>
 </resources>

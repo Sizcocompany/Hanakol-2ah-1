@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "418137280427-btmud2ka8fc64actet2hvu7qeiupt07g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hanakol_2ah",
+            "certificate_hash": "9e0a646ed4cf0170a4f40d255df7b6478e0e6b74"
+          }
+        },
+        {
           "client_id": "418137280427-4uu05j5ud40ip131lq88brqh2v5ag82h.apps.googleusercontent.com",
           "client_type": 3
         }

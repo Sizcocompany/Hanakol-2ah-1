@@ -11,9 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.activities.LoginActivity;
 import com.facebook.CallbackManager;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,20 +25,18 @@ public class FirebaseAuthenticationClass {
     final private FirebaseAuth firebaseAuth;
     final private Context context;
     final private Button login;
-    final private TextView info;
     final private ImageView profile;
     final private CallbackManager callbackManager;
     final private String PASSWORD, USERNAME;
 
 
     public FirebaseAuthenticationClass(String TAG, FirebaseAuth firebaseAuth, Context context,
-                                       Button login, TextView info, ImageView profile,
+                                       Button login, ImageView profile,
                                        CallbackManager callbackManager, String PASSWORD, String USERNAME) {
         this.TAG = TAG;
         this.firebaseAuth = firebaseAuth;
         this.context = context;
         this.login = login;
-        this.info = info;
         this.profile = profile;
         this.callbackManager = callbackManager;
         this.PASSWORD = PASSWORD;
@@ -102,14 +98,14 @@ public class FirebaseAuthenticationClass {
     public  void updateUI(FirebaseUser user) {
 
         if (user != null) {
-            info.setText(user.getDisplayName());
+//            info.setText(user.getDisplayName());
             if (user.getPhotoUrl() != null) {
                 String photoUrl = user.getPhotoUrl().toString();
                 photoUrl = photoUrl + "?type=large";
                 Picasso.get().load(photoUrl).into(profile);
             }
         } else {
-            info.setText(" ");
+//            info.setText(" ");
             profile.setImageResource(R.drawable.com_facebook_auth_dialog_background);
         }
     }

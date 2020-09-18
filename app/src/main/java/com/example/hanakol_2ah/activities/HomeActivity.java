@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.hanakol_2ah.Login;
+
 import com.example.hanakol_2ah.fragments.ListMealsFragmentContainer;
 import com.example.hanakol_2ah.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         final CardView juicesCardView = findViewById(R.id.juicesLayoutClick);
         final CardView snackesCardView = findViewById(R.id.snackesLayoutClick);
         final View relativeLayout = findViewById(R.id.fragment_home_layout);
+        final TextView login_txt_btn = findViewById(R.id.login_txt_btn);;
         TextView hanakoleh = findViewById(R.id.hanakolehTextView);
         hanakoleh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,12 +45,12 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, RandomMealsActivity.class);
                 startActivity(intent);
             }
-
-            public void logOut(View view){
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
+//
+//            public void logOut(View view){
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                finish();
+//            }
         });
 
 
@@ -58,7 +59,6 @@ public class HomeActivity extends AppCompatActivity {
         onClickCardviews(launchCardView, "Launch");
         onClickCardviews(dinnerCardView, "Dinner");
 
-        TextView login_txt_btn = findViewById(R.id.login_txt_btn);
         login_txt_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

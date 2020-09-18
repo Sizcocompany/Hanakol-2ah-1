@@ -38,18 +38,16 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="168dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
+                android:fontFamily="@font/rouge_script"
                 android:text="@string/app_name"
                 android:textColor="@color/colorWhite"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
-
-            <!-- TODO 3 Add Search container -->
-            <!-- We will make a look for the search box with CardView and TextView (this is only for click actions because later we will create another Activity to search) -->
 
             <TextView
                 android:id="@+id/login_txt_btn"
@@ -105,15 +103,11 @@
                 android:foregroundGravity="center"
                 android:overScrollMode="never" />
 
-            <!-- TODO 5 Delete comment to <include below -->
-            <!--<include android:id="@+id/shimmerMeal"
-                layout="@layout/item_view_pager_header_shimmer" />-->
             <include
                 android:id="@+id/shimmerMeal"
                 layout="@layout/item_view_pager_header_shimmer" />
 
 
-            <!-- TODO 5 Add <TextView> for title of Category list -->
             <TextView
                 android:id="@+id/titleCategory"
                 android:layout_width="match_parent"
@@ -126,13 +120,6 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="19sp"
                 android:textStyle="bold" />
-
-            <!-- TODO 6 Add <RecyclerView> for display the category list -->
-
-
-            <!-- TODO 7 Delete comment to <include below -->
-            <!-- <include android:id="@+id/shimmerCategory"
-                layout="@layout/item_recycler_category_shimmer" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerCategory"
@@ -149,12 +136,21 @@
                 android:id="@+id/shimmerCategory"
                 layout="@layout/item_recycler_category_shimmer" />
 
+            <Button
+                android:id="@+id/button_add_new_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/hanakolehTextView"
+                android:layout_marginBottom="2dp"
+                android:text="Add new meal"
+                android:fontFamily="@font/rouge_script"
+                android:textAllCaps="false"/>
+
             <TextView
                 android:id="@+id/hanakolehTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="20dp"
                 android:background="@color/colorPrimaryLight"
                 android:gravity="center"
                 android:padding="10dp"

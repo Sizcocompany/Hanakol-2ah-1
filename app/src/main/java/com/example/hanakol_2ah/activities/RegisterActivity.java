@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     TextView createTitle;
     EditText rName,rEmail,rPassword,rPasswordConfirm;
@@ -28,10 +28,12 @@ public class Register extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_register);
+
 
         createTitle = findViewById(R.id.title);
         rName = findViewById(R.id.registerName);
@@ -78,10 +80,10 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            Toast.makeText(Register.this,"Email Registered Successfully",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,"Email Registered Successfully",Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                         }else {
-                            Toast.makeText(Register.this,"ERROR"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,"ERROR"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
                         }
 
                     }

@@ -15,6 +15,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="progressBarStyle" parent="Widget.AppCompat.ProgressBar.Horizontal">
+
+        <item name="color">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+    </style>
   
     <style name="AppTheme.NoActionBar" parent="AppTheme">
           <item name="windowActionBar">false</item>

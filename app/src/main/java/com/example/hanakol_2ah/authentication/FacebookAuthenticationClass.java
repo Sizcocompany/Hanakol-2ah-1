@@ -35,18 +35,16 @@ public class FacebookAuthenticationClass {
     final private FirebaseAuth firebaseAuth;
     final private Context context;
     final private LoginButton login;
-    final private TextView info;
     final private ImageView profile;
     final CallbackManager callbackManager;
 
 
     public FacebookAuthenticationClass(String TAG, FirebaseAuth firebaseAuth,
-                                       Context context, LoginButton login, TextView info, ImageView profile, CallbackManager callbackManager ) {
+                                       Context context, LoginButton login,  ImageView profile, CallbackManager callbackManager ) {
         this.TAG = TAG;
         this.firebaseAuth = firebaseAuth;
         this.context = context;
         this.login = login;
-        this.info = info;
         this.profile = profile;
         this.callbackManager = callbackManager;
 
@@ -129,14 +127,14 @@ public class FacebookAuthenticationClass {
 
     public  void updateUI(FirebaseUser user) {
         if (user != null) {
-            info.setText(user.getDisplayName());
+//            info.setText(user.getDisplayName());
             if (user.getPhotoUrl() != null) {
                 String photoUrl = user.getPhotoUrl().toString();
                 photoUrl = photoUrl + "?type=large";
                 Picasso.get().load(photoUrl).into(profile);
             }
         } else {
-            info.setText(" ");
+//            info.setText(" ");
             profile.setImageResource(R.drawable.com_facebook_auth_dialog_background);
         }
     }
