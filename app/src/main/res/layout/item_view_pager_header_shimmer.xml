@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <RatingBar
-                    android:id="@+id/ratingBar"
+                    android:id="@+id/mealsratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -43,7 +43,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/mealImageView"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
@@ -55,7 +55,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/name_item_recycler"
+                            android:id="@+id/meal_name_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -64,7 +64,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/steps_item_recycler"
+                            android:id="@+id/meal_steps_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -73,7 +73,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/ingredients_item_recycler"
+                            android:id="@+id/meal_ingredients_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"

@@ -132,6 +132,7 @@ public class FacebookAuthenticationClass {
                 String photoUrl = user.getPhotoUrl().toString();
                 photoUrl = photoUrl + "?type=large";
                 Picasso.get().load(photoUrl).into(profile);
+
             }
         } else {
 //            info.setText(" ");

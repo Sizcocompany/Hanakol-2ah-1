@@ -3,6 +3,7 @@ package com.example.hanakol_2ah.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class RandomMealsActivity extends AppCompatActivity {
         final TextView ingredients = findViewById(R.id.textViewاسم);
         final TextView names = findViewById(R.id.textView2خطوات);
         final TextView steps = findViewById(R.id.textViewوصف);
+        final ImageView imageView = findViewById(R.id.imageViewMeal);
         TextView headerTextView = findViewById(R.id.headerTextView);
         Button Dinnerbutton = findViewById(R.id.buttonUploadDinnerData);
         Button Breakfastbutton = findViewById(R.id.buttonUploadbreakfastData);
@@ -48,7 +50,7 @@ public class RandomMealsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mealsDB.getBreakfastData(names, ingredients, steps);
+                mealsDB.getBreakfastData(imageView,names, ingredients, steps);
             }
         });
 

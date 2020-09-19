@@ -1,20 +1,18 @@
 package com.example.hanakol_2ah.models;
 
-import android.widget.Spinner;
-
-class ModelMeals {
+public class ModelMeals {
 
     private String mealName ;
-    private String mealDescription ;
+    private String mealIngredients;
     private String mealSteps ;
     private String ImageUrl ;
     private String ratingBar;
     private String meatCategory;
 
 
-    public ModelMeals(String mealName, String mealDescription, String mealSteps, String imageUrl, String ratingBar, String meatCategory ) {
+    public ModelMeals(String mealName, String mealIngredients, String mealSteps, String imageUrl, String ratingBar, String meatCategory ) {
         this.mealName = mealName;
-        this.mealDescription = mealDescription;
+        this.mealIngredients = mealIngredients;
         this.mealSteps = mealSteps;
         ImageUrl = imageUrl;
         this.ratingBar = ratingBar;
@@ -40,12 +38,12 @@ class ModelMeals {
         this.mealName = mealName;
     }
 
-    public String getMealDescription() {
-        return mealDescription;
+    public String getMealIngredients() {
+        return mealIngredients;
     }
 
-    public void setMealDescription(String mealDescription) {
-        this.mealDescription = mealDescription;
+    public void setMealIngredients(String mealIngredients) {
+        this.mealIngredients = mealIngredients;
     }
 
     public String getMealSteps() {

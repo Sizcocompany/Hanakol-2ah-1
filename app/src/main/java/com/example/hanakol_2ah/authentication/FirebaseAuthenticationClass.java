@@ -21,6 +21,15 @@ import com.squareup.picasso.Picasso;
 
 public class FirebaseAuthenticationClass {
 
+
+    /*
+    * ekteb elcode bta3ak hena ya 3m sabry
+    * in this class we will
+    *
+    * */
+
+
+
     final private String TAG;
     final private FirebaseAuth firebaseAuth;
     final private Context context;

@@ -8,15 +8,13 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hanakol_2ah.models.Meals;
-import com.example.hanakol_2ah.adapters.MyAdapter;
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.adapters.MyAdapter;
+import com.example.hanakol_2ah.models.ModelMeals;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -151,7 +149,7 @@ public class ListMealsFragmentContainer extends Fragment {
         final RecyclerView rv = view.findViewById(R.id.container_recyclerview);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        final List<Meals> listData = new ArrayList<>();
+        final List<ModelMeals> listData = new ArrayList<>();
 
 
         FirebaseDatabase.getInstance().getReference().child("Database").child(string).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -159,7 +157,7 @@ public class ListMealsFragmentContainer extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot npsnapshot : dataSnapshot.getChildren()) {
-                        Meals l = npsnapshot.getValue(Meals.class);
+                        ModelMeals l = npsnapshot.getValue(ModelMeals.class);
                         listData.add(l);
                     }
                     final MyAdapter adapter = new MyAdapter(listData);
