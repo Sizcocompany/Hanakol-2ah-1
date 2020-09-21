@@ -82,4 +82,3 @@ public class ListMealsFragmentContainer extends Fragment {
     }
 
 }
-
