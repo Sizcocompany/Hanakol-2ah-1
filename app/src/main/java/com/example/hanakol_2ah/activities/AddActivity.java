@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,9 +63,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         progressBar = findViewById(R.id.progress_bar);
         uploadbtn = findViewById(R.id.upload_butn);
         spinner = (Spinner) findViewById(R.id.spinner);
-        test = findViewById(R.id.test);
+//        final RatingBar add_rate_ratingbar = findViewById(R.id.add_rate_ratingbar);
         tvProgress.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+//        add_rate_ratingbar.setVisibility(View.INVISIBLE);
 
 //        databaseRef = FirebaseDatabase.getInstance().getReference().child("Meal").child("lunch");
         storageRef = FirebaseStorage.getInstance().getReference().child("MealImages");
@@ -85,10 +87,11 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 final String meatName = name.getText().toString();
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
+//                final Float mealRate = add_rate_ratingbar.getRating();
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadImage(meatName, meatDescription, meatSteps , child);
+                    uploadImage(meatName, meatDescription, meatSteps , Float.parseFloat("0.00") , child);
                 }
 
             }
@@ -113,10 +116,17 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
+
+
+
+
+
+
+
     }
 
 
-    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps ,String child) {
+    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps , final Float mealRate ,final String child) {
 
         tvProgress.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -135,6 +145,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("Description", meatDescription);
                         hashMap.put("Steps", mealSteps);
                         hashMap.put("ImageURL", uri.toString());
+                        hashMap.put("MealRate" , mealRate);
 
                         databaseRef.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

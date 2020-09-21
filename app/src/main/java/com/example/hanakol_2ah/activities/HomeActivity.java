@@ -1,10 +1,8 @@
 package com.example.hanakol_2ah.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.fragments.ListMealsFragmentContainer;
 import com.example.hanakol_2ah.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         final CardView snackesCardView = findViewById(R.id.snackesLayoutClick);
         final View relativeLayout = findViewById(R.id.fragment_home_layout);
         final TextView login_txt_btn = findViewById(R.id.login_txt_btn);;
-        final Button button_add_new_meal = findViewById(R.id.button_add_new_meal);
+        final TextView TV_add_new_meal = findViewById(R.id.TV_add_new_meal);
         TextView hanakoleh = findViewById(R.id.hanakolehTextView);
         hanakoleh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        button_add_new_meal.setOnClickListener(new View.OnClickListener() {
+        TV_add_new_meal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, AddActivity.class);

@@ -5,15 +5,20 @@ public class Meals {
     private String Description;
     private String Steps;
     private String ImageURL;
+    private Float MealRate;
 
     public Meals() {
     }
 
-    public Meals(String imageURL, String mealName, String description, String steps) {
+
+    public Meals(String imageURL, String mealName, String description, String steps, Float mealRate) {
         MealName = mealName;
         Description = description;
         Steps = steps;
         ImageURL = imageURL;
+        MealRate = mealRate;
+
+
     }
 
     public String getMealName() {
@@ -47,4 +52,13 @@ public class Meals {
     public void setImageURL(String imageURL) {
         ImageURL = imageURL;
     }
+
+    public Float getMealRate() {
+        return MealRate;
+    }
+
+    public void setMealRate(Float mealRate) {
+        MealRate = mealRate;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.hanakol_2ah.models;
 
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,11 +16,12 @@ import java.util.ArrayList;
 import java.util.Random;
 public class MealsDB {
 
-    public void getMealsData(final ImageView imageView, final TextView names , final TextView ingredients , final TextView steps , String child ) {
+    public void getMealsData(final ImageView imageView, final TextView names , final TextView ingredients , final TextView steps , final RatingBar ratingBar, String child ) {
         final ArrayList<String> namesArrayList = new ArrayList<>();
         final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
         final ArrayList<String> stepsArrayList = new ArrayList<>();
         final ArrayList<String> imageArrayList = new ArrayList<>();
+        final ArrayList<Float> rateArrayList = new ArrayList<>();
 
 
         FirebaseDatabase.getInstance().getReference().child("Meal").child(child).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -32,6 +34,7 @@ public class MealsDB {
                     ingreadentsArrayList.add(meals.getDescription());
                     stepsArrayList.add(meals.getSteps());
                     imageArrayList.add(meals.getImageURL());
+                    rateArrayList.add(meals.getMealRate());
                 }
                 Random random = new Random();
                 int Rand = random.nextInt(namesArrayList.size());
@@ -39,6 +42,7 @@ public class MealsDB {
                 ingredients.setText(ingreadentsArrayList.get(Rand));
                 steps.setText(stepsArrayList.get(Rand));
                 Picasso.get().load(imageArrayList.get(Rand)).into(imageView);
+                ratingBar.setRating(rateArrayList.get(Rand));
 
             }
 

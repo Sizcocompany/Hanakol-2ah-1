@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/titleCategory"
     android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
     android:layout_marginTop="10dp"
+    android:layout_marginRight="8dp"
     android:layout_marginBottom="50dp"
-    android:layout_below="@id/titleCategory">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/breackfastLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -53,14 +55,15 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/lunchLayoutClick"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lunchLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -80,6 +83,7 @@
                         android:layout_height="80dp"
                         android:padding="5dp"
                         android:src="@drawable/lunch" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -93,14 +97,14 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/dinnerLayoutClick"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/dinnerLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -141,14 +145,14 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/snackesLayoutClick"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/snackesLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -181,14 +185,14 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/juicesLayoutClick"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/juicesLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -221,14 +225,14 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/dessertsLayoutClick"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/dessertsLayoutClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 

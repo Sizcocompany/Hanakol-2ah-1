@@ -4,58 +4,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/back6">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".activities.AddActivity">
 
 
-        <ImageView
-            android:id="@+id/meatImage"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_imageview"
-            app:srcCompat="@drawable/ic_imageview" />
 
-        <Spinner
-            android:id="@+id/spinner"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/meatImage"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_imageview"
+            app:civ_border_color="@color/colorPrimaryText"
+            app:civ_border_width="5dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="2dp"
+            app:civ_shadow_color="#3f51b5"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/et_eatname" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/shapebutton"
+            android:orientation="vertical"
+            tools:context=".activities.AddActivity">
+
+            <Spinner
+                android:id="@+id/spinner"
+                style="@android:style/Widget.Material.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/et_eatname"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/et_eatname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/meatImage"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="40dp"
-            android:hint="Enter name " />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shapebutton"
+            android:hint="Enter name "
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryText"
+            android:textColorHint="@color/colorWhiteDark" />
 
         <EditText
             android:id="@+id/et_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_eatname"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:hint="Enter description " />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shapebutton"
+            android:hint="Enter description "
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryText"
+            android:textColorHint="@color/colorWhiteDark" />
 
         <EditText
             android:id="@+id/et_steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_description"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:hint="Enter steps " />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shapebutton"
+            android:hint="Enter steps "
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryText"
+            android:textColorHint="@color/colorWhiteDark" />
+
 
 
         <TextView
@@ -66,6 +102,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="0.0 %"
+            android:textColor="@color/colorWhiteDark"
             android:textSize="25dp" />
 
         <ProgressBar
@@ -75,7 +112,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textview_progress"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp" />
+            android:layout_marginRight="40dp"
+            android:outlineAmbientShadowColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/upload_butn"
@@ -85,16 +123,42 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="62dp"
             android:layout_marginRight="40dp"
+            android:background="@drawable/shapesignup"
             android:text="upload"
             android:textAllCaps="false" />
-
-        <TextView
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test"/>
 
 
     </LinearLayout>
 
 </ScrollView>
+
+
+
+
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:layout_marginBottom="10dp"-->
+<!--android:background="@drawable/shapebutton"-->
+<!--android:orientation="horizontal"-->
+<!--tools:context=".activities.AddActivity">-->
+
+<!--<TextView-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_weight="1"-->
+<!--    android:gravity="center"-->
+<!--    android:text="Set meal rate :"-->
+<!--    android:textColor="@color/colorWhiteDark"-->
+<!--    android:textStyle="bold" />-->
+
+<!--<RatingBar-->
+<!--    android:id="@+id/add_rate_ratingbar"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:layout_marginTop="5dp"-->
+<!--    android:layout_weight="2"-->
+<!--    android:numStars="5" />-->
+<!--</LinearLayout>-->

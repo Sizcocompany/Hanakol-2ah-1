@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.name_item_recycler.setText(meals.getMealName());
         holder.ingredients_item_recycler.setText(meals.getDescription());
         holder.steps_item_recycler.setText(meals.getSteps());
+        holder.meal_rating_Bar.setRating(meals.getMealRate());
         Picasso.get().load(meals.getImageURL()).into(holder.mealImageView);
     }
 
@@ -53,6 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler;
         private ImageView mealImageView;
+        private RatingBar meal_rating_Bar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -60,6 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             name_item_recycler = itemView.findViewById(R.id.meal_name_item_recycler);
             ingredients_item_recycler = itemView.findViewById(R.id.meal_ingredients_item_recycler);
             steps_item_recycler = itemView.findViewById(R.id.meal_steps_item_recycler);
+            meal_rating_Bar = itemView.findViewById(R.id.meal_rating_Bar);
 
         }
     }

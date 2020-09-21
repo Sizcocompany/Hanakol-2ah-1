@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class RandomMealsActivity extends AppCompatActivity {
         final TextView names = findViewById(R.id.textView2خطوات);
         final TextView steps = findViewById(R.id.textViewوصف);
         final ImageView imageViewMeal = findViewById(R.id.imageViewMeal);
+        final RatingBar meal_rating_Bar = findViewById(R.id.meal_rating_Bar);
         TextView headerTextView = findViewById(R.id.headerTextView);
         Button Dinnerbutton = findViewById(R.id.buttonUploadDinnerData);
         Button Breakfastbutton = findViewById(R.id.buttonUploadbreakfastData);
@@ -35,21 +37,21 @@ public class RandomMealsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps, "breakfast");
+                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps , meal_rating_Bar, "breakfast");
             }
         });
 
         Luanchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps, "lunch");
+                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps , meal_rating_Bar, "lunch");
             }
         });
 
         Dinnerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps, "dinner");
+                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps, meal_rating_Bar, "dinner");
             }
         });
 

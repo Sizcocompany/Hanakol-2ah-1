@@ -59,5 +59,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.4.0'
 
 
+//    image
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
