@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,123 +27,162 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ImageView mealImage;
-    private EditText name , description , steps ;
-    private TextView tvProgress ;
-    private Button uploadbtn ;
+    private EditText name, description, steps;
+    private TextView tvProgress;
+    private Button uploadbtn;
     private ProgressBar progressBar;
-    private RatingBar mRatingBar;
+    private Spinner spinner;
+    private TextView test;
+    private String child;
     private int REQUEST_CODE_IMAGE = 101;
 
-    DatabaseReference databaseRef ;
-    StorageReference storageRef ;
+    DatabaseReference databaseRef;
+    StorageReference storageRef;
 
     Uri imageurl;
     Boolean isImageAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_add);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add);
 
-        mealImage = findViewById( R.id.meatImage );
-        name = findViewById( R.id.et_eatname );
-        description = findViewById( R.id.et_description );
-        steps = findViewById( R.id.et_steps );
-        tvProgress = findViewById( R.id.textview_progress );
-        progressBar = findViewById( R.id.progress_bar );
-        uploadbtn = findViewById( R.id.upload_butn );
-        mRatingBar = findViewById( R.id.rating_Bar );
+        mealImage = findViewById(R.id.meatImage);
+        name = findViewById(R.id.et_eatname);
+        description = findViewById(R.id.et_description);
+        steps = findViewById(R.id.et_steps);
+        tvProgress = findViewById(R.id.textview_progress);
+        progressBar = findViewById(R.id.progress_bar);
+        uploadbtn = findViewById(R.id.upload_butn);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        test = findViewById(R.id.test);
+        tvProgress.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
 
-        tvProgress.setVisibility( View.GONE );
-        progressBar.setVisibility( View.GONE );
+//        databaseRef = FirebaseDatabase.getInstance().getReference().child("Meal").child("lunch");
+        storageRef = FirebaseStorage.getInstance().getReference().child("MealImages");
 
-        databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( "breakfast" );
-        storageRef = FirebaseStorage.getInstance().getReference().child( " MealImages" );
-
-        mealImage.setOnClickListener( new View.OnClickListener() {
+        mealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(  );
-                intent.setType( "image/*" );
-                intent.setAction( Intent.ACTION_GET_CONTENT );
-                startActivityForResult( intent , REQUEST_CODE_IMAGE );
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_CODE_IMAGE);
             }
-        } );
+        });
 
-        uploadbtn.setOnClickListener( new View.OnClickListener() {
+        uploadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               final String meatName = name.getText().toString();
-               final String meatDescription = description.getText().toString();
-               final String meatSteps = steps.getText().toString();
-               if(isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null){
+                final String meatName = name.getText().toString();
+                final String meatDescription = description.getText().toString();
+                final String meatSteps = steps.getText().toString();
+                if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
-                   uploadImage (meatName , meatDescription , meatSteps);
-               }
+
+                    uploadImage(meatName, meatDescription, meatSteps , child);
+                }
 
             }
-        } );
+        });
+
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Breakfast");
+        categories.add("Lunch");
+        categories.add("Dinner");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
     }
 
-    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps) {
 
-        tvProgress.setVisibility( View.VISIBLE );
-        progressBar.setVisibility( View.VISIBLE );
+    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps ,String child) {
 
-     final    String key = databaseRef.getKey();
-        storageRef.child( key + "jpg" ).putFile( imageurl ).addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        tvProgress.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("Meal").child(child);
+        final String key = databaseRef.push().getKey();
+        storageRef.child(key + "jpg").putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                storageRef.child( key +"jpg" ).getDownloadUrl().addOnSuccessListener( new OnSuccessListener<Uri>() {
+                storageRef.child(key + "jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        HashMap hashMap = new HashMap(  );
+                        HashMap hashMap = new HashMap();
 
-                        hashMap.put( "MealName" , mealName);
-                        hashMap.put( "description " , meatDescription );
-                        hashMap.put( "Steps" , mealSteps );
-                        hashMap.put( "ImageURL" , uri.toString() );
+                        hashMap.put("MealName", mealName);
+                        hashMap.put("Description", meatDescription);
+                        hashMap.put("Steps", mealSteps);
+                        hashMap.put("ImageURL", uri.toString());
 
-                        databaseRef.child( key ).setValue( hashMap ).addOnSuccessListener( new OnSuccessListener<Void>() {
+                        databaseRef.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
 
-                                startActivity( new Intent(  getApplicationContext() , HomeActivity.class ) );
-                             Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG ).show();
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                Toast.makeText(AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG).show();
                             }
-                        } );
+                        });
                     }
-                } );
+                });
 
             }
-        } ).addOnProgressListener( new OnProgressListener<UploadTask.TaskSnapshot>() {
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
 
-                double progress = (taskSnapshot.getBytesTransferred()*100) / taskSnapshot.getTotalByteCount();
-                progressBar.setProgress( (int) progress );
-                tvProgress.setText( progress +" %"  );
+                double progress = (taskSnapshot.getBytesTransferred() * 100) / taskSnapshot.getTotalByteCount();
+                progressBar.setProgress((int) progress);
+                tvProgress.setText(progress + " %");
             }
-        } );
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
-        if(requestCode == REQUEST_CODE_IMAGE && data != null){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_IMAGE && data != null) {
             {
                 imageurl = data.getData();
-                isImageAdded = true ;
-                mealImage.setImageURI( imageurl );
-                
+                isImageAdded = true;
+                mealImage.setImageURI(imageurl);
+
 
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString().toLowerCase();
+        this.child = item;
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 }

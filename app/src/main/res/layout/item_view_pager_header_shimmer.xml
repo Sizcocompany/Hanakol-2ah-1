@@ -60,6 +60,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="TextView"
+                            android:hint="Error"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -69,6 +70,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="TextView"
+                            android:hint="Error"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -78,6 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="TextView"
+                            android:hint="Error"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 

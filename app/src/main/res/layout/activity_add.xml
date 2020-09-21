@@ -23,24 +23,8 @@
             android:src="@drawable/ic_imageview"
             app:srcCompat="@drawable/ic_imageview" />
 
-
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/rating_Bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_eatname"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="-100dp"
-            android:layout_marginRight="60dp"
-            android:foregroundGravity="center"
-            android:numStars="5"
-            android:stepSize="1"
-            android:visibility="gone" />
-
-
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/et_eatname" />
@@ -103,6 +87,12 @@
             android:layout_marginRight="40dp"
             android:text="upload"
             android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test"/>
 
 
     </LinearLayout>

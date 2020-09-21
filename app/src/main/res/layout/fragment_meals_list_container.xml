@@ -44,6 +44,7 @@ android:background="@color/colorWhiteDark"
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/container_recyclerview"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_view_pager_header_shimmer" />
 

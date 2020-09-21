@@ -1,0 +1,19 @@
+----------------------------------------------------------------------------------------------------
+Recycler_view:
+--------------
+{
+
+classes :
+---------
+1) MyAdapter
+2) ListMealsFragmentContainer
+3) RandomMealActivity
+
+xml :
+-----
+1) item_view_pager_header_shimmer.xml
+2) fragment_meals_list_container.xml
+
+}
+----------------------------------------------------------------------------------------------------
+

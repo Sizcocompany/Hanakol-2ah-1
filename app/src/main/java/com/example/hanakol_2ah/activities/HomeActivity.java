@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         final CardView snackesCardView = findViewById(R.id.snackesLayoutClick);
         final View relativeLayout = findViewById(R.id.fragment_home_layout);
         final TextView login_txt_btn = findViewById(R.id.login_txt_btn);;
+        final Button button_add_new_meal = findViewById(R.id.button_add_new_meal);
         TextView hanakoleh = findViewById(R.id.hanakolehTextView);
         hanakoleh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +57,22 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        onClickCardviews(breackfastCardView, "Breakfast");
-        onClickCardviews(launchCardView, "Launch");
-        onClickCardviews(dinnerCardView, "Dinner");
+        onClickCardviews(breackfastCardView, "breakfast");
+        onClickCardviews(launchCardView, "lunch");
+        onClickCardviews(dinnerCardView, "dinner");
 
         login_txt_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button_add_new_meal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AddActivity.class);
                 startActivity(intent);
             }
         });

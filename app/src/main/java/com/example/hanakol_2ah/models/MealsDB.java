@@ -13,38 +13,32 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 public class MealsDB {
 
-    public void getBreakfastData(final ImageView imageView , final TextView names , final TextView ingredients , final TextView steps  ) {
+    public void getMealsData(final ImageView imageView, final TextView names , final TextView ingredients , final TextView steps , String child ) {
         final ArrayList<String> namesArrayList = new ArrayList<>();
         final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
         final ArrayList<String> stepsArrayList = new ArrayList<>();
         final ArrayList<String> imageArrayList = new ArrayList<>();
-        final ArrayList<String> categoryArrayList = new ArrayList<>();
-        final ArrayList<String> ratingArrayList = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("hanakol-aeh").child("Breakfast").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        FirebaseDatabase.getInstance().getReference().child("Meal").child(child).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ModelMeals meals = snapshot.getValue(ModelMeals.class);
+                    Meals meals = snapshot.getValue(Meals.class);
                     namesArrayList.add(meals.getMealName());
-                    ingreadentsArrayList.add(meals.getMealIngredients());
-                    stepsArrayList.add(meals.getMealSteps());
-                    imageArrayList.add(meals.getImageUrl());
-                    categoryArrayList.add(meals.getMeatCategory());
-                    ratingArrayList.add(meals.getRatingBar());
+                    ingreadentsArrayList.add(meals.getDescription());
+                    stepsArrayList.add(meals.getSteps());
+                    imageArrayList.add(meals.getImageURL());
                 }
                 Random random = new Random();
                 int Rand = random.nextInt(namesArrayList.size());
                 names.setText(namesArrayList.get(Rand));
                 ingredients.setText(ingreadentsArrayList.get(Rand));
                 steps.setText(stepsArrayList.get(Rand));
-                String photoUrl = imageArrayList.get(Rand).toString();
-                photoUrl = photoUrl + "?type=large";
-                Picasso.get().load(photoUrl).into(imageView);
+                Picasso.get().load(imageArrayList.get(Rand)).into(imageView);
 
             }
 
@@ -54,63 +48,74 @@ public class MealsDB {
             }
         });
     }
-    public void getLunchData(final TextView names , final TextView ingredients , final TextView steps) {
-        final ArrayList<String> namesArrayList = new ArrayList<>();
-        final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
-        final ArrayList<String> stepsArrayList = new ArrayList<>();
+//    public void getLunchData( final ImageView imageView , final TextView names , final TextView ingredients , final TextView steps ) {
+//        final ArrayList<String> namesArrayList = new ArrayList<>();
+//        final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
+//        final ArrayList<String> stepsArrayList = new ArrayList<>();
+//        final ArrayList<String> imageArrayList = new ArrayList<>();
+//
+//
+//        FirebaseDatabase.getInstance().getReference().child("hanakol-aeh").child("Meal").child("lunch").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Meals meals = snapshot.getValue(Meals.class);
+//                    imageArrayList.add(meals.getImage());
+//                    namesArrayList.add(meals.getName());
+//                    ingreadentsArrayList.add(meals.getIngredients());
+//                    stepsArrayList.add(meals.getSteps());
+//
+//                }
+//                Random random = new Random();
+//                int Rand = random.nextInt(namesArrayList.size());
+//                names.setText(namesArrayList.get(Rand));
+//                ingredients.setText(ingreadentsArrayList.get(Rand));
+//                steps.setText(stepsArrayList.get(Rand));
+//                Picasso.get().load(imageArrayList.get(Rand)).into(imageView);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+//
+//    public void getDinnerData(final TextView names , final TextView ingredients , final TextView steps) {
+//        final ArrayList<String> namesArrayList = new ArrayList<>();
+//        final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
+//        final ArrayList<String> stepsArrayList = new ArrayList<>();
+//
+//        FirebaseDatabase.getInstance().getReference().child("hanakol-aeh").child("Meal").child("dinner").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Meals meals = snapshot.getValue(Meals.class);
+//                    namesArrayList.add(meals.getName());
+//                    ingreadentsArrayList.add(meals.getIngredients());
+//                    stepsArrayList.add(meals.getSteps());
+//
+//                }
+//                Random random = new Random();
+//                int Rand = random.nextInt(namesArrayList.size());
+//                names.setText(namesArrayList.get(Rand));
+//                ingredients.setText(ingreadentsArrayList.get(Rand));
+//                steps.setText(stepsArrayList.get(Rand));
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 
-        FirebaseDatabase.getInstance().getReference().child("hanakol-aeh").child("Launch").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ModelMeals meals = snapshot.getValue(ModelMeals.class);
-                    namesArrayList.add(meals.getMealName());
-                    ingreadentsArrayList.add(meals.getMealIngredients());
-                    stepsArrayList.add(meals.getMealSteps());
-                }
-                Random random = new Random();
-                int Rand = random.nextInt(namesArrayList.size());
-                names.setText(namesArrayList.get(Rand));
-                ingredients.setText(ingreadentsArrayList.get(Rand));
-                steps.setText(stepsArrayList.get(Rand));
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-    }
-
-    public void getDinnerData(final TextView names , final TextView ingredients , final TextView steps) {
-        final ArrayList<String> namesArrayList = new ArrayList<>();
-        final ArrayList<String> ingreadentsArrayList = new ArrayList<>();
-        final ArrayList<String> stepsArrayList = new ArrayList<>();
-
-        FirebaseDatabase.getInstance().getReference().child("hanakol-aeh").child("Dinner").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ModelMeals meals = snapshot.getValue(ModelMeals.class);
-                    namesArrayList.add(meals.getMealName());
-                    ingreadentsArrayList.add(meals.getMealIngredients());
-                    stepsArrayList.add(meals.getMealSteps());
-                }
-                Random random = new Random();
-                int Rand = random.nextInt(namesArrayList.size());
-                names.setText(namesArrayList.get(Rand));
-                ingredients.setText(ingreadentsArrayList.get(Rand));
-                steps.setText(stepsArrayList.get(Rand));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 }
