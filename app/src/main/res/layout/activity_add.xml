@@ -16,7 +16,7 @@
 
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/meatImage"
+            android:id="@+id/logo_Image"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
@@ -54,7 +54,7 @@
             android:id="@+id/et_eatname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/meatImage"
+            android:layout_below="@+id/logo_Image"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"

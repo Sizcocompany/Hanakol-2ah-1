@@ -56,26 +56,28 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_login );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        profile_picture = findViewById( R.id.profile_picture );
+        profile_picture = findViewById(R.id.profile_picture);
 
 
 //   start facebook methods
 //  ------------------------------------------------------------------------------------------------
 //        ziad
 //  ------------------------------------------------------------------------------------------------
-        FacebookSdk.sdkInitialize( getApplicationContext() );
-        button_facebook_login = findViewById( R.id.button_facebook_login );
-        button_facebook_login.setReadPermissions( "email", "public_profile" );
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        button_facebook_login = findViewById(R.id.button_facebook_login);
+        button_facebook_login.setReadPermissions("email", "public_profile");
         callbackManager = CallbackManager.Factory.create();
 
 //   Creat object for FacebookAuthenticationClass
-        facebookAuthenticationClass = new FacebookAuthenticationClass( FACEBOOK_TAG, firebaseAuth,
-                LoginActivity.this, button_facebook_login, profile_picture, callbackManager );
+
+        facebookAuthenticationClass = new FacebookAuthenticationClass(FACEBOOK_TAG, firebaseAuth,
+                LoginActivity.this, button_facebook_login, profile_picture, callbackManager);
 //  ------------------------------------------------------------------------------------------------
+
 
 //   FacebookRegisterationCallback
         facebookAuthenticationClass.FacebookRegisterationCallback();
@@ -90,71 +92,73 @@ public class LoginActivity extends AppCompatActivity {
 
         // start Gmail auth . islam
 
-        googleSignInbtn = findViewById( R.id.button_google_sign_in );
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        gso = new GoogleSignInOptions.Builder( GoogleSignInOptions.DEFAULT_SIGN_IN )
-                .requestIdToken( getString( R.string.default_web_client_id ) )
-                .requestEmail().build();
 
-        signInClient = GoogleSignIn.getClient( this, gso );
+            googleSignInbtn = findViewById(R.id.button_google_sign_in);
+//        firebaseAuth = FirebaseAuth.getInstance();
 
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount( this );
+            gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail().build();
 
-        if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
-            startActivity( new Intent( this, HomeActivity.class ) );
-        }
+            signInClient = GoogleSignIn.getClient(this, gso);
 
-        googleSignInbtn.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signin = signInClient.getSignInIntent();
+            GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
-                startActivityForResult( signin, GOOGLE_SIGN_IN_CODE );
+            if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
+                startActivity(new Intent(this, HomeActivity.class));
             }
-        } );
+
+            googleSignInbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent signin = signInClient.getSignInIntent();
+
+                    startActivityForResult(signin, GOOGLE_SIGN_IN_CODE);
+                }
+            });
 
     }
 
     // ziad
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult( requestCode, resultCode, data );
-        super.onActivityResult( requestCode, resultCode, data );
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         // islam
 
-        if (requestCode == GOOGLE_SIGN_IN_CODE) {
+            if (requestCode == GOOGLE_SIGN_IN_CODE) {
 
-            Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent( data );
+                Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-            try {
-                GoogleSignInAccount signInacc = signInTask.getResult( ApiException.class );
+                try {
+                    GoogleSignInAccount signInacc = signInTask.getResult(ApiException.class);
 
-                AuthCredential authCredential = GoogleAuthProvider.getCredential( signInacc.getIdToken(), null );
+                    AuthCredential authCredential = GoogleAuthProvider.getCredential(signInacc.getIdToken(), null);
 
-                firebaseAuth.signInWithCredential( authCredential ).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        Toast.makeText( getApplicationContext(), "Signed In successfully ", Toast.LENGTH_SHORT ).show();
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        updateUI( user );
-                        startActivity( new Intent( getApplicationContext(), HomeActivity.class ) );
+                            Toast.makeText(getApplicationContext(), "Signed In successfully ", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            updateUI(user);
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
-                    }
-                } ).addOnFailureListener( new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                } );
+                        }
+                    });
 
-            } catch (ApiException e) {
-                e.printStackTrace();
-                Toast.makeText( this, "Error happened please try again alter ", Toast.LENGTH_SHORT ).show();
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error happened please try again alter ", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
     }
 
 //ziad

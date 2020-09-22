@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeActivity;
 import com.example.hanakol_2ah.activities.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -39,7 +41,7 @@ public class FacebookAuthenticationClass {
     final CallbackManager callbackManager;
 
 
-    public FacebookAuthenticationClass(String TAG, FirebaseAuth firebaseAuth,
+    public FacebookAuthenticationClass( String TAG, FirebaseAuth firebaseAuth,
                                        Context context, LoginButton login,  ImageView profile, CallbackManager callbackManager ) {
         this.TAG = TAG;
         this.firebaseAuth = firebaseAuth;
@@ -132,6 +134,8 @@ public class FacebookAuthenticationClass {
                 String photoUrl = user.getPhotoUrl().toString();
                 photoUrl = photoUrl + "?type=large";
                 Picasso.get().load(photoUrl).into(profile);
+//
+
 
             }
         } else {
@@ -139,7 +143,6 @@ public class FacebookAuthenticationClass {
             profile.setImageResource(R.drawable.com_facebook_auth_dialog_background);
         }
     }
-
 
 
 

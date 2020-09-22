@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +54,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        mealImage = findViewById(R.id.meatImage);
+        mealImage = findViewById(R.id.logo_Image);
         name = findViewById(R.id.et_eatname);
         description = findViewById(R.id.et_description);
         steps = findViewById(R.id.et_steps);
