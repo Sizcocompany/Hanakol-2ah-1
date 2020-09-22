@@ -22,12 +22,11 @@ public class RandomMealsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_meals);
-        final TextView ingredients = findViewById(R.id.textViewاسم);
-        final TextView names = findViewById(R.id.textView2خطوات);
-        final TextView steps = findViewById(R.id.textViewوصف);
-        final ImageView imageViewMeal = findViewById(R.id.imageViewMeal);
-        final RatingBar meal_rating_Bar = findViewById(R.id.meal_rating_Bar);
-        TextView headerTextView = findViewById(R.id.headerTextView);
+        final TextView Description =(TextView) findViewById(R.id.textView2خطوات);
+        final TextView MealName = (TextView) findViewById(R.id.textViewاسم);
+        final TextView Steps =(TextView) findViewById(R.id.textViewوصف);
+        final ImageView ImageURL =(ImageView) findViewById(R.id.imageViewMeal);
+        final RatingBar MealRate =(RatingBar) findViewById(R.id.randomratingBar);
         Button Dinnerbutton = findViewById(R.id.buttonUploadDinnerData);
         Button Breakfastbutton = findViewById(R.id.buttonUploadbreakfastData);
         Button Luanchbutton = findViewById(R.id.buttonUploadLaunchData);
@@ -37,21 +36,21 @@ public class RandomMealsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps , meal_rating_Bar, "breakfast");
+                mealsDB.getMealsData(ImageURL, MealName, Description, Steps , MealRate, "breakfast");
             }
         });
 
         Luanchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps , meal_rating_Bar, "lunch");
+                mealsDB.getMealsData(ImageURL, MealName, Description, Steps , MealRate, "lunch");
             }
         });
 
         Dinnerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mealsDB.getMealsData(imageViewMeal, names, ingredients, steps, meal_rating_Bar, "dinner");
+                mealsDB.getMealsData(ImageURL, MealName, Description, Steps, MealRate, "dinner");
             }
         });
 

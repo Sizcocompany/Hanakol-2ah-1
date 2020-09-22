@@ -11,7 +11,7 @@ public class Meals {
     }
 
 
-    public Meals(String imageURL, String mealName, String description, String steps, Float mealRate) {
+    public Meals(  String description,String imageURL,String mealName, Float mealRate, String steps) {
         MealName = mealName;
         Description = description;
         Steps = steps;

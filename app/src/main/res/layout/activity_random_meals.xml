@@ -1,116 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/back6">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        tools:context=".activities.RandomMealsActivity">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/back_click_image"
             android:layout_width="30dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.026" />
+            android:layout_gravity="left"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+        <RatingBar
+            android:id="@+id/randomratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:numStars="5" />
 
         <ImageView
             android:id="@+id/imageViewMeal"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerTextView"
-            app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+            android:background="@drawable/shapebutton"/>
 
         <TextView
             android:id="@+id/textViewاسم"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewMeal" />
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:background="@drawable/shapebutton"
+            android:padding="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            />
 
         <TextView
             android:id="@+id/textView2خطوات"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewاسم" />
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:background="@drawable/shapebutton"
+            android:padding="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="right"/>
 
         <TextView
             android:id="@+id/textViewوصف"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2خطوات" />
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:background="@drawable/shapebutton"
+            android:padding="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="right"/>
 
-        <Button
-            android:id="@+id/buttonUploadLaunchData"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:layout_marginEnd="25dp"
-            android:text="Launch"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewوصف"
-            app:layout_constraintVertical_bias="1.0" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonUploadbreakfastData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="20dp"
-            android:text="breakfast"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonUploadLaunchData"
-            app:layout_constraintStart_toEndOf="@+id/buttonUploadDinnerData"
-            app:layout_constraintTop_toBottomOf="@+id/textViewوصف"
-            app:layout_constraintVertical_bias="1.0" />
+            <Button
+                android:id="@+id/buttonUploadbreakfastData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shapebutton"
+                android:text="breakfast" />
 
-        <Button
-            android:id="@+id/buttonUploadDinnerData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="100dp"
-            android:text="Dinner"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewوصف"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/headerTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/buttonUploadLaunchData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shapebutton"
+                android:text="Launch" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/buttonUploadDinnerData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shapebutton"
+                android:text="Dinner" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 </ScrollView>

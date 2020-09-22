@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageView logo;
     private TextView welcome_tv;
-    private static int splashTimeOut=10000;
+    private static int splashTimeOut=1000;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

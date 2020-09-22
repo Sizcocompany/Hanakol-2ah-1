@@ -3,8 +3,8 @@ package com.example.hanakol_2ah.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.authentication.FacebookAuthenticationClass;
+import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,9 +33,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,10 +53,11 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton button_facebook_login;
     private CallbackManager callbackManager;
     private FirebaseAuth firebaseAuth;
+    private String TAG = "FacebookAuthentication";
     private AccessTokenTracker accessTokenTracker;
     private FirebaseAuth.AuthStateListener authStateListener;
     private static final String FACEBOOK_TAG = "FacebookAuthentication";
-    private FacebookAuthenticationClass facebookAuthenticationClass;
+//    private FacebookAuthenticationClass facebookAuthenticationClass;
 
 
     @Override
@@ -74,21 +80,86 @@ public class LoginActivity extends AppCompatActivity {
 
 //   Creat object for FacebookAuthenticationClass
 
-        facebookAuthenticationClass = new FacebookAuthenticationClass(FACEBOOK_TAG, firebaseAuth,
-                LoginActivity.this, button_facebook_login, profile_picture, callbackManager);
-//  ------------------------------------------------------------------------------------------------
+//        facebookAuthenticationClass = new FacebookAuthenticationClass(FACEBOOK_TAG, firebaseAuth,
+//                LoginActivity.this, button_facebook_login, profile_picture, callbackManager);
+////  ------------------------------------------------------------------------------------------------
+//
+//
+////   FacebookRegisterationCallback
+//        facebookAuthenticationClass.FacebookRegisterationCallback();
+//
+////   GetAuthStateListener
+//        authStateListener = facebookAuthenticationClass.GetAuthStateListener();
+//
+////   GetAccessTokenTracker
+//        accessTokenTracker = facebookAuthenticationClass.GetAccessTokenTracker();
+////  ------------------------------------------------------------------------------------------------
+////   End of facebook methods
 
 
-//   FacebookRegisterationCallback
-        facebookAuthenticationClass.FacebookRegisterationCallback();
 
-//   GetAuthStateListener
-        authStateListener = facebookAuthenticationClass.GetAuthStateListener();
+        button_facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "onSuccess" + loginResult);
+                handleFacebookToken(loginResult.getAccessToken());
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
 
-//   GetAccessTokenTracker
-        accessTokenTracker = facebookAuthenticationClass.GetAccessTokenTracker();
-//  ------------------------------------------------------------------------------------------------
-//   End of facebook methods
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "onCancel");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "onError");
+
+            }
+        });
+
+     authStateListener =new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    updateUI(user);
+                } else {
+                    updateUI(null);
+                }
+            }
+        };
+
+     accessTokenTracker = new AccessTokenTracker() {
+         @Override
+         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+             if (currentAccessToken == null) {
+                 firebaseAuth.signOut();
+             }
+         }
+     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // start Gmail auth . islam
 
@@ -167,7 +238,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        facebookAuthenticationClass.updateUI(currentUser);
+        updateUI(firebaseAuth.getCurrentUser());
+//        facebookAuthenticationClass.updateUI(currentUser);
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 //ziad
@@ -180,7 +252,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void updateUI (FirebaseUser fUser){
+    private void updateUI (FirebaseUser user){
+
+
+
+        if (user != null) {
+//            info.setText(user.getDisplayName());
+            if (user.getPhotoUrl() != null) {
+                String photoUrl = user.getPhotoUrl().toString();
+                photoUrl = photoUrl + "?type=large";
+                Picasso.get().load(photoUrl).into(profile_picture);
+//
+
+
+            }
+        } else {
+//            info.setText(" ");
+            profile_picture.setImageResource(R.drawable.com_facebook_auth_dialog_background);
+        }
+
+
+
+
+
        // logout.setVisibility( View.VISIBLE );
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount( getApplicationContext() );
         if (account != null){
@@ -196,5 +290,30 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+
+//    facebook
+
+    private void handleFacebookToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookToken" + token);
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "sign in with credential:successful");
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    updateUI(user);
+                } else {
+                    Log.d(TAG, "sign in with credential:failure");
+                    Toast.makeText(LoginActivity.this, "Authentication failure", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
 
 }
