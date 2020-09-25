@@ -3,8 +3,11 @@ package com.example.hanakol_2ah.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +44,9 @@ import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private Button logIn , signUp;
+    private EditText firebaseEmail , firebasePass;
+
     // Islam
     public static final int GOOGLE_SIGN_IN_CODE = 1;
     SignInButton googleSignInbtn;
@@ -67,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         profile_picture = findViewById(R.id.profile_picture);
+
+        logIn = findViewById(R.id.button_firebase_log_in);
+        signUp = findViewById(R.id.button_firebase_sign_up);
+        firebaseEmail = findViewById(R.id.editTextTextPersonName);
+        firebasePass = findViewById(R.id.editTextTextPassword);
 
 
 //   start facebook methods
@@ -143,6 +154,47 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = firebaseEmail.getText().toString().trim();
+                String password = firebasePass.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)){
+                    firebaseEmail.setError("Email Field is Empty");
+                    return;
+                }
+                if (TextUtils.isEmpty(password)){
+                    firebasePass.setError("Password Field is Empty");
+                    return;
+                }
+                if (password.length() < 8){
+                    firebaseEmail.setError("Please enter 8 Characters or more");
+                    return;
+                }
+
+
+
+                firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this,"Successful LogIn",Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                        }else {
+                            Toast.makeText(LoginActivity.this,"ERROR"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
+            }
+        });
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+            }
+        });
 
 
 
