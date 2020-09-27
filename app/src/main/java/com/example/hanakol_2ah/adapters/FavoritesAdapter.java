@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.FavoritesActivity;
 import com.example.hanakol_2ah.models.Favorites;
 import com.example.hanakol_2ah.models.Meals;
 import com.squareup.picasso.Picasso;
@@ -24,7 +25,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.favo
     private ArrayList<Favorites> favoritesMealsList;
     Context context;
 
-    public FavoritesAdapter(Context context,ArrayList<Favorites> favoritesMealsList) {
+
+    public FavoritesAdapter(Context context, ArrayList<Favorites> favoritesMealsList) {
+
 
         this.favoritesMealsList = favoritesMealsList;
         this.context = context;
@@ -52,10 +55,16 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.favo
         return favoritesMealsList.size();
     }
 
+    public void remove(int adapterPosition) {
+    }
+
     public class favoritesViewHolder extends RecyclerView.ViewHolder {
+
+
         private TextView favoritesName , favoritesIngredients, favoritesSteps;
         private ImageView favoritesMealImageView;
         private RatingBar favoritesMeal_rating_Bar;
+
 
         public favoritesViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +74,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.favo
             favoritesSteps = itemView.findViewById(R.id.favorites_meal_steps_item_recycler);
             favoritesMeal_rating_Bar = itemView.findViewById(R.id.favorites_meal_rating_Bar);
 
+
+
         }
+
     }
 }
