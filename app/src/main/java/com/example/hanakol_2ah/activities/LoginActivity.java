@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     private String TAG = "FacebookAuthentication";
     private AccessTokenTracker accessTokenTracker;
     private FirebaseAuth.AuthStateListener authStateListener;
+    public FirebaseUser firebaseUser;
     private static final String FACEBOOK_TAG = "FacebookAuthentication";
 //    private FacebookAuthenticationClass facebookAuthenticationClass;
 
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    firebaseUser = user;
                     updateUI(user);
                 } else {
                     updateUI(null);
@@ -174,9 +176,9 @@ public class LoginActivity extends AppCompatActivity {
 
             signInClient = GoogleSignIn.getClient(this, gso);
 
-            GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+            GoogleSignInAccount signInGoogleAccount = GoogleSignIn.getLastSignedInAccount(this);
 
-            if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
+            if (signInGoogleAccount != null || firebaseAuth.getCurrentUser() != null) {
                 startActivity(new Intent(this, HomeActivity.class));
             }
 
