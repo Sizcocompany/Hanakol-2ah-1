@@ -18,11 +18,19 @@
         >
 
 
+        <RatingBar
+            android:id="@+id/meal_rating_Bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:numStars="5"
+            />
+
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/selected_item_image_iv"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitXY"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:src="@drawable/ic_image" />
@@ -47,8 +55,8 @@
             android:gravity="center"
             android:text="My Meal ingredients"
             android:textColor="@color/colorWhite"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+             />
 
         <TextView
             android:id="@+id/selected_items_steps_tv"
@@ -59,8 +67,8 @@
             android:gravity="center"
             android:text="My Meal steps"
             android:textColor="@color/colorWhite"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            />
 
 
     </LinearLayout>

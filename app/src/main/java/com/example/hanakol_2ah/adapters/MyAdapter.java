@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
-
+import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.List;
-
-
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
