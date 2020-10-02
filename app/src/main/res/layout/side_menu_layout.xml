@@ -12,20 +12,16 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_menu_close"/>
 
-    <LinearLayout
-        android:id="@+id/user_name_Linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/user_profile_pic"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="100dp"
             android:src="@drawable/ic_user_pic" />
 
         <TextView
+            android:id="@+id/user_profile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -35,8 +31,30 @@
             android:textStyle="bold" />
 
 
-    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/my_post"
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_my_posts" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="My Posts"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/language_Linear"
 
@@ -90,6 +108,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/log_out_side_menu_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -102,16 +121,16 @@
             android:src="@drawable/ic_logout" />
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="logOut"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/log_out_side_menu_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="logOut"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+
 
 </LinearLayout>

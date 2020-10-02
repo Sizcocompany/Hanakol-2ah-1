@@ -30,6 +30,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         holder.ingredients_item_recycler.setText(meals.getDescription());
         holder.steps_item_recycler.setText(meals.getSteps());
         holder.meal_rating_Bar.setRating(meals.getMealRate());
+        holder.owner_name_item_recycler.setText("Created by: "+meals.getMealOwner());
         Picasso.get().load(meals.getImageURL()).into(holder.mealImageView);
     }
 
@@ -46,7 +47,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
     }
 
     class NoteHolder extends RecyclerView.ViewHolder {
-        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler;
+        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler ,owner_name_item_recycler ;
         private ImageView mealImageView;
         private RatingBar meal_rating_Bar;
 
@@ -58,6 +59,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
             ingredients_item_recycler = itemView.findViewById(R.id.meal_ingredients_item_recycler);
             steps_item_recycler = itemView.findViewById(R.id.meal_steps_item_recycler);
             meal_rating_Bar = itemView.findViewById(R.id.meal_rating_Bar);
+            owner_name_item_recycler = itemView.findViewById(R.id.meal_owner_name_item_recycler);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

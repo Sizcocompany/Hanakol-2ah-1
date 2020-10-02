@@ -22,19 +22,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ListMealsFragmentContainer extends Fragment {
+public class MyMeals extends Fragment {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
     private MealAdapter adapter;
     private View view;
     private SelectedItemFragment selectedItemFragment;
+    private String userName;
 
-    public ListMealsFragmentContainer(String child) {
-        this.child = child;
+    public MyMeals(String child, String userName) {
+        this.child = child; this.userName = userName;
     }
 
 
@@ -48,15 +46,13 @@ public class ListMealsFragmentContainer extends Fragment {
 
         selectedItemFragment = new SelectedItemFragment();
 //        onGetbreakfastList(view , "Breakfast");
-        setUpRecyclerView(view, child);
-
-
+        setUpRecyclerView(view, child, userName);
 
 
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(ListMealsFragmentContainer.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove(MyMeals.this).commitAllowingStateLoss();
             }
         });
 
@@ -65,10 +61,10 @@ public class ListMealsFragmentContainer extends Fragment {
     }
 
 
-    private void setUpRecyclerView(View v, String child) {
+    private void setUpRecyclerView(View v, String child, String userName) {
 
         notebookRef = db.collection(child);
-        Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+        Query query = notebookRef.whereEqualTo("mealOwner", userName);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
@@ -90,7 +86,7 @@ public class ListMealsFragmentContainer extends Fragment {
                 bundle.putString("MEAL_STEP", meal.getSteps());
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL","Created by: "+meal.getMealOwner());
+                bundle.putString("MEAL_OWNER_EMAIL", "Created by: " + meal.getMealOwner());
 
                 FragmentTransaction(selectedItemFragment, bundle);
 

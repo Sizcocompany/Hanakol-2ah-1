@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class HomeActivity extends ToolBarActivity {
     ListMealsFragmentContainer fragment;
-    TextView login_txt_btn;
+    public static TextView login_txt_btn;
     private Boolean Visablilety;
     private Toolbar toolbar;
 //toolbar
@@ -107,6 +107,8 @@ public class HomeActivity extends ToolBarActivity {
 
             }
         });
+
+
 
     }
 

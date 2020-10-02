@@ -70,6 +70,16 @@
                             android:layout_gravity="right"
                             android:isIndicator="true"
                             android:numStars="5" />
+                        <TextView
+                            android:id="@+id/meal_owner_name_item_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:hint="Error"
+                            android:text="TextView"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            />
 
                         <TextView
                             android:id="@+id/meal_steps_item_recycler"
@@ -80,6 +90,7 @@
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:visibility="invisible" />
+
 
                         <TextView
                             android:id="@+id/meal_ingredients_item_recycler"

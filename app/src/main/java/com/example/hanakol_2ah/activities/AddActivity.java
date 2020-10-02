@@ -20,7 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -147,7 +151,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("ImageURL", uri.toString());
                         hashMap.put("MealRate", mealRate);
 
-                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps);
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps , onGetOwnerName());
                         CollectionReference notebookRef = db.collection(child);
 
                         notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -200,4 +204,38 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+    private String onGetOwnerName() {
+        FirebaseAuth mFirebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser == null) {
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        }
+
+        return mUsername;
+    }
+
 }

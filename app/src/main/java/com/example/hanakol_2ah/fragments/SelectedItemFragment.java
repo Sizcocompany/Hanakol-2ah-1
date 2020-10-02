@@ -21,7 +21,7 @@ public class SelectedItemFragment extends Fragment {
 //    i changed the name of that fragment from single view fragment into selected item fragment to be more detailed;
 
     private ImageView selected_item_photo;
-    private TextView selected_item_name, selected_item_steps, selected_item_ingredients;
+    private TextView selected_item_name, selected_item_steps, selected_item_ingredients , selected_item_owner_name;
     private RatingBar meal_rating_Bar;
     public static final String EXTRA_NAME = "com.examples.hanakol-2ah.EXTRA_NAME";
     public static final String EXTRA_RATE = "com.examples.hanakol-2ah.EXTRA_RATE";
@@ -40,6 +40,7 @@ public class SelectedItemFragment extends Fragment {
         selected_item_ingredients = view.findViewById(R.id.selected_item_ingreadents_tv);
         selected_item_steps = view.findViewById(R.id.selected_items_steps_tv);
         meal_rating_Bar = view.findViewById(R.id.meal_rating_Bar);
+        selected_item_owner_name = view.findViewById(R.id.selected_item_owner_name_tv);
 
 
 
@@ -50,6 +51,7 @@ public class SelectedItemFragment extends Fragment {
             selected_item_name.setText(bundle.getString("MEAL_NAME"));
             selected_item_steps.setText(bundle.getString("MEAL_STEP"));
             meal_rating_Bar.setRating(Float.parseFloat(bundle.getString("MEAL_RATE")));
+            selected_item_owner_name.setText(bundle.getString("MEAL_OWNER_EMAIL"));
 
         }
 

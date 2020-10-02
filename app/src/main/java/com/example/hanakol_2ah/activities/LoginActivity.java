@@ -22,12 +22,14 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.squareup.picasso.Picasso;
+
+import static com.example.hanakol_2ah.activities.HomeActivity.login_txt_btn;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -57,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private AccessTokenTracker accessTokenTracker;
     private FirebaseAuth.AuthStateListener authStateListener;
     public FirebaseUser firebaseUser;
+    GoogleApiClient googleApiClient;
     private static final String FACEBOOK_TAG = "FacebookAuthentication";
 //    private FacebookAuthenticationClass facebookAuthenticationClass;
 
@@ -105,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess" + loginResult);
                 handleFacebookToken(loginResult.getAccessToken());
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Toast.makeText(LoginActivity.this, "Welcome chief "+onGetOwnerName(firebaseAuth , googleApiClient), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
 
@@ -264,7 +270,8 @@ public class LoginActivity extends AppCompatActivity {
                 String photoUrl = user.getPhotoUrl().toString();
                 photoUrl = photoUrl + "?type=large";
                 Picasso.get().load(photoUrl).into(profile_picture);
-//
+//                login_txt_btn.setText("Hi! "+user.getDisplayName());
+//                login_txt_btn.setClickable(false);
 
 
             }
@@ -287,7 +294,8 @@ public class LoginActivity extends AppCompatActivity {
             String personEmail = account.getEmail();
             String personId = account.getId();
             Uri personPhoto = account.getPhotoUrl();
-
+//            login_txt_btn.setText("Hi! "+personName);
+//            login_txt_btn.setClickable(false);
             Toast.makeText( LoginActivity.this , personName + personEmail  , Toast.LENGTH_SHORT).show();
 
         }
@@ -315,6 +323,40 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String onGetOwnerName(FirebaseAuth firebaseAuth , GoogleApiClient googleApiClient) {
+        FirebaseAuth mFirebaseAuth2 = firebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient = googleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser == null) {
+                mUsername = "Dear chief";
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        }
+
+        return mUsername;
     }
 
 

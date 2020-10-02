@@ -6,17 +6,19 @@ public class Meals {
     private String Steps;
     private String ImageURL;
     private Float MealRate;
+    private String mealOwner;
 
     public Meals() {
     }
 
 
-    public Meals(  String description,String imageURL,String mealName, Float mealRate, String steps) {
+    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner) {
         MealName = mealName;
         Description = description;
         Steps = steps;
         ImageURL = imageURL;
         MealRate = mealRate;
+        this.mealOwner = mealOwner;
 
 
     }
@@ -59,6 +61,14 @@ public class Meals {
 
     public void setMealRate(Float mealRate) {
         MealRate = mealRate;
+    }
+
+    public String getMealOwner() {
+        return mealOwner;
+    }
+
+    public void setMealOwner(String mealOwner) {
+        this.mealOwner = mealOwner;
     }
 
 }
