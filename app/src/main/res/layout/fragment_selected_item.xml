@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back"
-    >
+    android:background="@mipmap/back">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="12dp"
-        >
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
-
+        <ImageView
+            android:id="@+id/back_click_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
         <RatingBar
             android:id="@+id/meal_rating_Bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:numStars="5"
-            />
+            android:numStars="5" />
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/selected_item_image_iv"
             android:layout_width="300dp"
             android:layout_height="200dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:src="@drawable/ic_image" />
@@ -45,6 +46,21 @@
             android:textColor="@color/colorWhite"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/favorites_icon"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_favorite_icon" />
+
+        <ImageView
+            android:id="@+id/share_icon"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_share" />
+
         <TextView
             android:id="@+id/selected_item_owner_name_tv"
             android:layout_width="wrap_content"
@@ -65,8 +81,7 @@
             android:gravity="center"
             android:text="My Meal ingredients"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-             />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/selected_items_steps_tv"
@@ -77,8 +92,7 @@
             android:gravity="center"
             android:text="My Meal steps"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
 
     </LinearLayout>

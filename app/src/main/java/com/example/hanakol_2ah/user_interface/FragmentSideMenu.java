@@ -125,6 +125,7 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
         myPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 MyMeals myMeals = new MyMeals("breakfast" , mUsername );
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.activity_home_container, myMeals);

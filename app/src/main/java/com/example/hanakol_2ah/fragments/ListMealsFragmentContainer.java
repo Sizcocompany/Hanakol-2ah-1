@@ -22,9 +22,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ListMealsFragmentContainer extends Fragment {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -51,8 +48,6 @@ public class ListMealsFragmentContainer extends Fragment {
         setUpRecyclerView(view, child);
 
 
-
-
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,14 +60,14 @@ public class ListMealsFragmentContainer extends Fragment {
     }
 
 
-    private void setUpRecyclerView(View v, String child) {
+    private void setUpRecyclerView(View v, final String child) {
 
         notebookRef = db.collection(child);
         Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
-        adapter = new MealAdapter(options);
+        adapter = new MealAdapter(getActivity().getApplicationContext(),options);
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,50 +85,14 @@ public class ListMealsFragmentContainer extends Fragment {
                 bundle.putString("MEAL_STEP", meal.getSteps());
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL","Created by: "+meal.getMealOwner());
+                bundle.putString("MEAL_OWNER_EMAIL", "Created by: " + meal.getMealOwner());
+                bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);
 
             }
         });
     }
-
-//    private void RecyclerViewsearch(View v,String child,String meal) {
-//
-//        final RecyclerView rv = v.findViewById(R.id.container_recyclerview);
-//        rv.setHasFixedSize(true);
-//        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-//        final List<Meals> listData = new ArrayList<>();
-//
-//        notebookRef = db.collection(child);
-//        Query query = notebookRef.whereEqualTo(meal, Query.Direction.ASCENDING);
-//        FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
-//                .setQuery(query, Meals.class)
-//                .build();
-//        adapter = new MealAdapter(options);
-//        RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(adapter);
-//
-//        adapter.setOnItemClickListener(new MealAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-//
-//                Meals meal = documentSnapshot.toObject(Meals.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("MEAL_NAME", meal.getMealName());
-//                bundle.putString("MEAL_DESCRIPTION", meal.getDescription());
-//                bundle.putString("MEAL_STEP", meal.getSteps());
-//                bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
-//                bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-//
-//                FragmentTransaction(selectedItemFragment, bundle);
-//
-//
-//            }
-//        });
-//    }
 
 
     @Override
@@ -148,6 +107,13 @@ public class ListMealsFragmentContainer extends Fragment {
         adapter.stopListening();
     }
 
+    public boolean isFragmentAdded() {
+        return false;
+    }
+
+    public boolean hasEditableFields() {
+        return false;
+    }
 
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();

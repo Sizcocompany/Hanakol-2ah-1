@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,53 +23,44 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MyMeals extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SearchFragment extends Fragment {
+
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
     private MealAdapter adapter;
     private View view;
     private SelectedItemFragment selectedItemFragment;
-    private String userName;
 
-    public MyMeals(String child, String userName  ) {
-        this.child = child; this.userName = userName;
-    }
+
+    private SearchView searchView;
+    private RecyclerView recyclerView;
+    private MealAdapter movieAdapter;
+    private List<Meals> movieList;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_meals_list_container, container, false);
-        ImageView back_image_button = view.findViewById(R.id.back_click_image);
-        this.view = view;
-
+        final View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         selectedItemFragment = new SelectedItemFragment();
-//        onGetbreakfastList(view , "Breakfast");
-        setUpRecyclerView(view, child, userName);
-
-
-        back_image_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(MyMeals.this).commitAllowingStateLoss();
-            }
-        });
 
 
         return view;
     }
 
-
-    private void setUpRecyclerView(View v, String child, String userName) {
+    private void setUpRecyclerView(View v) {
 
         notebookRef = db.collection(child);
-        Query query = notebookRef.whereEqualTo("mealOwner", userName);
+        Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
-        adapter = new MealAdapter(getActivity().getApplicationContext(),options);
+        adapter = new MealAdapter(getActivity().getApplicationContext(), options);
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -86,33 +78,22 @@ public class MyMeals extends Fragment {
                 bundle.putString("MEAL_STEP", meal.getSteps());
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL",  meal.getMealOwner());
+                bundle.putString("MEAL_OWNER_EMAIL", "Created by: " + meal.getMealOwner());
+                bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);
 
             }
         });
+
     }
+        private void FragmentTransaction(Fragment fragment, Bundle bundle) {
+            androidx.fragment.app.FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.activity_home_container, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            fragment.setArguments(bundle);
+        }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
-
-    private void FragmentTransaction(Fragment fragment, Bundle bundle) {
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_home_container, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-        fragment.setArguments(bundle);
-    }
 }

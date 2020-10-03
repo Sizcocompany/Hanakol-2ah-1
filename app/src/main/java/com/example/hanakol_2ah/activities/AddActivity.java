@@ -96,8 +96,6 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                final CollectionReference notebookRef = db.collection("Meal");
-
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
@@ -116,6 +114,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         categories.add("Breakfast");
         categories.add("Lunch");
         categories.add("Dinner");
+        categories.add("Desserts");
+        categories.add("Juices");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -151,7 +151,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("ImageURL", uri.toString());
                         hashMap.put("MealRate", mealRate);
 
-                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps , onGetOwnerName());
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName());
                         CollectionReference notebookRef = db.collection(child);
 
                         notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {

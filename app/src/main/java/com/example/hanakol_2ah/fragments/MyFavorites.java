@@ -17,23 +17,25 @@ import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MyMeals extends Fragment {
+public class MyFavorites extends Fragment {
+
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
     private MealAdapter adapter;
     private View view;
     private SelectedItemFragment selectedItemFragment;
-    private String userName;
+    private String senderEmail;
 
-    public MyMeals(String child, String userName  ) {
-        this.child = child; this.userName = userName;
-    }
 
 
     @Nullable
@@ -44,15 +46,16 @@ public class MyMeals extends Fragment {
         this.view = view;
 
 
+        senderEmail = onGetMealSenderEmail();
         selectedItemFragment = new SelectedItemFragment();
 //        onGetbreakfastList(view , "Breakfast");
-        setUpRecyclerView(view, child, userName);
+        setUpRecyclerView(view, child, senderEmail);
 
 
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(MyMeals.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove(MyFavorites.this).commitAllowingStateLoss();
             }
         });
 
@@ -61,10 +64,10 @@ public class MyMeals extends Fragment {
     }
 
 
-    private void setUpRecyclerView(View v, String child, String userName) {
+    private void setUpRecyclerView(View v, String child, String senderEmail) {
 
         notebookRef = db.collection(child);
-        Query query = notebookRef.whereEqualTo("mealOwner", userName);
+        Query query = notebookRef.whereEqualTo("mealSender", senderEmail);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
@@ -115,4 +118,38 @@ public class MyMeals extends Fragment {
         fragmentTransaction.commit();
         fragment.setArguments(bundle);
     }
+
+    private String onGetMealSenderEmail() {
+        FirebaseAuth mFirebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .enableAutoManage(getActivity() /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser == null) {
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        }
+
+        return mUsername;
+    }
+
 }

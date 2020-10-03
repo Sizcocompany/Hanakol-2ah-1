@@ -7,6 +7,7 @@ public class Meals {
     private String ImageURL;
     private Float MealRate;
     private String mealOwner;
+    private String mealSender;
 
     public Meals() {
     }
@@ -19,9 +20,8 @@ public class Meals {
         ImageURL = imageURL;
         MealRate = mealRate;
         this.mealOwner = mealOwner;
-
-
     }
+
 
     public String getMealName() {
         return MealName;
@@ -70,5 +70,14 @@ public class Meals {
     public void setMealOwner(String mealOwner) {
         this.mealOwner = mealOwner;
     }
+
+    public String getMealSender() {
+        return mealSender;
+    }
+
+    public void setMealSender(String mealSender) {
+        this.mealSender = mealSender;
+    }
+
 
 }

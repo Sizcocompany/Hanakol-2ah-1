@@ -1,8 +1,11 @@
 package com.example.hanakol_2ah.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -17,11 +20,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder> {
-    private OnItemClickListener listener;
+import java.util.ArrayList;
+import java.util.List;
 
-    public MealAdapter(@NonNull FirestoreRecyclerOptions<Meals> options) {
+public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder> implements Filterable {
+    private OnItemClickListener listener;
+    private List<Meals> mealsListFiltered;
+    private List<Meals> mealsList;
+    private Context context;
+
+
+    public MealAdapter(Context context, @NonNull FirestoreRecyclerOptions<Meals> options) {
         super(options);
+        this.context = context;
     }
 
     @Override
@@ -30,7 +41,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         holder.ingredients_item_recycler.setText(meals.getDescription());
         holder.steps_item_recycler.setText(meals.getSteps());
         holder.meal_rating_Bar.setRating(meals.getMealRate());
-        holder.owner_name_item_recycler.setText("Created by: "+meals.getMealOwner());
+        holder.owner_name_item_recycler.setText("Created by: " + meals.getMealOwner());
         Picasso.get().load(meals.getImageURL()).into(holder.mealImageView);
     }
 
@@ -46,8 +57,40 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    mealsListFiltered = mealsList;
+                } else {
+                    List<Meals> filteredList = new ArrayList<>();
+                    for (Meals meals : mealsList) {
+                        if (meals.getMealName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(meals);
+                        }
+                    }
+                    mealsListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mealsListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mealsListFiltered = (ArrayList<Meals>) filterResults.values;
+
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     class NoteHolder extends RecyclerView.ViewHolder {
-        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler ,owner_name_item_recycler ;
+        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler, owner_name_item_recycler;
         private ImageView mealImageView;
         private RatingBar meal_rating_Bar;
 

@@ -1,39 +1,38 @@
 package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.fragments.ListMealsFragmentContainer;
+import com.example.hanakol_2ah.fragments.SearchFragment;
 import com.example.hanakol_2ah.user_interface.FragmentSideMenu;
 import com.example.hanakol_2ah.user_interface.ToolBarActivity;
 import com.facebook.AccessToken;
 
-import java.util.Locale;
 
-
-public class HomeActivity extends ToolBarActivity {
+public class HomeActivity extends ToolBarActivity implements TextView.OnEditorActionListener {
     ListMealsFragmentContainer fragment;
+    public EditText search_txt;
     public static TextView login_txt_btn;
     private Boolean Visablilety;
     private Toolbar toolbar;
-//toolbar
-    private ImageView ic_menu;
-
-
+    //toolbar
+    private ImageView ic_menu ;
+    private SearchView open_search_fragment_txt;
 
 
     @Override
@@ -49,8 +48,9 @@ public class HomeActivity extends ToolBarActivity {
         final CardView dinnerCardView = findViewById(R.id.dinnerLayoutClick);
         final CardView dessertsCardView = findViewById(R.id.dessertsLayoutClick);
         final CardView juicesCardView = findViewById(R.id.juicesLayoutClick);
-        final CardView snackesCardView = findViewById(R.id.snackesLayoutClick);
+        final CardView favoritesCardView = findViewById(R.id.favoritesLayoutClick);
         final View relativeLayout = findViewById(R.id.fragment_home_layout);
+//        search_txt = findViewById(R.id.search_text);
         login_txt_btn = findViewById(R.id.login_txt_btn);
         toolbar.setVisibility(View.VISIBLE);
 
@@ -78,6 +78,10 @@ public class HomeActivity extends ToolBarActivity {
         onClickCardviews(breackfastCardView, "breakfast");
         onClickCardviews(launchCardView, "lunch");
         onClickCardviews(dinnerCardView, "dinner");
+        onClickCardviews(favoritesCardView, "favorites");
+        onClickCardviews(juicesCardView, "juices");
+        onClickCardviews(dessertsCardView, "desserts");
+
 
         login_txt_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +90,17 @@ public class HomeActivity extends ToolBarActivity {
                 startActivity(intent);
             }
         });
+
+//        search_txt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                boolean handled = false;
+//                if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                    handled = true;
+//                }
+//                return handled;
+//            }
+//        });
 
         TV_add_new_meal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +122,36 @@ public class HomeActivity extends ToolBarActivity {
 
             }
         });
+        open_search_fragment_txt = findViewById(R.id.search_view);
 
+
+        open_search_fragment_txt.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SearchFragment searchFragment = new SearchFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_up);
+                transaction.replace(R.id.activity_home_container, searchFragment);
+                transaction.commit();
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                SearchFragment searchFragment = new SearchFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_out_up, R.anim.slide_out_up);
+                transaction.replace(R.id.search_fragment_container, searchFragment);
+                transaction.commit();
+                return false;
+            }
+        });
+
+
+    }
+
+    private void handleSearchText() {
 
 
     }
@@ -129,23 +173,29 @@ public class HomeActivity extends ToolBarActivity {
 
     }
 
-//    public void invisibleRelativeLayout() {
-//        View relativeLayout = findViewById(R.id.fragment_home_layout);
-//        relativeLayout.setVisibility(View.INVISIBLE);
-//    }
-//
-//    public void removeLoginText(Boolean aBoolean) {
-//        if (aBoolean == false) {
-//            this.login_txt_btn.setVisibility(View.INVISIBLE);
-//        }
-
-//    }
 
     public boolean isLoggedIn() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;
     }
 
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        return false;
     }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+}
+
+
+
+
+
+
+
 
 
