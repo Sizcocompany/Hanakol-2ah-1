@@ -6,9 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -33,8 +31,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     private Toolbar toolbar;
     //toolbar
     private ImageView ic_menu;
-    private SearchView open_search_fragment_txt;
-    MealAdapter mealAdapter;
     SearchFragment searchFragment;
 
     private CardView open_search_fragment_card_view;
@@ -59,8 +55,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         final CardView dessertsCardView = findViewById(R.id.dessertsLayoutClick);
         final CardView juicesCardView = findViewById(R.id.juicesLayoutClick);
         final CardView favoritesCardView = findViewById(R.id.favoritesLayoutClick);
-        final View relativeLayout = findViewById(R.id.fragment_home_layout);
-//        search_txt = findViewById(R.id.search_text);
         login_txt_btn = findViewById(R.id.login_txt_btn);
         toolbar.setVisibility(View.VISIBLE);
         open_search_fragment_card_view = findViewById(R.id.open_search_fragment);
@@ -105,16 +99,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
             }
         });
 
-//        search_txt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                boolean handled = false;
-//                if (actionId == EditorInfo.IME_ACTION_DONE) {
-//                    handled = true;
-//                }
-//                return handled;
-//            }
-//        });
 
         TV_add_new_meal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,28 +120,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
             }
         });
-//        open_search_fragment_txt = findViewById(R.id.search_view);
-//
-//        open_search_fragment_txt.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                SearchFragment fragmentSideMenu = new SearchFragment();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.setCustomAnimations(R.anim.slide_out_up, R.anim.slide_out_up);
-//                transaction.add(R.id.search_fragment_container, fragmentSideMenu);
-////                setUpRecyclerView();
-//                transaction.commit();
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String query) {
-//
-//                return false;
-//            }
-//
-//
-//        });
+
 
         open_search_fragment_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,12 +132,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
                 transaction.commit();
             }
         });
-
-    }
-
-
-    private void handleSearchText() {
-
 
     }
 
@@ -198,35 +155,9 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
     }
 
-//    public void onClickFavoriteCardviews(CardView cardView, final String string , final int MEAL_FAVORITES_CONDITION) {
-//        cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fragment = new ListMealsFragmentContainer(string);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("MEAL_FAVORITES_CONDITION" , MEAL_FAVORITES_CONDITION);
-//                FragmentTransaction(fragment, bundle);
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.activity_home_container, fragment);
-//                transaction.commit();
-//
-//
-//            }
-//        });
-
-
-//    }
-
-
     @Override
     protected void onStart() {
         super.onStart();
-//        if (open_search_fragment_txt != null){
-//            Toast.makeText(this, "not null", Toast.LENGTH_LONG).show();
-//        }
-//        else {
-//            Toast.makeText(this, "null", Toast.LENGTH_LONG).show();
-//        }
     }
 
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {

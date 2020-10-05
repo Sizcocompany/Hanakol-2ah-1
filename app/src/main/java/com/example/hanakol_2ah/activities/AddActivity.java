@@ -232,8 +232,6 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
                 // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
             } else {
                 mUsername = mFirebaseUser.getEmail();
 

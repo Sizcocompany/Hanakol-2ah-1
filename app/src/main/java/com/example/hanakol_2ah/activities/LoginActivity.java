@@ -282,164 +282,165 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-        // ziad
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-            super.onActivityResult(requestCode, resultCode, data);
 
-            // islam
+    // ziad
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == GOOGLE_SIGN_IN_CODE) {
+        // islam
 
-                Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+        if (requestCode == GOOGLE_SIGN_IN_CODE) {
 
-                try {
-                    GoogleSignInAccount signInacc = signInTask.getResult(ApiException.class);
+            Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-                    AuthCredential authCredential = GoogleAuthProvider.getCredential(signInacc.getIdToken(), null);
+            try {
+                GoogleSignInAccount signInacc = signInTask.getResult(ApiException.class);
 
-                    firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                AuthCredential authCredential = GoogleAuthProvider.getCredential(signInacc.getIdToken(), null);
 
-                            Toast.makeText(getApplicationContext(), "Signed In successfully ", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Signed In successfully ", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        updateUI(user);
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
-                        }
-                    });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-                    Log.d(TAG, e.toString());
-                }
+                    }
+                });
+
+            } catch (ApiException e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
             }
         }
+    }
 
-        //ziad
-        @Override
-        protected void onStart () {
-            super.onStart();
-            // Check if user is signed in (non-null) and update UI accordingly.
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            updateUI(firebaseAuth.getCurrentUser());
+    //ziad
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        updateUI(firebaseAuth.getCurrentUser());
 //        facebookAuthenticationClass.updateUI(currentUser);
-            firebaseAuth.addAuthStateListener(authStateListener);
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    //ziad
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (authStateListener != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
         }
-
-        //ziad
-        @Override
-        protected void onStop () {
-            super.onStop();
-            if (authStateListener != null) {
-                firebaseAuth.removeAuthStateListener(authStateListener);
-            }
-        }
+    }
 
 
-        private void updateUI (FirebaseUser user){
+    private void updateUI(FirebaseUser user) {
 
 
-            if (user != null) {
+        if (user != null) {
 //            info.setText(user.getDisplayName());
-                if (user.getPhotoUrl() != null) {
-                    String photoUrl = user.getPhotoUrl().toString();
-                    photoUrl = photoUrl + "?type=large";
-                    Picasso.get().load(photoUrl).into(profile_picture);
+            if (user.getPhotoUrl() != null) {
+                String photoUrl = user.getPhotoUrl().toString();
+                photoUrl = photoUrl + "?type=large";
+                Picasso.get().load(photoUrl).into(profile_picture);
 //                login_txt_btn.setText("Hi! "+user.getDisplayName());
 //                login_txt_btn.setClickable(false);
 
 
-                }
-            } else {
-//            info.setText(" ");
-                profile_picture.setImageResource(R.drawable.com_facebook_auth_dialog_background);
             }
+        } else {
+//            info.setText(" ");
+            profile_picture.setImageResource(R.drawable.com_facebook_auth_dialog_background);
+        }
 
 
-            // logout.setVisibility( View.VISIBLE );
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-            if (account != null) {
+        // logout.setVisibility( View.VISIBLE );
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if (account != null) {
 
-                String personName = account.getDisplayName();
-                String personGivenName = account.getGivenName();
-                String personFamilyName = account.getFamilyName();
-                String personEmail = account.getEmail();
-                String personId = account.getId();
-                Uri personPhoto = account.getPhotoUrl();
+            String personName = account.getDisplayName();
+            String personGivenName = account.getGivenName();
+            String personFamilyName = account.getFamilyName();
+            String personEmail = account.getEmail();
+            String personId = account.getId();
+            Uri personPhoto = account.getPhotoUrl();
 //            login_txt_btn.setText("Hi! "+personName);
 //            login_txt_btn.setClickable(false);
-                Toast.makeText(LoginActivity.this, personName + personEmail, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, personName + personEmail, Toast.LENGTH_SHORT).show();
 
-            }
         }
+    }
 
 
 //    facebook
 
-        private void handleFacebookToken (AccessToken token){
-            Log.d(TAG, "handleFacebookToken" + token);
-            AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-            firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "sign in with credential:successful");
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        updateUI(user);
-                    } else {
-                        Log.d(TAG, "sign in with credential:failure");
-                        Toast.makeText(LoginActivity.this, "Authentication failure", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-
-        }
-
-        private String onGetOwnerName (FirebaseAuth firebaseAuth, GoogleApiClient googleApiClient){
-            FirebaseAuth mFirebaseAuth2 = firebaseAuth;
-            FirebaseUser mFirebaseUser;
-            GoogleApiClient mGoogleApiClient = googleApiClient;
-            String mUsername = "UserName";
-            try {
-                mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
-                        .addApi(Auth.GOOGLE_SIGN_IN_API)
-                        .build();
-
-                mFirebaseAuth2 = FirebaseAuth.getInstance();
-                mFirebaseUser = mFirebaseAuth2.getCurrentUser();
-                if (mFirebaseUser == null) {
-                    mUsername = "Dear chief";
-                    // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
+    private void handleFacebookToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookToken" + token);
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "sign in with credential:successful");
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    updateUI(user);
                 } else {
-                    mUsername = mFirebaseUser.getDisplayName();
-
-                }
-            } catch (Exception e) {
-                mFirebaseAuth2 = FirebaseAuth.getInstance();
-                mFirebaseUser = mFirebaseAuth2.getCurrentUser();
-                if (mFirebaseUser != null) {
-                    mUsername = mFirebaseUser.getDisplayName();
-
+                    Log.d(TAG, "sign in with credential:failure");
+                    Toast.makeText(LoginActivity.this, "Authentication failure", Toast.LENGTH_LONG).show();
                 }
             }
-
-            return mUsername;
-        }
-
+        });
 
     }
+
+    private String onGetOwnerName(FirebaseAuth firebaseAuth, GoogleApiClient googleApiClient) {
+        FirebaseAuth mFirebaseAuth2 = firebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient = googleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser == null) {
+                mUsername = "Dear chief";
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        }
+
+        return mUsername;
+    }
+
+
+}
 
 
 //package com.example.hanakol_2ah.activities;
