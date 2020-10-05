@@ -35,6 +35,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
     testImplementation 'org.testng:testng:6.9.6'
+    implementation 'com.android.support:appcompat-v7:29.0.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:29.0.0'

@@ -1,6 +1,8 @@
 package com.example.hanakol_2ah.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder> implements Filterable {
+public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder>   {
     private OnItemClickListener listener;
     private List<Meals> mealsListFiltered;
     private List<Meals> mealsList;
@@ -35,14 +37,17 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         this.context = context;
     }
 
+
     @Override
     protected void onBindViewHolder(@NonNull NoteHolder holder, int position, @NonNull Meals meals) {
         holder.name_item_recycler.setText(meals.getMealName());
         holder.ingredients_item_recycler.setText(meals.getDescription());
         holder.steps_item_recycler.setText(meals.getSteps());
         holder.meal_rating_Bar.setRating(meals.getMealRate());
-        holder.owner_name_item_recycler.setText("Created by: " + meals.getMealOwner());
+        holder.owner_name_item_recycler.setText( meals.getMealOwner());
+        holder.meal_creation_date.setText(meals.getMealCreationDate());
         Picasso.get().load(meals.getImageURL()).into(holder.mealImageView);
+
     }
 
     @NonNull
@@ -57,41 +62,10 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    mealsListFiltered = mealsList;
-                } else {
-                    List<Meals> filteredList = new ArrayList<>();
-                    for (Meals meals : mealsList) {
-                        if (meals.getMealName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(meals);
-                        }
-                    }
-                    mealsListFiltered = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = mealsListFiltered;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mealsListFiltered = (ArrayList<Meals>) filterResults.values;
-
-                notifyDataSetChanged();
-            }
-        };
-    }
 
     class NoteHolder extends RecyclerView.ViewHolder {
-        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler, owner_name_item_recycler;
-        private ImageView mealImageView;
+        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler, owner_name_item_recycler , meal_creation_date;
+        private ImageView mealImageView ,FAVORITES_ICON;
         private RatingBar meal_rating_Bar;
 
         public NoteHolder(View itemView) {
@@ -103,6 +77,10 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
             steps_item_recycler = itemView.findViewById(R.id.meal_steps_item_recycler);
             meal_rating_Bar = itemView.findViewById(R.id.meal_rating_Bar);
             owner_name_item_recycler = itemView.findViewById(R.id.meal_owner_name_item_recycler);
+            meal_creation_date = itemView.findViewById(R.id.upload_date_txt);
+            FAVORITES_ICON = itemView.findViewById(R.id.favorites_icon);
+
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +94,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
             });
         }
     }
+
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);

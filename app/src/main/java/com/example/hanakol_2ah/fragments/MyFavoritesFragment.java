@@ -26,7 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MyFavorites extends Fragment {
+public class MyFavoritesFragment extends Fragment {
 
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -35,6 +35,10 @@ public class MyFavorites extends Fragment {
     private View view;
     private SelectedItemFragment selectedItemFragment;
     private String senderEmail;
+    public static ImageView favoriteImage_favorite_fragment;
+    private final int  MEAL_FAVORITES_CONDITION =1 ;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
 
 
 
@@ -43,19 +47,28 @@ public class MyFavorites extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_meals_list_container, container, false);
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
-        this.view = view;
 
+
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+
+//        favoriteImage_favorite_fragment =view.findViewById(R.id.favorites_icon);
+
+        this.view = view;
 
         senderEmail = onGetMealSenderEmail();
         selectedItemFragment = new SelectedItemFragment();
 //        onGetbreakfastList(view , "Breakfast");
-        setUpRecyclerView(view, child, senderEmail);
-
+        if(mFirebaseUser!=null) {
+            setUpRecyclerView(view, child, senderEmail);
+        }
 
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(MyFavorites.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove(MyFavoritesFragment.this).commitAllowingStateLoss();
             }
         });
 
@@ -90,7 +103,7 @@ public class MyFavorites extends Fragment {
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
                 bundle.putString("MEAL_OWNER_EMAIL",  meal.getMealOwner());
-
+                bundle.putString("MEAL_CREATION_DATE" , meal.getMealCreationDate());
                 FragmentTransaction(selectedItemFragment, bundle);
 
             }
@@ -151,5 +164,19 @@ public class MyFavorites extends Fragment {
 
         return mUsername;
     }
+
+//    private void handleFavoriteIcon(View view) {
+//        MyFavoritesFragment myFavorites = new MyFavoritesFragment();
+//        if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_icon)) {
+//            favorites_icon.setImageResource(R.drawable.ic_favorite_done);
+//            myFavorites.favoriteImage_favorite_fragment = view.findViewById(R.id.favorites_icon);
+//            myFavorites.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_done);
+//        } else if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_done)) {
+//            favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
+//            // deleteFromFavirotes();
+//
+//        }
+//
+//    }
 
 }

@@ -22,7 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MyMeals extends Fragment {
+public class MyMealsFragment extends Fragment {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
@@ -31,7 +31,7 @@ public class MyMeals extends Fragment {
     private SelectedItemFragment selectedItemFragment;
     private String userName;
 
-    public MyMeals(String child, String userName  ) {
+    public MyMealsFragment(String child, String userName  ) {
         this.child = child; this.userName = userName;
     }
 
@@ -52,7 +52,7 @@ public class MyMeals extends Fragment {
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(MyMeals.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove(MyMealsFragment.this).commitAllowingStateLoss();
             }
         });
 
@@ -87,6 +87,7 @@ public class MyMeals extends Fragment {
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
                 bundle.putString("MEAL_OWNER_EMAIL",  meal.getMealOwner());
+                bundle.putString("MEAL_CREATED_DATE" ,meal.getMealCreationDate());
 
                 FragmentTransaction(selectedItemFragment, bundle);
 

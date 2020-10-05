@@ -8,20 +8,29 @@ public class Meals {
     private Float MealRate;
     private String mealOwner;
     private String mealSender;
+    private String mealCreationDate;
 
     public Meals() {
     }
 
 
-    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner) {
+    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate ) {
         MealName = mealName;
         Description = description;
         Steps = steps;
         ImageURL = imageURL;
         MealRate = mealRate;
         this.mealOwner = mealOwner;
+        this.mealCreationDate = mealCreationDate;
     }
 
+    public String getMealCreationDate() {
+        return mealCreationDate;
+    }
+
+    public void setMealCreationDate(String mealCreationDate) {
+        this.mealCreationDate = mealCreationDate;
+    }
 
     public String getMealName() {
         return MealName;

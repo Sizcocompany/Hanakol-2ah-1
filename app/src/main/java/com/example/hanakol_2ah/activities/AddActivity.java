@@ -36,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private String child;
     private String URI;
     private int REQUEST_CODE_IMAGE = 101;
+    private int favorite_CONDITION = 0;
 
 
     DatabaseReference databaseRef;
@@ -79,6 +81,12 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         progressBar.setVisibility(View.GONE);
         storageRef = FirebaseStorage.getInstance().getReference().child("MealImages");
 
+        Calendar calendar = Calendar.getInstance();
+        final String Day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        final String Month= String.valueOf(calendar.get(Calendar.MONTH));
+        final String year= String.valueOf(calendar.get(Calendar.YEAR));
+
+
         mealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,10 +104,11 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                final String mealCreationDate =Day+"/" + Month+"/" + year;
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"), child);
+                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"),  mealCreationDate,child  , favorite_CONDITION);
                 }
 
             }
@@ -130,7 +139,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-    private void uploadImage(final FirebaseFirestore db, final String mealName, final String mealDescription, final String mealSteps, final Float mealRate, final String child) {
+    private void uploadImage(final FirebaseFirestore db, final String mealName, final String mealDescription, final String mealSteps, final Float mealRate
+            , final String mealCreationDate, final String child , final int favorite_CONDITION) {
 
 
         tvProgress.setVisibility(View.VISIBLE);
@@ -150,8 +160,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("Steps", mealSteps);
                         hashMap.put("ImageURL", uri.toString());
                         hashMap.put("MealRate", mealRate);
+                        hashMap.put("MealCreationdate",mealCreationDate);
 
-                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName());
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName() , mealCreationDate);
+
                         CollectionReference notebookRef = db.collection(child);
 
                         notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {

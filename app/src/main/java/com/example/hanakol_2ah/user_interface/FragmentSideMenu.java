@@ -1,6 +1,5 @@
 package com.example.hanakol_2ah.user_interface;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.fragments.MyMeals;
+import com.example.hanakol_2ah.fragments.MyMealsFragment;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -126,9 +125,9 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
                 
-                MyMeals myMeals = new MyMeals("breakfast" , mUsername );
+                MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.activity_home_container, myMeals);
+                transaction.replace(R.id.activity_home_container, myMealsFragment);
                 transaction.commit();
             }
         });

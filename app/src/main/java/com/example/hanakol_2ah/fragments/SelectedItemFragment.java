@@ -37,7 +37,7 @@ public class SelectedItemFragment extends Fragment {
 //    i changed the name of that fragment from single view fragment into selected item fragment to be more detailed;
 
     private ImageView selected_item_photo, favorites_icon, share_icon;
-    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name;
+    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date;
     private RatingBar meal_rating_Bar;
     private List<ListMealsFragmentContainer> fragmentList;
     private String imageUri, child;
@@ -46,8 +46,9 @@ public class SelectedItemFragment extends Fragment {
     public static final String EXTRA_STEPS = "com.examples.hanakol-2ah.EXTRA_STEPS";
     public static final String EXTRA_DESCRIPTION = "com.examples.hanakol-2ah.EXTRA_DESCRIPTION";
     public static final String EXTRA_IMAGE_URL = "com.examples.hanakol-2ah.EXTRA_IMAGE_URL";
-    private MyFavorites myFavorites;
-
+    private MyFavoritesFragment myFavoritesFragment;
+    private View view;
+    private int MEAL_FAVORITES_CONDITION;
 
     DatabaseReference databaseRef;
     StorageReference storageRef;
@@ -63,7 +64,7 @@ public class SelectedItemFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_selected_item, container, false);
-
+        this.view = view;
         selected_item_photo = view.findViewById(R.id.selected_item_image_iv);
         selected_item_name = view.findViewById(R.id.selected_item_name_tv);
         selected_item_ingredients = view.findViewById(R.id.selected_item_ingreadents_tv);
@@ -72,9 +73,10 @@ public class SelectedItemFragment extends Fragment {
         selected_item_owner_name = view.findViewById(R.id.selected_item_owner_name_tv);
         favorites_icon = view.findViewById(R.id.favorites_icon);
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
+        meal_creation_date = view.findViewById(R.id.upload_date_txt);
         share_icon = view.findViewById(R.id.share_icon);
 
-        myFavorites = new MyFavorites();
+        myFavoritesFragment = new MyFavoritesFragment();
 
 
         Bundle bundle = this.getArguments();
@@ -86,19 +88,32 @@ public class SelectedItemFragment extends Fragment {
             selected_item_steps.setText(bundle.getString("MEAL_STEP"));
             meal_rating_Bar.setRating(Float.parseFloat(bundle.getString("MEAL_RATE")));
             selected_item_owner_name.setText(bundle.getString("MEAL_OWNER_EMAIL"));
+            meal_creation_date.setText(bundle.getString("MEAL_CREATION_DATE"));
+            MEAL_FAVORITES_CONDITION = bundle.getInt("MEAL_FAVORITES_CONDITION");
             child = bundle.getString("CHILD");
 
         }
+
+
+        if (MEAL_FAVORITES_CONDITION == 0) {
+            favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
+        } else if (MEAL_FAVORITES_CONDITION == 1) {
+            favorites_icon.setImageResource(R.drawable.ic_favorite_done);
+        }
+
+
+
         favorites_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 if (selected_item_name != null) {
-
+                    handleFavoriteIcon(view);
 
                     addFavoritesItems(db, selected_item_name.getText().toString(), imageUri, selected_item_ingredients.getText().toString(), selected_item_steps.getText().toString()
-                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString());
+                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString(), meal_creation_date.getText().toString() , 1 );
+
                 }
 
 
@@ -125,24 +140,19 @@ public class SelectedItemFragment extends Fragment {
                     String shareBody = "Hey, I'm using Hanakol 2ah App* for sending awesome Meals \n \nDownload it now: https://play.google.com/store/apps/details?id=com.yourappurlhere";
                     sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                     //change the app package id as your wish for sharing content to the specific one, WhatsApp's package id is com.whatsapp, and for facebook is com.facebook.katana
-                   // sharingIntent.setPackage("com.whatsapp");
+                    // sharingIntent.setPackage("com.whatsapp");
                     startActivity(sharingIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
                     Intent sharingIntent1 = new Intent(Intent.ACTION_SEND);
                     sharingIntent1.setType("text/plain");
-                    String shareBody =  "Hey, I'm using Hanakol 2ah App* for sending awesome Meals  \n \nDownload it now: https://play.google.com/store/apps/details?id=com.yourappurlhere";
+                    String shareBody = "Hey, I'm using Hanakol 2ah App* for sending awesome Meals  \n \nDownload it now: https://play.google.com/store/apps/details?id=com.yourappurlhere";
                     String shareSubject = "Stickers Android App";
                     sharingIntent1.putExtra(Intent.EXTRA_TEXT, shareBody);
                     sharingIntent1.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
                     startActivity(Intent.createChooser(sharingIntent1, "Share with friends"));
                 }
 
-//
-//                Intent intent = new Intent(  );
-//                intent.setAction( Intent.ACTION_SEND );
-//                intent.setType( "text / plain" );
-//                intent.putExtra( "Data" , text.getText() );
-//                startActivity( intent.createChooser( intent , "Share Data" ) );
+
 
 
             }
@@ -150,6 +160,22 @@ public class SelectedItemFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void handleFavoriteIcon(View view) {
+        MyFavoritesFragment myFavoritesFragment = new MyFavoritesFragment();
+        myFavoritesFragment.favoriteImage_favorite_fragment = view.findViewById(R.id.favorites_icon);
+        if (myFavoritesFragment.favoriteImage_favorite_fragment.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_icon)) {
+            favorites_icon.setImageResource(R.drawable.ic_favorite_done);
+            myFavoritesFragment.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_done);
+
+        } else {
+            favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
+            myFavoritesFragment.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_icon);
+            // deleteFromFavirotes();
+
+        }
+
     }
 //    public void proceedWithBack() {
 //        if (fragmentList.size() > 1) {
@@ -187,7 +213,7 @@ public class SelectedItemFragment extends Fragment {
     }
 
 
-    private void addFavoritesItems(final FirebaseFirestore db, final String mealName, final String imageUri, final String mealDescription, final String mealSteps, final Float mealRate, final String mealOwnerName) {
+    private void addFavoritesItems(final FirebaseFirestore db, final String mealName, final String imageUri, final String mealDescription, final String mealSteps, final Float mealRate, final String mealOwnerName, final String mealDateCreation , final int favoriteCondition) {
 
 
         HashMap hashMap = new HashMap();
@@ -195,11 +221,12 @@ public class SelectedItemFragment extends Fragment {
         hashMap.put("Description", mealDescription);
         hashMap.put("Steps", mealSteps);
         hashMap.put("ImageURL", imageUri);
-        hashMap.put("MealOwnerName", removeWord(mealOwnerName, "Created by:"));
+        hashMap.put("MealOwnerName", mealOwnerName);
         hashMap.put("MealRate", mealRate);
         hashMap.put("MealSenderEmail", onGetMealSenderEmail());
+        hashMap.put("MealCreationDate", mealDateCreation);
 
-        Meals meals = new Meals(mealDescription, imageUri, mealName, mealRate, mealSteps, removeWord(mealOwnerName, "Created by:"));
+        Meals meals = new Meals(mealDescription, imageUri, mealName, mealRate, mealSteps, mealOwnerName, mealDateCreation);
         meals.setMealSender(onGetMealSenderEmail());
         CollectionReference notebookRef = db.collection("favorites");
 
@@ -210,7 +237,7 @@ public class SelectedItemFragment extends Fragment {
                 Toast.makeText(getActivity(), "Data Added successfully in your favorites ", Toast.LENGTH_LONG).show();
             }
         });
-//
+
     }
 
     private String onGetMealSenderEmail() {
@@ -246,6 +273,12 @@ public class SelectedItemFragment extends Fragment {
         return mUsername;
     }
 
+    private void FragmentTransaction(Fragment fragment, Bundle bundle) {
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        fragment.setArguments(bundle);
+    }
     public static String removeWord(String string, String word) {
 
         // Check if the word is present in string

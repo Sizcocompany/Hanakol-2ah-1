@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,13 +26,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class ListMealsFragmentContainer extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListMealsFragmentContainer extends Fragment implements AdapterView.OnItemSelectedListener {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
     private MealAdapter adapter;
     private View view;
+    private Spinner spinner;
     private SelectedItemFragment selectedItemFragment;
+    private int MEAL_SORTING_CONDITION;
+    private int MEAL_FAVORITES_CONDITION;
 
     public ListMealsFragmentContainer(String child) {
         this.child = child;
@@ -42,32 +52,66 @@ public class ListMealsFragmentContainer extends Fragment {
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
         this.view = view;
 
+        spinner = view.findViewById(R.id.spinner_sorting);
 
         selectedItemFragment = new SelectedItemFragment();
-//        onGetbreakfastList(view , "Breakfast");
-        setUpRecyclerView(view, child);
+        Bundle bundle = this.getArguments();
+        if (getArguments() != null) {
+            MEAL_FAVORITES_CONDITION = bundle.getInt("MEAL_FAVORITES_CONDITION");
+        }
+//        setUpRecyclerView(view, child);
 
 
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(ListMealsFragmentContainer.this).commitAllowingStateLoss();
+                getParentFragmentManager().beginTransaction().remove(ListMealsFragmentContainer.this).commitAllowingStateLoss();
             }
         });
+
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Sort A to Z");
+        categories.add("Sort Z to A");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
 
 
         return view;
     }
 
 
-    private void setUpRecyclerView(View v, final String child) {
+    private void setUpRecyclerView(View v, final String child ) {
 
         notebookRef = db.collection(child);
-        Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
-        FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
-                .setQuery(query, Meals.class)
-                .build();
-        adapter = new MealAdapter(getActivity().getApplicationContext(),options);
+        Query query;
+        if (MEAL_SORTING_CONDITION == 0) {
+            query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
+                    .setQuery(query, Meals.class)
+                    .build();
+            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
+
+        } else if (MEAL_SORTING_CONDITION == 1){
+            query = notebookRef.orderBy("mealName", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
+                    .setQuery(query, Meals.class)
+                    .build();
+            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
+
+        }
+//            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -85,7 +129,9 @@ public class ListMealsFragmentContainer extends Fragment {
                 bundle.putString("MEAL_STEP", meal.getSteps());
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL", "Created by: " + meal.getMealOwner());
+                bundle.putString("MEAL_OWNER_EMAIL", meal.getMealOwner());
+                bundle.putString("MEAL_CREATION_DATE", meal.getMealCreationDate());
+                bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
                 bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);
@@ -98,6 +144,7 @@ public class ListMealsFragmentContainer extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setUpRecyclerView(view, child);
         adapter.startListening();
     }
 
@@ -105,6 +152,11 @@ public class ListMealsFragmentContainer extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public boolean isFragmentAdded() {
@@ -121,5 +173,32 @@ public class ListMealsFragmentContainer extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         fragment.setArguments(bundle);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        String item = parent.getItemAtPosition(position).toString().toLowerCase();
+        switch (item) {
+            case "sort a to z":
+                this.MEAL_SORTING_CONDITION = 0;
+                break;
+            case "sort z to a":
+                this.MEAL_SORTING_CONDITION = 1;
+                break;
+            default:
+                this.MEAL_SORTING_CONDITION = 0;
+                break;
+
+        }
+//        this.MEAL_SORTING_CONDITION = MEAL_SORTING_CONDITION;
+        // Showing selected spinner item
+        onStart();
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

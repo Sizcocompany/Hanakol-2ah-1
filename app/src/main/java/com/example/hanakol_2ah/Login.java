@@ -1,104 +1,78 @@
-//package com.example.hanakol_2ah;
+import androidx.annotation.NonNull;
+//logIn.setOnClickListener(new View.OnClickListener(){
+//@Override
+//public void onClick(View v){
+//        String email=firebaseEmail.getText().toString().trim();
+//        String password=firebasePass.getText().toString().trim();
 //
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.ImageView;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-//import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
-//
-//import androidx.annotation.NonNull;
-//import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//public class Login extends AppCompatActivity {
-//
-//    ImageView logo;
-//    EditText user, password;
-//    Button signIn;
-//    TextView signUp;
-//
-//    private static final String TAG = "Login";
-//
-//    String email, pass;
-//
-//    private FirebaseAuth mAuth;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate( savedInstanceState );
-//        setContentView(R.layout.login_page);
-//        logo = findViewById(R.id.logo_imageView);
-//        user = findViewById(R.id.editTextTextPersonName);
-//        password = findViewById(R.id.editTextTextPassword);
-//        signIn = findViewById(R.id.button_sign_in);
-//        signUp = findViewById(R.id.textView_sign_up);
-//
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        mAuth.createUserWithEmailAndPassword(email, pass)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(Login.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                        }
-//
-//                        // ...
-//                    }
-//                });
-//
-//        mAuth.signInWithEmailAndPassword(email, pass)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                            Toast.makeText(Login.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                        }
-//
-//                        // ...
-//                    }
-//                });
+//        if(TextUtils.isEmpty(email)){
+//        firebaseEmail.setError("Email Field is Empty");
+//        return;
+//        }
+//        if(TextUtils.isEmpty(password)){
+//        firebasePass.setError("Password Field is Empty");
+//        return;
+//        }
+//        if(password.length()< 8){
+//        firebaseEmail.setError("Please enter 8 Characters or more");
+//        return;
+//        }
 //
 //
+//        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+//@Override
+//public void onComplete(@NonNull Task<AuthResult> task){
+//        if(task.isSuccessful()){
+//        Toast.makeText(LoginActivity.this,"Successful LogIn",Toast.LENGTH_LONG).show();
+//        startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+//        }else{
+//        Toast.makeText(LoginActivity.this,"ERROR"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
 //
-//    }
+//        }
+//        }
+//        });
+//        }
+//        });
+//        signUp.setOnClickListener(new View.OnClickListener(){
+//@Override
+//public void onClick(View v){
+//        startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+//        }
+//        });
 //
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-//    }
+//        forgetPass.setOnClickListener(new View.OnClickListener(){
+//@Override
+//public void onClick(View v){
+//final EditText resetMail=new EditText(v.getContext());
+//        AlertDialog.Builder passReset=new AlertDialog.Builder(v.getContext());
+//        passReset.setTitle("Reset Password !!");
+//        passReset.setMessage("Enter your Email to Recieve the Reset Link");
+//        passReset.setView(resetMail);
+//
+//        passReset.setPositiveButton("Yes",new DialogInterface.OnClickListener(){
+//@Override
+//public void onClick(DialogInterface dialog,int which){
+//
+//        String mail=resetMail.getText().toString();
+//        firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>(){
+//@Override
+//public void onSuccess(Void aVoid){
+//        Toast.makeText(LoginActivity.this,"Reset Email was Sent",Toast.LENGTH_LONG).show();
+//        }
+//        }).addOnFailureListener(new OnFailureListener(){
+//@Override
+//public void onFailure(@NonNull Exception e){
+//        Toast.makeText(LoginActivity.this,"ERROR !!"+e.getMessage(),Toast.LENGTH_LONG).show();
+//        }
+//        });
+//
+//        }
+//        });
+//        passReset.setPositiveButton("No",new DialogInterface.OnClickListener(){
+//@Override
+//public void onClick(DialogInterface dialog,int which){
 //
 //
-//    private void updateUI(FirebaseUser currentUser) {
-//    }
-//
-//}
+//        }
+//        });
+//        passReset.create().show();
