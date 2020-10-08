@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "964983433326",
+    "firebase_url": "https://hanakol-2ah-50f18.firebaseio.com",
+    "project_id": "hanakol-2ah-50f18",
+    "storage_bucket": "hanakol-2ah-50f18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964983433326:android:8858c17822ac958c66de7f",
+        "android_client_info": {
+          "package_name": "com.example.hanakol_2ah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964983433326-gpi6krolus380kq71bsdoemrg2402ra2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hanakol_2ah",
+            "certificate_hash": "132e429ff373e1e36f350e2d10da524f2e81b357"
+          }
+        },
+        {
+          "client_id": "964983433326-4etlrs7vemv74bc3mnatu72lnhq2ce54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSvTbMhuVum2TAF_R-GMYwWKJlIHjtKk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964983433326-4etlrs7vemv74bc3mnatu72lnhq2ce54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
