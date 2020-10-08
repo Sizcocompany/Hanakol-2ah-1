@@ -6,19 +6,30 @@ public class Meals {
     private String Steps;
     private String ImageURL;
     private Float MealRate;
+    private String mealOwner;
+    private String mealSender;
+    private String mealCreationDate;
 
     public Meals() {
     }
 
 
-    public Meals(  String description,String imageURL,String mealName, Float mealRate, String steps) {
+    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate ) {
         MealName = mealName;
         Description = description;
         Steps = steps;
         ImageURL = imageURL;
         MealRate = mealRate;
+        this.mealOwner = mealOwner;
+        this.mealCreationDate = mealCreationDate;
+    }
 
+    public String getMealCreationDate() {
+        return mealCreationDate;
+    }
 
+    public void setMealCreationDate(String mealCreationDate) {
+        this.mealCreationDate = mealCreationDate;
     }
 
     public String getMealName() {
@@ -60,5 +71,22 @@ public class Meals {
     public void setMealRate(Float mealRate) {
         MealRate = mealRate;
     }
+
+    public String getMealOwner() {
+        return mealOwner;
+    }
+
+    public void setMealOwner(String mealOwner) {
+        this.mealOwner = mealOwner;
+    }
+
+    public String getMealSender() {
+        return mealSender;
+    }
+
+    public void setMealSender(String mealSender) {
+        this.mealSender = mealSender;
+    }
+
 
 }

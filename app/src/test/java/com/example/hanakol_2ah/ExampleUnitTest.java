@@ -1,6 +1,7 @@
 package com.example.hanakol_2ah;
 
 import org.junit.Test;
+import org.testng.annotations.AfterTest;
 
 import static org.junit.Assert.*;
 

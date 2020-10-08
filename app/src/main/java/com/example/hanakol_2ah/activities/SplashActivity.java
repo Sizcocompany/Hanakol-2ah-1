@@ -1,17 +1,25 @@
 package com.example.hanakol_2ah.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hanakol_2ah.R;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+
+import static com.example.hanakol_2ah.activities.HomeActivity.login_txt_btn;
 
 //public class SplashActivity extends AppCompatActivity {
 //
@@ -87,4 +95,9 @@ public class SplashActivity extends AppCompatActivity {
         Animation text_animate = AnimationUtils.loadAnimation(this,R.anim.my_splash_text_animation);
         welcome_tv.startAnimation(text_animate);
     }
+
+
+
+
+
 }

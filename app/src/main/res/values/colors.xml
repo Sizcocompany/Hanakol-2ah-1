@@ -2,14 +2,14 @@
 
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#448AFF</color>
     <color name="colorNull">#00000000</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorWhiteDark">#DBDBDB</color>
-    <color name="colorPrimaryLight">#C5CAE9</color>
+    <color name="colorPrimaryLight">#448AFF</color>
     <color name="colorBackground">#F4F7F7</color>
     <color name="signupColor">#066e8a</color>
 </resources>

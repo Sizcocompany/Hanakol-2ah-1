@@ -19,15 +19,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.models.Meals;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,21 +48,27 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private Button uploadbtn;
     private ProgressBar progressBar;
     private Spinner spinner;
-    private TextView test;
     private String child;
+    private String URI;
     private int REQUEST_CODE_IMAGE = 101;
+    private int favorite_CONDITION = 0;
+
 
     DatabaseReference databaseRef;
     StorageReference storageRef;
+    private CollectionReference notebookRef;
+
 
     Uri imageurl;
     Boolean isImageAdded = false;
+
+
+    private ListenerRegistration noteListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-
         mealImage = findViewById(R.id.logo_Image);
         name = findViewById(R.id.et_eatname);
         description = findViewById(R.id.et_description);
@@ -62,13 +77,15 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         progressBar = findViewById(R.id.progress_bar);
         uploadbtn = findViewById(R.id.upload_butn);
         spinner = (Spinner) findViewById(R.id.spinner);
-//        final RatingBar add_rate_ratingbar = findViewById(R.id.add_rate_ratingbar);
         tvProgress.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
-//        add_rate_ratingbar.setVisibility(View.INVISIBLE);
-
-//        databaseRef = FirebaseDatabase.getInstance().getReference().child("Meal").child("lunch");
         storageRef = FirebaseStorage.getInstance().getReference().child("MealImages");
+
+        Calendar calendar = Calendar.getInstance();
+        final String Day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        final String Month= String.valueOf(calendar.get(Calendar.MONTH));
+        final String year= String.valueOf(calendar.get(Calendar.YEAR));
+
 
         mealImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,11 +103,12 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 final String meatName = name.getText().toString();
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
-//                final Float mealRate = add_rate_ratingbar.getRating();
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                final String mealCreationDate =Day+"/" + Month+"/" + year;
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadImage(meatName, meatDescription, meatSteps , Float.parseFloat("0.00") , child);
+                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"),  mealCreationDate,child  , favorite_CONDITION);
                 }
 
             }
@@ -105,6 +123,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         categories.add("Breakfast");
         categories.add("Lunch");
         categories.add("Dinner");
+        categories.add("Desserts");
+        categories.add("Juices");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -116,16 +136,12 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         spinner.setAdapter(dataAdapter);
 
 
-
-
-
-
-
-
     }
 
 
-    private void uploadImage(final String mealName, final String meatDescription, final String mealSteps , final Float mealRate ,final String child) {
+    private void uploadImage(final FirebaseFirestore db, final String mealName, final String mealDescription, final String mealSteps, final Float mealRate
+            , final String mealCreationDate, final String child , final int favorite_CONDITION) {
+
 
         tvProgress.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -139,21 +155,25 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                     @Override
                     public void onSuccess(Uri uri) {
                         HashMap hashMap = new HashMap();
-
                         hashMap.put("MealName", mealName);
-                        hashMap.put("Description", meatDescription);
+                        hashMap.put("Description", mealDescription);
                         hashMap.put("Steps", mealSteps);
                         hashMap.put("ImageURL", uri.toString());
-                        hashMap.put("MealRate" , mealRate);
+                        hashMap.put("MealRate", mealRate);
+                        hashMap.put("MealCreationdate",mealCreationDate);
 
-                        databaseRef.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName() , mealCreationDate);
+
+                        CollectionReference notebookRef = db.collection(child);
+
+                        notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                 Toast.makeText(AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG).show();
                             }
                         });
+//
                     }
                 });
 
@@ -167,6 +187,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 tvProgress.setText(progress + " %");
             }
         });
+
     }
 
     @Override
@@ -195,4 +216,36 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+    private String onGetOwnerName() {
+        FirebaseAuth mFirebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser == null) {
+                // Not signed in, launch the Sign In activity
+            } else {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        }
+
+        return mUsername;
+    }
+
 }

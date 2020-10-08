@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/cardSearch"
     android:layout_margin="10dp">
 
     <androidx.cardview.widget.CardView
@@ -16,8 +15,8 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@android:color/holo_blue_light"
+        app:cardCornerRadius="10dp"
         app:cardElevation="1dp">
 
         <FrameLayout
@@ -29,13 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <RatingBar
-                    android:id="@+id/meal_rating_Bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:numStars="5"
-                    />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -48,42 +41,84 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="3dp"
                         app:srcCompat="@drawable/dinner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="5dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/meal_name_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="TextView"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="right"
                             android:hint="Error"
+                            android:text="TextView"
                             android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <RatingBar
+                            android:id="@+id/meal_rating_Bar"
+                            style="@style/customRatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:isIndicator="true"
+                            android:numStars="5" />
+
+                        <TextView
+                            android:id="@+id/meal_owner_name_item_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:hint="Error"
+                            android:text="TextView"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/meal_steps_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="TextView"
                             android:hint="Error"
+                            android:text="TextView"
                             android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/upload_date_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="date"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/favorites_icon"
+                            android:layout_width="42dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:src="@drawable/ic_favorite_icon" />
 
                         <TextView
                             android:id="@+id/meal_ingredients_item_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="TextView"
                             android:hint="Error"
+                            android:text="TextView"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="invisible" />
 
 
                     </LinearLayout>

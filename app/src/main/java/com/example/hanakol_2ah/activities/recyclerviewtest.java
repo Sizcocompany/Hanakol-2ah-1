@@ -1,77 +1,112 @@
-//package com.example.hanakol_2ah;
+//import androidx.annotation.NonNull;logIn.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View v) {
+//        String email = firebaseEmail.getText().toString().trim();
+//        String password = firebasePass.getText().toString().trim();
 //
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.EditText;
+//        if (TextUtils.isEmpty(email)){
+//        firebaseEmail.setError("Email Field is Empty");
+//        return;
+//        }
+//        if (TextUtils.isEmpty(password)){
+//        firebasePass.setError("Password Field is Empty");
+//        return;
+//        }
+//        if (password.length() < 8){
+//        firebaseEmail.setError("Please enter 8 Characters or more");
+//        return;
+//        }
 //
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.recyclerview.widget.LinearLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
 //
-//import com.firebase.ui.database.FirebaseRecyclerAdapter;
-//import com.firebase.ui.database.FirebaseRecyclerOptions;
-//import com.google.android.material.floatingactionbutton.FloatingActionButton;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.squareup.picasso.Picasso;
 //
-//public class HomeActivity1 extends AppCompatActivity {
+//        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//@Override
+//public void onComplete(@NonNull Task<AuthResult> task) {
+//        if (task.isSuccessful()){
+//        Toast.makeText(LoginActivity.this,"Successful LogIn",Toast.LENGTH_LONG).show();
+//        startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+//        }else {
+//        Toast.makeText(LoginActivity.this,"ERROR"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
 //
-//    private EditText inputSearch;
-//    RecyclerView recyclerView ;
-//    FloatingActionButton floatin_btn ;
+//        }
+//        }
+//        });
+//        }
+//        });
+//        signUp.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View v) {
+//        startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+//        }
+//        });
 //
-//    FirebaseRecyclerOptions<ModelMeals> options;
-//    FirebaseRecyclerAdapter<ModelMeals , MyViewHolder> adapter;
-//    DatabaseReference databaseRef ;
+//        forgetPass.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View v) {
+//final EditText resetMail = new EditText(v.getContext());
+//        AlertDialog.Builder passReset = new AlertDialog.Builder(v.getContext());
+//        passReset.setTitle("Reset Password !!");
+//        passReset.setMessage("Enter your Email to Recieve the Reset Link");
+//        passReset.setView(resetMail);
 //
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate( savedInstanceState );
-//        setContentView( R.layout.activity_home );
+//        passReset.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//@Override
+//public void onClick(DialogInterface dialog, int which) {
 //
-//        databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( "breakfast" );
-//        inputSearch = findViewById( R.id.input_serch );
-//        recyclerView = findViewById( R.id.recycler_view );
-//        recyclerView.setLayoutManager( new LinearLayoutManager( getApplicationContext() ) );
-//        recyclerView.setHasFixedSize (true);
-//        floatin_btn= findViewById( R.id.floating_adding_btn );
+//        String mail = resetMail.getText().toString();
+//        firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+//@Override
+//public void onSuccess(Void aVoid) {
+//        Toast.makeText(LoginActivity.this,"Reset Email was Sent",Toast.LENGTH_LONG).show();
+//        }
+//        }).addOnFailureListener(new OnFailureListener() {
+//@Override
+//public void onFailure(@NonNull Exception e) {
+//        Toast.makeText(LoginActivity.this,"ERROR !!"+ e.getMessage(),Toast.LENGTH_LONG).show();
+//        }
+//        });
 //
-//        floatin_btn.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity( new Intent( getApplicationContext() , MainActivity.class ) );
-//            }
-//        } );
+//        }
+//        });
+//        passReset.setPositiveButton("No", new DialogInterface.OnClickListener() {
+//@Override
+//public void onClick(DialogInterface dialog, int which) {
 //
-//        LoadData();
-//    }
 //
-//    private void LoadData() {
-//        options = new FirebaseRecyclerOptions.Builder<ModelMeals>().setQuery( databaseRef , ModelMeals.class ).build();
-//        adapter = new FirebaseRecyclerAdapter<ModelMeals, MyViewHolder>(options) {
-//            @Override
-//            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull ModelMeals model) {
+//        }
+//        });
+//        passReset.create().show();
 //
-//                holder.textView.setText( model.getMealName() );
-//                Picasso.get().load( model.getImageUrl() ).into( holder.imageView );
+
+
+
+
+
+
+
+
+
+//public void remove(int adapterPosition) {
+//    } adapter
+
+
+
+
+//onSwipDelete
+
+//import androidx.annotation.NonNull;new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//@Override
+//public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//        return false;
+//        }
 //
-//            }
+//@Override
+//public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 //
-//            @NonNull
-//            @Override
-//            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        favoritesAdapter.remove(viewHolder.getAdapterPosition());
+//        favoritesAdapter.notifyDataSetChanged();
+//        Toast.makeText(FavoritesActivity.this,"Meal Deleted",Toast.LENGTH_LONG).show();
 //
-//                View  view = LayoutInflater.from( parent.getContext() ).inflate( R.layout.single_view , parent , false );
-//                return new MyViewHolder( view );
-//            }
-//        };
-//
-//        adapter.startListening();
-//        recyclerView.setAdapter( adapter );
-//    }
-//}
+//        }
+//        }).attachToRecyclerView(favoritesRecyclerview);
+//        }

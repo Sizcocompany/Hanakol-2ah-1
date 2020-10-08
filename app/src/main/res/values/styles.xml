@@ -7,7 +7,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -22,20 +22,25 @@
         <item name="colorAccent">@color/colorPrimary</item>
 
     </style>
-  
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
-          <item name="windowActionBar">false</item>
-          <item name="windowNoTitle">true</item>
-          <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
-          <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-      </style>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+    </style>
 
-      <style name="AppBarLayoutTheme" parent="@style/ThemeOverlay.AppCompat.Light">
-          <item name="colorControlNormal">@color/colorAccent</item>
-      </style>
+    <style name="AppBarLayoutTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorAccent</item>
+    </style>
 
-      <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-      <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="customRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+        ... // Additional customizations
+    </style>
 
 </resources>
