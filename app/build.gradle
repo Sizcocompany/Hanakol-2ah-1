@@ -30,10 +30,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
+    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     testImplementation 'org.testng:testng:6.9.6'
     implementation 'com.android.support:appcompat-v7:29.0.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -47,24 +49,29 @@ dependencies {
 //    Facebook dependencies
     implementation 'com.facebook.android:facebook-login:5.15.3'
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 //  firebase dependencies
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-database:19.5.0'
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-functions:19.1.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
 
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
-    implementation 'com.google.firebase:firebase-firestore:21.6.0'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+    implementation 'com.google.firebase:firebase-core:17.5.1'
     implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
 
 //    image

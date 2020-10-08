@@ -27,9 +27,9 @@ public class RandomMealsActivity extends AppCompatActivity {
         final TextView Steps =(TextView) findViewById(R.id.textViewوصف);
         final ImageView ImageURL =(ImageView) findViewById(R.id.imageViewMeal);
         final RatingBar MealRate =(RatingBar) findViewById(R.id.randomratingBar);
-        Button Dinnerbutton = findViewById(R.id.buttonUploadDinnerData);
-        Button Breakfastbutton = findViewById(R.id.buttonUploadbreakfastData);
-        Button Luanchbutton = findViewById(R.id.buttonUploadLaunchData);
+        TextView Dinnerbutton = findViewById(R.id.buttonUploadDinnerData);
+        TextView Breakfastbutton = findViewById(R.id.buttonUploadbreakfastData);
+        TextView Luanchbutton = findViewById(R.id.buttonUploadLaunchData);
 
 
         Breakfastbutton.setOnClickListener(new View.OnClickListener() {

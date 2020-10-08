@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/graylight"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="285dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="265dp"-->
+<!--                android:background="@drawable/gradient"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <com.mikhaellopez.circularimageview.CircularImageView-->
+<!--                    android:id="@+id/user_profile_pic_page"-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="140dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="21dp"-->
+<!--                    android:src="@drawable/ic_user_pic" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/user_profile_name_page"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:text="user_profile_name_page"-->
+<!--                    android:textColor="#FFF"-->
+<!--                    android:textSize="18dp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/user_profile_email_page"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:text="user_profile_email_page"-->
+<!--                    android:textColor="@color/graylight"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--            </LinearLayout>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="370dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="250dp">-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/breackfast_profile_search_Click"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Breakfast"-->
+<!--                        android:textColor="@color/colorWhite" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/lunch_profile_search_Click"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Lunch"-->
+<!--                        android:textColor="@color/colorWhite" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/dinner_profile_search_Click"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Dinner"-->
+<!--                        android:textColor="@color/colorWhite" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/juice_profle_search_Click"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Juices"-->
+<!--                        android:textColor="@color/colorWhite" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/desserts_profile_search_Click"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Desserts"-->
+<!--                        android:textColor="@color/colorWhite" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--        </RelativeLayout>-->
+
+
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/container_profile_search_recyclerview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                tools:listitem="@layout/item_view_pager_header_shimmer" />-->
+
+
+<!--    </LinearLayout>-->
+</ScrollView>

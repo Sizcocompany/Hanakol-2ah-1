@@ -95,6 +95,7 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
     private void setUpRecyclerView(View v, final String child ) {
 
         notebookRef = db.collection(child);
+//        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query;
         if (MEAL_SORTING_CONDITION == 0) {
             query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);

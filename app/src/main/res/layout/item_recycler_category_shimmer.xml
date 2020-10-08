@@ -22,13 +22,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,7 +50,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Breakfast"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
@@ -62,8 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
-
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -90,7 +90,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Lunch"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -131,7 +131,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Dinner"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -179,7 +179,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Favorites"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
@@ -192,7 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -219,7 +219,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Juices"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
@@ -232,7 +232,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@color/colorWhiteDark"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp">
 
@@ -259,7 +259,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Desserts"
-                        android:textColor="@color/colorPrimaryLight"
+                        android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>

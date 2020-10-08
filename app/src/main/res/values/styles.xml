@@ -16,6 +16,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="dialog_title_style" parent="@android:style/TextAppearance">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:typeface">normal</item>
+    <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="progressBarStyle" parent="Widget.AppCompat.ProgressBar.Horizontal">
 
         <item name="color">@color/colorPrimary</item>

@@ -23,8 +23,11 @@ import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
 import java.util.List;
@@ -33,6 +36,8 @@ public class SearchFragment extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
+    private CollectionReference notebookRef2;
+    DocumentReference docRef;
     private MealAdapter adapter;
     private String child = "breakfast";
     private FirestoreRecyclerOptions<Meals> options;
@@ -87,20 +92,57 @@ public class SearchFragment extends Fragment {
 
                 if (s.toString().isEmpty()) {
                     notebookRef = db.collection(child);
+//                    notebookRef = db.collection("meals-database").document(child).collection("data");
                     query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
                     options = new FirestoreRecyclerOptions.Builder<Meals>()
                             .setQuery(query, Meals.class)
                             .build();
                 } else {
 
-                    query = db.collection(child)
-                            .whereEqualTo("mealName", s.toString())
-                            .orderBy("mealName", Query.Direction.ASCENDING);
+                    notebookRef = db.collection(child);
+//                    notebookRef = db.collection("meals-database").document(child).collection("data");
+                    query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
                 }
 
                 options = new FirestoreRecyclerOptions.Builder<Meals>()
                         .setQuery(query, Meals.class)
                         .build();
+
+
+                docRef = db.collection(child).document("mealName");
+//                docRef = db.collection("meals-database").document(child).collection("data").document("mealName");
+                docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.err.println("Listen failed: " + e);
+                            return;
+                        }
+
+                        if (snapshot != null && snapshot.exists()) {
+                            System.out.println("Current data: " + snapshot.getData());
+                        } else {
+                            System.out.print("Current data: null");
+                        }
+                    }
+                });
+
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+//                                        @Nullable FirestoreException e) {
+//                        if (e != null) {
+//                            System.err.println("Listen failed: " + e);
+//                            return;
+//                        }
+//
+//                        if (snapshot != null && snapshot.exists()) {
+//                            System.out.println("Current data: " + snapshot.getData());
+//                        } else {
+//                            System.out.print("Current data: null");
+//                        }
+//                    }
+
+
                 adapter = new MealAdapter(getActivity().getApplicationContext(), options);
                 RecyclerView recyclerView = view.findViewById(R.id.container_search_recyclerview);
                 recyclerView.setHasFixedSize(true);
@@ -139,17 +181,17 @@ public class SearchFragment extends Fragment {
         desserts_search_Click = view.findViewById(R.id.desserts_search_Click);
 //        ------------------------------------------------------------------------------------------
 
-        breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
+        breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
 
         breackfast_search_Click.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 child = "breakfast";
-                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
-                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
                 setUpRecyclerView(view, child);
 
             }
@@ -160,11 +202,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 child = "lunch";
-                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
-                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
                 setUpRecyclerView(view, child);
 
             }
@@ -174,11 +216,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 child = "dinner";
-                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
-                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
                 setUpRecyclerView(view, child);
 
             }
@@ -188,11 +230,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 child = "juices";
-                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
-                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
                 setUpRecyclerView(view, child);
 
             }
@@ -202,11 +244,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 child = "desserts";
-                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
-                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimary));
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
                 setUpRecyclerView(view, child);
 
             }
@@ -226,6 +268,7 @@ public class SearchFragment extends Fragment {
     private void setUpRecyclerView(View v, final String child) {
 
         notebookRef = db.collection(child);
+//        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
         options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)

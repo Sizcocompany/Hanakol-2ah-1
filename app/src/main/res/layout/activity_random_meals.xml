@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back6">
+    android:background="@color/colorWhiteDark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,15 +29,15 @@
             android:id="@+id/imageViewMeal"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="@drawable/shapebutton"/>
+            android:background="@drawable/shapeedittext"/>
 
         <TextView
             android:id="@+id/textViewاسم"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryLight"
-            android:background="@drawable/shapebutton"
+            android:textColor="@color/colorPrimaryText"
+            android:background="@drawable/shapeedittext"
             android:padding="2dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -49,8 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryLight"
-            android:background="@drawable/shapebutton"
+            android:textColor="@color/colorPrimaryText"
+            android:background="@drawable/shapeedittext"
             android:padding="2dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -61,8 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryLight"
-            android:background="@drawable/shapebutton"
+            android:textColor="@color/colorPrimaryText"
+            android:background="@drawable/shapeedittext"
             android:padding="2dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -76,30 +76,76 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/colorWhiteDark"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/buttonUploadbreakfastData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shapebutton"
-                android:text="breakfast" />
+                android:gravity="center"
+                android:text="Breakfast"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
 
-            <Button
+            <TextView
                 android:id="@+id/buttonUploadLaunchData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shapebutton"
-                android:text="Launch" />
+                android:gravity="center"
+                android:text="Lunch"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
 
-
-            <Button
+            <TextView
                 android:id="@+id/buttonUploadDinnerData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shapebutton"
-                android:text="Dinner" />
+                android:gravity="center"
+                android:text="Dinner"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/buttonUploadJuicesData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shapebutton"
+                android:gravity="center"
+                android:text="Juices"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/buttonUploadDessertsData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shapebutton"
+                android:gravity="center"
+                android:text="Desserts"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold"/>
+
         </LinearLayout>
 
 
