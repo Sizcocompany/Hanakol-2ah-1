@@ -337,10 +337,6 @@
 //}
 
 
-
-
-
-
 package com.example.hanakol_2ah.fragments;
 
 import android.content.Intent;
@@ -363,17 +359,23 @@ import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Document;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SelectedItemFragment extends Fragment {
 
@@ -392,10 +394,13 @@ public class SelectedItemFragment extends Fragment {
     private MyFavoritesFragment myFavoritesFragment;
     private View view;
     private int MEAL_FAVORITES_CONDITION;
-
     DatabaseReference databaseRef;
     StorageReference storageRef;
-    private CollectionReference notebookRef;
+    FirebaseFirestore db;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private DocumentReference documentReference;
+    private String MEALNAME;
 
 
     Uri imageurl;
@@ -421,6 +426,7 @@ public class SelectedItemFragment extends Fragment {
 
         myFavoritesFragment = new MyFavoritesFragment();
 
+//        documentReference = db.collection(child).document("mealRate");
 
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
@@ -428,6 +434,7 @@ public class SelectedItemFragment extends Fragment {
             selected_item_ingredients.setText(bundle.getString("MEAL_DESCRIPTION"));
             imageUri = bundle.getString("MEAL_IMAGE_URI");
             selected_item_name.setText(bundle.getString("MEAL_NAME"));
+            MEALNAME = bundle.getString("MEAL_NAME");
             selected_item_steps.setText(bundle.getString("MEAL_STEP"));
             meal_rating_Bar.setRating(Float.parseFloat(bundle.getString("MEAL_RATE")));
             selected_item_owner_name.setText(bundle.getString("MEAL_OWNER_EMAIL"));
@@ -436,6 +443,13 @@ public class SelectedItemFragment extends Fragment {
             child = bundle.getString("CHILD");
 
         }
+        meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Float MEALRATE = meal_rating_Bar.getRating();
+                UpdatData(child , (float) 2.2, MEALNAME );
+            }
+        });
 
 
         if (MEAL_FAVORITES_CONDITION == 0) {
@@ -443,7 +457,6 @@ public class SelectedItemFragment extends Fragment {
         } else if (MEAL_FAVORITES_CONDITION == 1) {
             favorites_icon.setImageResource(R.drawable.ic_favorite_done);
         }
-
 
 
         favorites_icon.setOnClickListener(new View.OnClickListener() {
@@ -455,7 +468,7 @@ public class SelectedItemFragment extends Fragment {
                     handleFavoriteIcon(view);
 
                     addFavoritesItems(db, selected_item_name.getText().toString(), imageUri, selected_item_ingredients.getText().toString(), selected_item_steps.getText().toString()
-                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString(), meal_creation_date.getText().toString() , 1 );
+                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString(), meal_creation_date.getText().toString(), 1);
 
                 }
 
@@ -496,13 +509,21 @@ public class SelectedItemFragment extends Fragment {
                 }
 
 
-
-
             }
         });
 
 
         return view;
+    }
+
+    private void UpdatData(String child,Float aFloat , String mealName){
+        DocumentReference meal = db.collection("breakfast").document("A breakfast name 1 ");
+        meal.update("mealRate" ,(Float)aFloat).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getActivity(), "Updated successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void handleFavoriteIcon(View view) {
@@ -556,7 +577,7 @@ public class SelectedItemFragment extends Fragment {
     }
 
 
-    private void addFavoritesItems(final FirebaseFirestore db, final String mealName, final String imageUri, final String mealDescription, final String mealSteps, final Float mealRate, final String mealOwnerName, final String mealDateCreation , final int favoriteCondition) {
+    private void addFavoritesItems(final FirebaseFirestore db, final String mealName, final String imageUri, final String mealDescription, final String mealSteps, final Float mealRate, final String mealOwnerName, final String mealDateCreation, final int favoriteCondition) {
 
 
         HashMap hashMap = new HashMap();
@@ -622,6 +643,7 @@ public class SelectedItemFragment extends Fragment {
         fragmentTransaction.commit();
         fragment.setArguments(bundle);
     }
+
     public static String removeWord(String string, String word) {
 
         // Check if the word is present in string
@@ -645,6 +667,9 @@ public class SelectedItemFragment extends Fragment {
         // Return the resultant string
         return string;
     }
+
+
+
 
 
 }

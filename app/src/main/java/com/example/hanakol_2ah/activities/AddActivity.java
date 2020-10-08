@@ -293,25 +293,6 @@
 //    }
 //
 //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;

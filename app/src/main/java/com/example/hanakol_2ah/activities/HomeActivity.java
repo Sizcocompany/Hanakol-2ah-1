@@ -455,13 +455,6 @@
 //}
 
 
-
-
-
-
-
-
-
 package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
@@ -484,6 +477,9 @@ import com.example.hanakol_2ah.fragments.SelectedItemFragment;
 import com.example.hanakol_2ah.user_interface.FragmentSideMenu;
 import com.example.hanakol_2ah.user_interface.ToolBarActivity;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -503,6 +499,8 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     private Query query;
     private MealAdapter adapter;
     private Fragment selectedItemFragment;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
     @Override
@@ -511,6 +509,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         setContentView(R.layout.activity_home);
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
 
         final CardView breackfastCardView = findViewById(R.id.breackfastLayoutClick);
@@ -634,6 +633,14 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
 
     public boolean isLoggedIn() {
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            return true;
+        }
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;
     }

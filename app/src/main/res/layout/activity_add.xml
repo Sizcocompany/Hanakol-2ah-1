@@ -64,11 +64,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_bg_edit_text"
+                    android:background="@drawable/shapeedittext"
                     android:hint="Name "
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:textColorHint="@color/colorWhiteDark" />
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
 
                 <EditText
                     android:id="@+id/et_description"
@@ -77,11 +78,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_bg_edit_text"
+                    android:background="@drawable/shapeedittext"
                     android:hint="@string/description"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:textColorHint="@color/colorWhiteDark" />
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
 
                 <EditText
                     android:id="@+id/et_steps"
@@ -90,11 +92,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_bg_edit_text"
+                    android:background="@drawable/shapeedittext"
                     android:hint="@string/steps"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:textColorHint="@color/colorWhiteDark" />
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
 
 
                 <TextView
@@ -124,7 +127,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="62dp"
                     android:layout_marginRight="40dp"
-                    android:background="@drawable/shapesignup"
+                    android:background="@drawable/shapebutton"
                     android:text="upload"
                     android:textAllCaps="false" />
 
