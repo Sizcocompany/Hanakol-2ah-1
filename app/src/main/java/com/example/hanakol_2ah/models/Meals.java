@@ -110,6 +110,7 @@
 package com.example.hanakol_2ah.models;
 
 public class Meals {
+
     private String MealName;
     private String Description;
     private String Steps;
@@ -118,12 +119,13 @@ public class Meals {
     private String mealOwner;
     private String mealSender;
     private String mealCreationDate;
+    private  int mealTotalRateNum;
 
     public Meals() {
     }
 
 
-    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate ) {
+    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate , int mealTotalRateNum ) {
         MealName = mealName;
         Description = description;
         Steps = steps;
@@ -131,6 +133,7 @@ public class Meals {
         MealRate = mealRate;
         this.mealOwner = mealOwner;
         this.mealCreationDate = mealCreationDate;
+        this.mealTotalRateNum = mealTotalRateNum;
     }
 
     public String getMealCreationDate() {
@@ -197,5 +200,11 @@ public class Meals {
         this.mealSender = mealSender;
     }
 
+    public int getMealTotalRateNum() {
+        return mealTotalRateNum;
+    }
 
+    public void setMealTotalRateNum(int mealTotalRateNum) {
+        this.mealTotalRateNum = mealTotalRateNum;
+    }
 }

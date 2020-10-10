@@ -88,6 +88,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 Query query;
 
                 if (s.toString().isEmpty()) {
@@ -126,21 +127,6 @@ public class SearchFragment extends Fragment {
                         }
                     }
                 });
-
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot snapshot,
-//                                        @Nullable FirestoreException e) {
-//                        if (e != null) {
-//                            System.err.println("Listen failed: " + e);
-//                            return;
-//                        }
-//
-//                        if (snapshot != null && snapshot.exists()) {
-//                            System.out.println("Current data: " + snapshot.getData());
-//                        } else {
-//                            System.out.print("Current data: null");
-//                        }
-//                    }
 
 
                 adapter = new MealAdapter(getActivity().getApplicationContext(), options);

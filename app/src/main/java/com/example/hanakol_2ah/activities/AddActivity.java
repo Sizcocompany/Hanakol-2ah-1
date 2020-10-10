@@ -403,7 +403,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"),  mealCreationDate,child  , favorite_CONDITION);
+                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"),  mealCreationDate,child  , favorite_CONDITION , 0);
                 }
 
             }
@@ -435,7 +435,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
 
     private void uploadImage(final FirebaseFirestore db, final String mealName, final String mealDescription, final String mealSteps, final Float mealRate
-            , final String mealCreationDate, final String child , final int favorite_CONDITION) {
+            , final String mealCreationDate, final String child , final int favorite_CONDITION , final int mealTotalRateNum) {
 
 
         tvProgress.setVisibility(View.VISIBLE);
@@ -456,8 +456,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("ImageURL", uri.toString());
                         hashMap.put("MealRate", mealRate);
                         hashMap.put("MealCreationdate",mealCreationDate);
+                        hashMap.put("MealTotalRateNum" , mealTotalRateNum);
 
-                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName() , mealCreationDate);
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName() , mealCreationDate , mealTotalRateNum);
 
                         CollectionReference notebookRef = db.collection(child);
 

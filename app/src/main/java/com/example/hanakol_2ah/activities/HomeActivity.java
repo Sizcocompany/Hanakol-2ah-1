@@ -458,14 +458,23 @@
 package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -478,13 +487,20 @@ import com.example.hanakol_2ah.user_interface.FragmentSideMenu;
 import com.example.hanakol_2ah.user_interface.ToolBarActivity;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 
-public class HomeActivity extends ToolBarActivity implements TextView.OnEditorActionListener {
+public class HomeActivity extends ToolBarActivity implements TextView.OnEditorActionListener, GoogleApiClient.OnConnectionFailedListener {
     ListMealsFragmentContainer fragment;
     public static TextView login_txt_btn;
     private Boolean Visablilety;
@@ -501,6 +517,28 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     private Fragment selectedItemFragment;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+//-------------------------------------------SideMenu-----------------------------------------------
+    private String mUsername;
+    private String mEmail;
+    private String mPhotoUrl;
+
+//    private FirebaseAuth mFirebaseAuth;
+//    private FirebaseUser mFirebaseUser;
+    private GoogleApiClient mGoogleApiClient;
+//----------------------------------------------------------------------------------------------
+
+
+    private DrawerLayout drawerLayout;
+    private final int DRAWER_CLOSE_DELAY = 300;
+
+    public static String LANGUAGE_AR = "ar";
+    public static String LANGUAGE_EN = "en";
+    private TextView user_profile_name;
+    private LinearLayout aboutUs;
+    private LinearLayout changeLanguage;
+    private LinearLayout logOut;
+    private ImageView user_profile_pic;
+    private View myPosts;
 
 
     @Override
@@ -510,6 +548,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        customizeSideMenu();
 
 
         final CardView breackfastCardView = findViewById(R.id.breackfastLayoutClick);
@@ -524,6 +563,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         searchFragment = new SearchFragment();
         selectedItemFragment = new SelectedItemFragment();
 
+        drawerLayout =  findViewById(R.id.drawer_layout);
 
         final TextView TV_add_new_meal = findViewById(R.id.TV_add_new_meal);
         TextView hanakoleh = findViewById(R.id.hanakolehTextView);
@@ -541,10 +581,10 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 //            }
         });
 
-        Visablilety = isLoggedIn();
-        if (Visablilety == true) {
-            login_txt_btn.setVisibility(View.INVISIBLE);
-        }
+//        Visablilety = isLoggedIn();
+//        if (Visablilety == true) {
+//            login_txt_btn.setVisibility(View.INVISIBLE);
+//        }
 
         onClickCardviews(breackfastCardView, "breakfast", 0);
         onClickCardviews(launchCardView, "lunch", 0);
@@ -575,11 +615,12 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         ic_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentSideMenu fragmentSideMenu = new FragmentSideMenu();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                transaction.replace(R.id.activity_home_container, fragmentSideMenu);
-                transaction.commit();
+//                FragmentSideMenu fragmentSideMenu = new FragmentSideMenu();
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                transaction.replace(R.id.activity_home_container, fragmentSideMenu);
+//                transaction.commit();
+                handleMenuAction();
 
             }
         });
@@ -653,6 +694,173 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
+
+
+
+
+
+
+    private void handleMenuAction() {
+        toggleDrawer(false);
+    }
+
+    public void toggleDrawer(boolean isCloseDelayed) {
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+
+
+        if (conf.locale.getDisplayLanguage().toLowerCase().equals(new Locale(LANGUAGE_AR).getDisplayLanguage().toLowerCase())) {
+            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawerLayout.closeDrawer(Gravity.RIGHT);
+                    }
+                }, isCloseDelayed ? DRAWER_CLOSE_DELAY : 0);
+
+            } else {
+                drawerLayout.openDrawer(Gravity.RIGHT);
+            }
+        } else {
+            if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                    }
+                }, isCloseDelayed ? DRAWER_CLOSE_DELAY : 0);
+
+            } else {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        }
+    }
+    protected void customizeSideMenu() {
+        user_profile_pic = findViewById(R.id.user_profile_pic);
+        user_profile_name = (TextView) findViewById(R.id.user_profile_name);
+
+        myPosts = findViewById(R.id.my_post);
+        changeLanguage = (LinearLayout) findViewById(R.id.language_Linear);
+        logOut = findViewById(R.id.log_out_side_menu_linear_layout);;
+
+
+
+
+
+
+
+
+        try {
+
+
+
+
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser == null) {
+                user_profile_name.setText("User Name");
+                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+//                logOut.setVisibility(View.INVISIBLE);
+//                myPosts.setVisibility(View.INVISIBLE);
+            } else {
+                logOut.setVisibility(View.VISIBLE);
+                myPosts.setVisibility(View.VISIBLE);
+//                login_txt_btn.setVisibility(View.INVISIBLE);
+//                mUsername = mFirebaseUser.getDisplayName();
+//                if(mUsername ==null){
+                mUsername = firebaseUser.getEmail();
+//                }
+                mUsername = firebaseUser.getDisplayName();
+                if (firebaseUser.getPhotoUrl() != null) {
+                    mPhotoUrl = firebaseUser.getPhotoUrl().toString();
+                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
+                }
+                user_profile_name.setText(mUsername);
+
+
+            }
+        } catch (Exception e) {
+            logOut.setVisibility(View.VISIBLE);
+            myPosts.setVisibility(View.VISIBLE);
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser != null) {
+                mUsername = firebaseUser.getDisplayName();
+                mEmail = firebaseUser.getEmail();
+                if (firebaseUser.getPhotoUrl() != null) {
+                    mPhotoUrl = firebaseUser.getPhotoUrl().toString();
+                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
+                }
+                user_profile_name.setText(mUsername);
+            } else {
+                user_profile_name.setText("User Name");
+                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+                logOut.setVisibility(View.INVISIBLE);
+                myPosts.setVisibility(View.INVISIBLE);
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+//        aboutUs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                startActivity(new  In);
+//            }
+//        });
+//
+//        changeLanguage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+//
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Controller.getInstance(HomeActivity.this).btnLogout("sasassa" , fragmentSideMenu , mGoogleApiClient);
+//                Controller.getInstance(HomeActivity.this).showLogOutDialog(HomeActivity.this, true);
+                btnLogout();
+            }
+        });
+
+    }
+
+    public void btnLogout() {
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        firebaseAuth.signOut();
+        LoginManager.getInstance().logOut();
+        login_txt_btn.setVisibility(View.VISIBLE);
+        user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+        user_profile_name.setText("User Name");
+        myPosts.setVisibility(View.INVISIBLE);
+//        Toast.makeText(getActivity(), "See you later chief "+Username +":)", Toast.LENGTH_LONG).show();
+
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }

@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+         firebaseAuth = FirebaseAuth.getInstance();
+
         profile_picture = findViewById(R.id.profile_picture);
 
 
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 //  ------------------------------------------------------------------------------------------------
         FacebookSdk.sdkInitialize(getApplicationContext());
         button_facebook_login = findViewById(R.id.button_facebook_login);
+        
         button_facebook_login.setReadPermissions("email", "public_profile");
         callbackManager = CallbackManager.Factory.create();
 
@@ -122,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "onSuccess" + loginResult);
-                handleFacebookToken(loginResult.getAccessToken());
+                handleFacebookAccessToken(loginResult.getAccessToken());
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 Toast.makeText(LoginActivity.this, "Welcome chief " + onGetOwnerName(firebaseAuth, googleApiClient), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -162,6 +164,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // start Gmail auth . islam
@@ -392,23 +408,28 @@ public class LoginActivity extends AppCompatActivity {
 
 //    facebook
 
-    private void handleFacebookToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookToken" + token);
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "sign in with credential:successful");
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    Log.d(TAG, "sign in with credential:failure");
-                    Toast.makeText(LoginActivity.this, "Authentication failure", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
 
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     private String onGetOwnerName(FirebaseAuth firebaseAuth, GoogleApiClient googleApiClient) {

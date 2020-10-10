@@ -79,7 +79,8 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
         categories.add("Sort Z to A");
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -145,7 +146,7 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
     @Override
     public void onStart() {
         super.onStart();
-        setUpRecyclerView(view, child);
+        setUpRecyclerView(view, this.child);
         adapter.startListening();
     }
 
