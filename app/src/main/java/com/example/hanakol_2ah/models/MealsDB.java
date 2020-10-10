@@ -29,7 +29,8 @@ public class MealsDB {
 
 
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        CollectionReference studentsCollectionReference = rootRef.collection(child);
+//        CollectionReference studentsCollectionReference = rootRef.collection(child);
+        CollectionReference studentsCollectionReference = rootRef.collection("meals-database").document(child).collection("data");
         studentsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

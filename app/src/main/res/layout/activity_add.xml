@@ -1,166 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back6">
+    android:background="@color/graylight">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".activities.AddActivity">
-
-
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/logo_Image"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_imageview"
-            app:civ_border_color="@color/colorPrimaryText"
-            app:civ_border_width="5dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="2dp"
-            app:civ_shadow_color="#3f51b5"/>
-
-
-        <LinearLayout
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/shapebutton"
-            android:orientation="vertical"
-            tools:context=".activities.AddActivity">
-
-            <Spinner
-                android:id="@+id/spinner"
-                style="@android:style/Widget.Material.Spinner.Underlined"
+            android:layout_height="match_parent">
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/et_eatname"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:padding="10dp" />
-        </LinearLayout>
+                android:layout_height="285dp"
+                android:background="@drawable/gradient"/>
 
-        <EditText
-            android:id="@+id/et_eatname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/logo_Image"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_bg_edit_text"
-            android:hint="Enter name "
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryText"
-            android:textColorHint="@color/colorWhiteDark" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".activities.AddActivity">
 
-        <EditText
-            android:id="@+id/et_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_eatname"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_bg_edit_text"
-            android:hint="Enter description "
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryText"
-            android:textColorHint="@color/colorWhiteDark" />
-
-        <EditText
-            android:id="@+id/et_steps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_description"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_bg_edit_text"
-            android:hint="Enter steps "
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryText"
-            android:textColorHint="@color/colorWhiteDark" />
+                <ImageView
+                    android:id="@+id/logo_Image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="65dp"
+                    android:layout_marginBottom="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_imageview" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/shapebutton"
+                    android:orientation="vertical"
+                    tools:context=".activities.AddActivity">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        style="@android:style/Widget.Material.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_eatname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shapeedittext"
+                    android:hint="Name "
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
+
+                <EditText
+                    android:id="@+id/et_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shapeedittext"
+                    android:hint="@string/description"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
+
+                <EditText
+                    android:id="@+id/et_steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shapeedittext"
+                    android:hint="@string/steps"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorPrimaryDark" />
 
 
-        <TextView
-            android:id="@+id/textview_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_steps"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="0.0 %"
-            android:textColor="@color/colorWhiteDark"
-            android:textSize="25dp" />
+                <TextView
+                    android:id="@+id/textview_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/_0_0"
+                    android:textColor="@color/colorWhiteDark"
+                    android:textSize="25sp" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textview_progress"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:outlineAmbientShadowColor="@color/colorAccent" />
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:outlineAmbientShadowColor="@color/colorAccent" />
 
-        <Button
-            android:id="@+id/upload_butn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/progress_bar"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="62dp"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/shapesignup"
-            android:text="upload"
-            android:textAllCaps="false" />
+                <Button
+                    android:id="@+id/upload_butn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progress_bar"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="62dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/shapebutton"
+                    android:text="upload"
+                    android:textAllCaps="false" />
 
 
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
-
 </ScrollView>
 
 
 
 
-
-<!--<LinearLayout-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:layout_marginBottom="10dp"-->
-<!--android:background="@drawable/shapebutton"-->
-<!--android:orientation="horizontal"-->
-<!--tools:context=".activities.AddActivity">-->
-
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:layout_weight="1"-->
-<!--    android:gravity="center"-->
-<!--    android:text="Set meal rate :"-->
-<!--    android:textColor="@color/colorWhiteDark"-->
-<!--    android:textStyle="bold" />-->
-
-<!--<RatingBar-->
-<!--    android:id="@+id/add_rate_ratingbar"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_gravity="center"-->
-<!--    android:layout_marginTop="5dp"-->
-<!--    android:layout_weight="2"-->
-<!--    android:numStars="5" />-->
-<!--</LinearLayout>-->

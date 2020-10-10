@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@mipmap/back3"
+    android:background="@mipmap/back7"
     android:layout_height="match_parent">
 
     <com.mikhaellopez.circularimageview.CircularImageView
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="Welcome"
-        android:textColor="@color/colorPrimaryLight"
+        android:text="@string/welcome"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

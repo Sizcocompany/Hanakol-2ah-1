@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back6"
+    android:background="@color/graylight"
     tools:context=".fragments.SearchFragment">
 
     <LinearLayout
@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/gradient"
             android:orientation="horizontal">
 
             <ImageView
@@ -30,11 +31,6 @@
 
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:src="@drawable/ic_search_primary_light" />
 
             <EditText
                 android:id="@+id/meal_search_tv"
@@ -42,6 +38,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginRight="12dp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="10dp"
                 android:hint="@string/search_your_recipes"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorPrimaryLight" />
@@ -55,8 +53,10 @@
             android:background="@color/colorPrimaryLight" />
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorWhiteDark"
             android:orientation="horizontal">
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Breakfast"
                 android:textColor="@color/colorWhite" />
@@ -78,7 +78,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Lunch"
                 android:textColor="@color/colorWhite" />
@@ -91,7 +91,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Dinner"
                 android:textColor="@color/colorWhite" />
@@ -104,7 +104,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Juices"
                 android:textColor="@color/colorWhite" />
@@ -117,7 +117,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Desserts"
                 android:textColor="@color/colorWhite" />
@@ -126,6 +126,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="15dp"
             android:id="@+id/container_search_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

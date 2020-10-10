@@ -80,6 +80,7 @@ public class MyFavoritesFragment extends Fragment {
     private void setUpRecyclerView(View v, String child, String senderEmail) {
 
         notebookRef = db.collection(child);
+//        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query = notebookRef.whereEqualTo("mealSender", senderEmail);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)

@@ -77,12 +77,18 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
             mFirebaseAuth = FirebaseAuth.getInstance();
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
-                // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
+                user_profile_name.setText("User Name");
+                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+                logout.setVisibility(View.INVISIBLE);
+                myPosts.setVisibility(View.INVISIBLE);
             } else {
                 logout.setVisibility(View.VISIBLE);
                 myPosts.setVisibility(View.VISIBLE);
+                login_txt_btn.setVisibility(View.INVISIBLE);
+//                mUsername = mFirebaseUser.getDisplayName();
+//                if(mUsername ==null){
+                    mUsername = mFirebaseUser.getEmail();
+//                }
                 mUsername = mFirebaseUser.getDisplayName();
                 if (mFirebaseUser.getPhotoUrl() != null) {
                     mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
@@ -124,7 +130,7 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
         myPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.activity_home_container, myMealsFragment);

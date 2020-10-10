@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="#957676">-->
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@mipmap/back"
-    android:gravity="center"
+    android:background="@color/graylight"
     android:orientation="vertical"
-    android:padding="20dp">
+    >
+<View
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/gradient"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:padding="20dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginBottom="50dp"
-           android:src="@drawable/ic_image" />
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="100dp"
+           android:src="@drawable/logo" />
 
         <EditText
             android:id="@+id/editTextTextPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/shapeemail"
-            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:background="@drawable/shapeedittext"
+            android:drawableStart="@drawable/ic_person_black_24dp"
             android:drawablePadding="10dp"
             android:hint="Email"
             android:padding="15dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             android:textColorHighlight="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColorHint="@color/colorPrimaryDark" />
 
         <EditText
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/shapeemail"
+            android:background="@drawable/shapeedittext"
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="10dp"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="15dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             android:textColorHighlight="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColorHint="@color/colorPrimaryDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,10 +69,10 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:buttonTint="@color/colorWhite"
+                android:buttonTint="@color/colorPrimaryText"
                 android:checked="true"
-                android:text="Remember Me"
-                android:textColor="@color/colorWhite" />
+                android:text="@string/remember_me"
+                android:textColor="@color/colorPrimaryText" />
 
             <TextView
                 android:id="@+id/forget"
@@ -85,7 +86,7 @@
                 android:drawablePadding="6dp"
                 android:padding="4dp"
                 android:text="Forget Password"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorPrimaryText" />
 
 
         </LinearLayout>
@@ -98,7 +99,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/shapelogin"
+            android:background="@drawable/button"
             android:padding="15dp"
             android:shadowColor="@android:color/transparent"
             android:text="Log In" />
@@ -142,7 +143,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
-
+</RelativeLayout>
 
 <!--</ScrollView>-->
 
