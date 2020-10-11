@@ -378,8 +378,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         Calendar calendar = Calendar.getInstance();
         final String Day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        final String Month= String.valueOf(calendar.get(Calendar.MONTH));
-        final String year= String.valueOf(calendar.get(Calendar.YEAR));
+        final String Month = String.valueOf(calendar.get(Calendar.MONTH));
+        final String year = String.valueOf(calendar.get(Calendar.YEAR));
 
 
         mealImage.setOnClickListener(new View.OnClickListener() {
@@ -399,11 +399,11 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 final String meatDescription = description.getText().toString();
                 final String meatSteps = steps.getText().toString();
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                final String mealCreationDate =Day+"/" + Month+"/" + year;
+                final String mealCreationDate = Day + "/" + Month + "/" + year;
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"),  mealCreationDate,child  , favorite_CONDITION , 0);
+                    uploadImage(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"), mealCreationDate, child, favorite_CONDITION, 0);
                 }
 
             }
@@ -435,7 +435,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
 
     private void uploadImage(final FirebaseFirestore db, final String mealName, final String mealDescription, final String mealSteps, final Float mealRate
-            , final String mealCreationDate, final String child , final int favorite_CONDITION , final int mealTotalRateNum) {
+            , final String mealCreationDate, final String child, final int favorite_CONDITION, final int mealTotalVotes) {
 
 
         tvProgress.setVisibility(View.VISIBLE);
@@ -455,10 +455,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         hashMap.put("Steps", mealSteps);
                         hashMap.put("ImageURL", uri.toString());
                         hashMap.put("MealRate", mealRate);
-                        hashMap.put("MealCreationdate",mealCreationDate);
-                        hashMap.put("MealTotalRateNum" , mealTotalRateNum);
+                        hashMap.put("MealCreationdate", mealCreationDate);
+                        hashMap.put("MealTotalVotes", mealTotalVotes);
 
-                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName() , mealCreationDate , mealTotalRateNum);
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName(), mealCreationDate, mealTotalVotes);
 
                         CollectionReference notebookRef = db.collection(child);
 

@@ -2,14 +2,23 @@ package com.example.hanakol_2ah.models;
 
 public class RatingMeals {
     private String mealName;
-    private int rateNumber;
-    private double mealAvarage;
+    private double rateNumber;
     private String sender_rating_email;
+    private String sender_id;
 
-    public RatingMeals(String sender_rating_email,String mealName, int rateNumber, double mealAvarage) {
+    public RatingMeals() {
+    }
+
+    public RatingMeals( String mealName, String sender_rating_email, double rateNumber) {
+        this.sender_id =sender_id;
         this.mealName = mealName;
         this.rateNumber = rateNumber;
-        this.mealAvarage = mealAvarage;
+        this.sender_rating_email = sender_rating_email;
+    }
+    public RatingMeals(String sender_id, String mealName, String sender_rating_email, double rateNumber) {
+        this.sender_id =sender_id;
+        this.mealName = mealName;
+        this.rateNumber = rateNumber;
         this.sender_rating_email = sender_rating_email;
     }
 
@@ -21,7 +30,7 @@ public class RatingMeals {
         this.mealName = mealName;
     }
 
-    public int getRateNumber() {
+    public double getRateNumber() {
         return rateNumber;
     }
 
@@ -29,13 +38,6 @@ public class RatingMeals {
         this.rateNumber = rateNumber;
     }
 
-    public double getMealAvarage() {
-        return mealAvarage;
-    }
-
-    public void setMealAvarage(double mealAvarage) {
-        this.mealAvarage = mealAvarage;
-    }
 
     public String getSender_rating_email() {
         return sender_rating_email;
