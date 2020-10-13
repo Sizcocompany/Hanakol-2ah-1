@@ -358,6 +358,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
 import com.example.hanakol_2ah.models.RatingMeals;
+import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -402,8 +403,9 @@ public class SelectedItemFragment extends Fragment {
     private DocumentReference documentReference;
     private String IMAGE_URL, child, MEAL_NAME, MEAL_DESCRIPTION, MEAL_STEP, MEAL_OWNER_EMAIL, MEAL_CREATION_DATE;
     private Float MEAL_RATE_BAR;
-    private Float MEALRATE;
-    private int NUMBER_OF_VOTES ;
+    private double MEALRATE;
+    private int NUMBER_OF_VOTES;
+    private double TOTAL_RATES = 0;
 
     Uri imageurl;
     Boolean isImageAdded = false;
@@ -463,16 +465,27 @@ public class SelectedItemFragment extends Fragment {
         }
         //-----------------------------------Get-Number-Of-Votes------------------------------------
         getNumberofViewers(MEAL_NAME);
+
+
         //------------------------------------------------------------------------------------------
 
-        meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+        if (!isLoggedIn()) {
+            meal_rating_Bar.setIsIndicator(true);
+        }
+
+                meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
                 MEALRATE = meal_rating_Bar.getRating();
-                sendUserRate(onUserID(), MEAL_NAME, onGetMealSenderEmail(), MEALRATE);
+
+                sendUserRate(onUserID(), MEAL_NAME, onGetMealSenderEmail(), String.valueOf(MEALRATE));
+
+
                 getNumberofViewers(MEAL_NAME);
 //                UpdatData(child, (float) meal_rating_Bar.getRating(), MEAL_NAME, getNumberofViewers(MEAL_NAME));
+                getNumberofRates(MEAL_NAME);
 
                 onStart();
 //                addRating(db, onGetMealSenderEmail(), MEAL_NAME, getRating(db, onGetMealSenderEmail(), MEAL_NAME),MEALRATE);
@@ -565,12 +578,12 @@ public class SelectedItemFragment extends Fragment {
         return view;
     }
 
-    private void UpdatData(String child, double newRate, String mealName, int mealVotes) {
-        DocumentReference mealDocumentReference = db.collection(child).document(mealName);
-        mealDocumentReference.update("mealRate", newRate);
-        mealDocumentReference.update("mealTotalVotes", mealVotes);
-
-    }
+//    private void UpdatData(String child, double newRate, String mealName, int mealVotes) {
+//        DocumentReference mealDocumentReference = db.collection(child).document(mealName);
+//        mealDocumentReference.update("mealRate", newRate);
+//        mealDocumentReference.update("mealTotalVotes", mealVotes);
+//
+//    }
 
     private void handleFavoriteIcon(View view) {
         MyFavoritesFragment myFavoritesFragment = new MyFavoritesFragment();
@@ -633,7 +646,7 @@ public class SelectedItemFragment extends Fragment {
 
 
     //------------------------------Set-Firebase-Realtime-------------------------------------------
-    private void sendUserRate(String userID, String mealName, String userEmail, double mealRate) {
+    private void sendUserRate(String userID, String mealName, String userEmail, String mealRate) {
         RatingMeals ratingMeals = new RatingMeals(userID, mealName, userEmail, mealRate);
 
         mDatabase.child("hanakol-aeh")
@@ -660,9 +673,8 @@ public class SelectedItemFragment extends Fragment {
                         if (dataSnapshot.exists()) {
                             NUMBER_OF_VOTES = (int) dataSnapshot.getChildrenCount();
                             number_of_votes.setText(String.valueOf(NUMBER_OF_VOTES));
-                            UpdatData(child,MEALRATE , MEAL_NAME , (int) dataSnapshot.getChildrenCount());
+//                            UpdatData(child, MEALRATE, MEAL_NAME, (int) dataSnapshot.getChildrenCount());
                         }
-
                     }
 
                     @Override
@@ -670,7 +682,46 @@ public class SelectedItemFragment extends Fragment {
 
                     }
                 });
-return NUMBER_OF_VOTES;
+        return NUMBER_OF_VOTES;
+    }
+    //----------------------------------------------------------------------------------------------
+
+    double avg;
+
+    //-------------------------------Get-Firebase-Realtime------------------------------------------
+    private double getNumberofRates(final String mealName) {
+
+        com.google.firebase.database.Query rating = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("hanakol-aeh")
+                .child(child)
+                .child(mealName)
+                .orderByChild("mealName").equalTo(mealName);
+        rating.addValueEventListener(new ValueEventListener() {
+            int count = 0;
+            double sum = 0.0;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RatingMeals ratingMeals = dataSnapshot.getValue(RatingMeals.class);
+                    sum += Double.parseDouble(ratingMeals.getRateNumber());
+                    count++;
+                }
+
+                avg = sum / count;
+                DocumentReference mealDocumentReference = db.collection(child).document(mealName);
+                mealDocumentReference.update("mealRate", avg);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return avg;
     }
     //----------------------------------------------------------------------------------------------
 
@@ -746,6 +797,7 @@ return NUMBER_OF_VOTES;
         return mUsername;
     }
 
+
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
         fragmentTransaction.addToBackStack(null);
@@ -775,6 +827,19 @@ return NUMBER_OF_VOTES;
 
         // Return the resultant string
         return string;
+    }
+
+    private boolean isLoggedIn() {
+
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if (mFirebaseUser != null) {
+            return true;
+        }
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 
 

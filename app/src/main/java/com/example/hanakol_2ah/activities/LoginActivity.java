@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         profile_picture = findViewById(R.id.profile_picture);
 
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 //  ------------------------------------------------------------------------------------------------
         FacebookSdk.sdkInitialize(getApplicationContext());
         button_facebook_login = findViewById(R.id.button_facebook_login);
-        
+
         button_facebook_login.setReadPermissions("email", "public_profile");
         callbackManager = CallbackManager.Factory.create();
 
@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
         GoogleSignInAccount signInGoogleAccount = GoogleSignIn.getLastSignedInAccount(this);
 
         if (signInGoogleAccount != null || firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, HomeActivity.class));
+//            startActivity(new Intent(this, HomeActivity.class));
         }
 
         googleSignInbtn.setOnClickListener(new View.OnClickListener() {
