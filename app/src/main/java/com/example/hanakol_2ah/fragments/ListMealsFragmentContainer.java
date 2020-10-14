@@ -134,6 +134,7 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
                 bundle.putString("MEAL_OWNER_EMAIL", meal.getMealOwner());
                 bundle.putString("MEAL_CREATION_DATE", meal.getMealCreationDate());
                 bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
+                bundle.putInt("VISIBILTY" , 0);
                 bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);

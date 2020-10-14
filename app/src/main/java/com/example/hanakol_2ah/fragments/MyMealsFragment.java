@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,16 +25,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class MyMealsFragment extends Fragment {
-    private String child;
+    private String child = "breakfast";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef;
     private MealAdapter adapter;
     private View view;
+    private LinearLayout child_linear;
     private SelectedItemFragment selectedItemFragment;
     private String userName;
 
-    public MyMealsFragment(String child, String userName  ) {
-        this.child = child; this.userName = userName;
+    //----------------------------------------------------------------------------------------------
+    private TextView breackfast_search_Click, lunch_search_Click, dinner_search_Click, juice_search_Click, desserts_search_Click;
+    //----------------------------------------------------------------------------------------------
+
+    public MyMealsFragment( String userName) {
+
+        this.userName = userName;
     }
 
 
@@ -44,8 +52,14 @@ public class MyMealsFragment extends Fragment {
         this.view = view;
 
 
+        child_linear = view.findViewById(R.id.child_linear);
+        child_linear.setVisibility(View.VISIBLE);
         selectedItemFragment = new SelectedItemFragment();
+//        meal_edit_text_view = view.findViewById(R.id.meal_edit_text_view);
+//        meal_edit_text_view.setVisibility(View.VISIBLE);
 //        onGetbreakfastList(view , "Breakfast");
+
+
         setUpRecyclerView(view, child, userName);
 
 
@@ -57,11 +71,100 @@ public class MyMealsFragment extends Fragment {
         });
 
 
+
+
+        //        --------------------------------meals_search_Click----------------------------------------
+        breackfast_search_Click = view.findViewById(R.id.breackfast_child_Click);
+        lunch_search_Click = view.findViewById(R.id.lunch_child_Click);
+        dinner_search_Click = view.findViewById(R.id.dinner_child_Click);
+        juice_search_Click = view.findViewById(R.id.juice_child_Click);
+        desserts_search_Click = view.findViewById(R.id.desserts_child_Click);
+//        ------------------------------------------------------------------------------------------
+
+        breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+
+        breackfast_search_Click.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                child = "breakfast";
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                setUpRecyclerView(view, child, userName);
+
+            }
+        });
+
+        lunch_search_Click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                child = "lunch";
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                setUpRecyclerView(view, child, userName);
+
+            }
+        });
+        dinner_search_Click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                child = "dinner";
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                setUpRecyclerView(view, child, userName);
+
+            }
+        });
+        juice_search_Click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                child = "juices";
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                setUpRecyclerView(view, child, userName);
+
+            }
+        });
+        desserts_search_Click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                child = "desserts";
+                breackfast_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                lunch_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                dinner_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                juice_search_Click.setBackground(getResources().getDrawable(R.color.endblue));
+                desserts_search_Click.setBackground(getResources().getDrawable(R.color.colorPrimaryLight));
+                setUpRecyclerView(view, child, userName);
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
         return view;
     }
 
 
-    private void setUpRecyclerView(View v, String child, String userName) {
+    private void setUpRecyclerView(View v, final String child, String userName) {
 
         notebookRef = db.collection(child);
 //        notebookRef = db.collection("meals-database").document(child).collection("data");
@@ -69,7 +172,7 @@ public class MyMealsFragment extends Fragment {
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
-        adapter = new MealAdapter(getActivity().getApplicationContext(),options);
+        adapter = new MealAdapter(getActivity().getApplicationContext(), options);
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -87,14 +190,18 @@ public class MyMealsFragment extends Fragment {
                 bundle.putString("MEAL_STEP", meal.getSteps());
                 bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL",  meal.getMealOwner());
-                bundle.putString("MEAL_CREATED_DATE" ,meal.getMealCreationDate());
+                bundle.putString("MEAL_OWNER_EMAIL", meal.getMealOwner());
+                bundle.putString("MEAL_CREATED_DATE", meal.getMealCreationDate());
+                bundle.putInt("VISIBILTY" , 1);
+                bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);
 
             }
         });
     }
+
+
 
 
     @Override

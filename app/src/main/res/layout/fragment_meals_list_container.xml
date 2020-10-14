@@ -25,6 +25,9 @@
                 android:layout_gravity="right"
                 android:src="@drawable/ic_arrow_back_black_24dp" />
 
+
+
+
             <TextView
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
@@ -34,10 +37,10 @@
 
             <Spinner
                 android:id="@+id/spinner_sorting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center" />
 
 
@@ -48,13 +51,86 @@
             android:layout_height="2dp"
             android:background="@color/colorPrimaryLight" />
 
+        <LinearLayout
+            android:id="@+id/child_linear"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhiteDark"
+            android:visibility="invisible"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/breackfast_child_Click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/endblue"
+                android:gravity="center"
+                android:text="Breakfast"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/lunch_child_Click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@color/endblue"
+                android:gravity="center"
+                android:text="Lunch"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/dinner_child_Click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@color/endblue"
+                android:gravity="center"
+                android:text="Dinner"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/juice_child_Click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@color/endblue"
+                android:gravity="center"
+                android:text="Juices"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/desserts_child_Click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@color/endblue"
+                android:gravity="center"
+                android:text="Desserts"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="15dp"
             android:id="@+id/container_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             tools:listitem="@layout/item_view_pager_header_shimmer" />
 
         />

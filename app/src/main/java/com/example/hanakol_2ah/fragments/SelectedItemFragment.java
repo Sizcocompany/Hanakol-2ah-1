@@ -383,7 +383,8 @@ public class SelectedItemFragment extends Fragment {
 //    i changed the name of that fragment from single view fragment into selected item fragment to be more detailed;
 
     private ImageView selected_item_photo, favorites_icon, share_icon;
-    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date, meal_edit_text_view, number_of_votes;
+    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date, number_of_votes;
+    public static TextView meal_edit_text_view;
     private RatingBar meal_rating_Bar;
     private List<ListMealsFragmentContainer> fragmentList;
     public static final String EXTRA_NAME = "com.examples.hanakol-2ah.EXTRA_NAME";
@@ -406,6 +407,7 @@ public class SelectedItemFragment extends Fragment {
     private double MEALRATE;
     private int NUMBER_OF_VOTES;
     private double TOTAL_RATES = 0;
+    private int visibility;
 
     Uri imageurl;
     Boolean isImageAdded = false;
@@ -434,7 +436,6 @@ public class SelectedItemFragment extends Fragment {
         meal_edit_text_view = view.findViewById(R.id.meal_edit_text_view);
         number_of_votes = view.findViewById(R.id.number_of_votes);
 
-
 //------------------------------------firebase-Realtime---------------------------------------------
         mDatabase = FirebaseDatabase.getInstance().getReference();
 //--------------------------------------------------------------------------------------------------
@@ -461,11 +462,20 @@ public class SelectedItemFragment extends Fragment {
             meal_creation_date.setText(bundle.getString("MEAL_CREATION_DATE"));
             MEAL_CREATION_DATE = bundle.getString("MEAL_CREATION_DATE");
             MEAL_FAVORITES_CONDITION = bundle.getInt("MEAL_FAVORITES_CONDITION");
+            visibility = bundle.getInt("VISIBILTY");
             child = bundle.getString("CHILD");
         }
-        //-----------------------------------Get-Number-Of-Votes------------------------------------
-        getNumberofViewers(MEAL_NAME);
 
+        if(visibility == 0){
+            meal_edit_text_view.setVisibility(View.INVISIBLE);
+        }
+        else if (visibility == 1){
+            meal_edit_text_view.setVisibility(View.VISIBLE);
+        }
+
+        //-----------------------------------Get-Number-Of-Votes------------------------------------
+
+        getNumberofViewers(MEAL_NAME);
 
         //------------------------------------------------------------------------------------------
 
@@ -474,7 +484,7 @@ public class SelectedItemFragment extends Fragment {
             meal_rating_Bar.setIsIndicator(true);
         }
 
-                meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
@@ -577,13 +587,6 @@ public class SelectedItemFragment extends Fragment {
 
         return view;
     }
-
-//    private void UpdatData(String child, double newRate, String mealName, int mealVotes) {
-//        DocumentReference mealDocumentReference = db.collection(child).document(mealName);
-//        mealDocumentReference.update("mealRate", newRate);
-//        mealDocumentReference.update("mealTotalVotes", mealVotes);
-//
-//    }
 
     private void handleFavoriteIcon(View view) {
         MyFavoritesFragment myFavoritesFragment = new MyFavoritesFragment();
@@ -729,6 +732,13 @@ public class SelectedItemFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if(visibility == 0){
+            meal_edit_text_view.setVisibility(View.INVISIBLE);
+        }
+        else if (visibility == 1){
+            meal_edit_text_view.setVisibility(View.VISIBLE);
+        }
     }
 
     private String onUserID() {
