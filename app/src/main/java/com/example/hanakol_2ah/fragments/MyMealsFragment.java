@@ -24,6 +24,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import static com.example.hanakol_2ah.fragments.SelectedItemFragment.meal_edit_text_view;
+
 public class MyMealsFragment extends Fragment {
     private String child = "breakfast";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -62,7 +64,7 @@ public class MyMealsFragment extends Fragment {
 
         setUpRecyclerView(view, child, userName);
 
-
+//        meal_edit_text_view.setVisibility( View.VISIBLE );
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,19 +152,8 @@ public class MyMealsFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
         return view;
     }
-
 
     private void setUpRecyclerView(View v, final String child, String userName) {
 

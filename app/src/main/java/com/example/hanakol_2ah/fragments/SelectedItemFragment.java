@@ -356,6 +356,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeActivity;
 import com.example.hanakol_2ah.models.Meals;
 import com.example.hanakol_2ah.models.RatingMeals;
 import com.facebook.AccessToken;
@@ -382,7 +383,7 @@ public class SelectedItemFragment extends Fragment {
 
 //    i changed the name of that fragment from single view fragment into selected item fragment to be more detailed;
 
-    private ImageView selected_item_photo, favorites_icon, share_icon;
+    private ImageView selected_item_photo, favorites_icon, share_icon , delete_icon;
     private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date, number_of_votes;
     public static TextView meal_edit_text_view;
     private RatingBar meal_rating_Bar;
@@ -395,10 +396,10 @@ public class SelectedItemFragment extends Fragment {
     private MyFavoritesFragment myFavoritesFragment;
     private View view;
     private int MEAL_FAVORITES_CONDITION;
-    DatabaseReference databaseRef;
+    private DatabaseReference databaseRef;
     private int numberOfDocuments;
-    StorageReference storageRef;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StorageReference storageRef;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DocumentReference documentReference;
@@ -435,6 +436,7 @@ public class SelectedItemFragment extends Fragment {
         share_icon = view.findViewById(R.id.share_icon);
         meal_edit_text_view = view.findViewById(R.id.meal_edit_text_view);
         number_of_votes = view.findViewById(R.id.number_of_votes);
+        delete_icon= view.findViewById( R.id.meal_delete_text_view );
 
 //------------------------------------firebase-Realtime---------------------------------------------
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -468,9 +470,11 @@ public class SelectedItemFragment extends Fragment {
 
         if(visibility == 0){
             meal_edit_text_view.setVisibility(View.INVISIBLE);
+            delete_icon.setVisibility(View.INVISIBLE);
         }
         else if (visibility == 1){
             meal_edit_text_view.setVisibility(View.VISIBLE);
+            delete_icon.setVisibility(View.VISIBLE);
         }
 
         //-----------------------------------Get-Number-Of-Votes------------------------------------
@@ -584,6 +588,16 @@ public class SelectedItemFragment extends Fragment {
             }
         });
 
+        delete_icon.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                documentReference = db.collection(child).document(MEAL_NAME);
+                documentReference.delete();
+                Toast.makeText( getActivity(), "Meal Deleted sucssfully", Toast.LENGTH_SHORT ).show();
+                getParentFragmentManager().beginTransaction().remove(SelectedItemFragment.this).commitAllowingStateLoss();
+
+            }
+        } );
 
         return view;
     }

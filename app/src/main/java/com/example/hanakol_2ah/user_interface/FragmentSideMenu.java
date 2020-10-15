@@ -1,5 +1,9 @@
 package com.example.hanakol_2ah.user_interface;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +19,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeActivity;
+import com.example.hanakol_2ah.fragments.LocalHelperLanguage;
 import com.example.hanakol_2ah.fragments.MyMealsFragment;
 import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.data.model.Resource;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,11 +37,14 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
     private ImageView ic_menu_close;
     private ImageView user_profile_pic;
     private TextView user_profile_name;
-    private TextView language;
+    private TextView languageDialog;
     private TextView info;
     private View logout;
     private Toolbar toolbar;
     private  View myPosts ;
+    boolean lang_slected = true ;
+    Resources resources ;
+    Context context ;
 
     private String mUsername;
     private String mEmail;
@@ -61,6 +71,56 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
         logout = view.findViewById(R.id.log_out_side_menu_linear_layout);
 //        TextView
         user_profile_name = view.findViewById(R.id.user_profile_name);
+
+        languageDialog = view.findViewById( R.id.language_Linear );
+
+        languageDialog.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String[] language  = {"English" , "غريس"};
+
+                int checkItem ;
+
+                if (lang_slected){
+                    checkItem = 0;
+                }else {
+
+                    checkItem = 1;
+                }
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+
+                builder.setTitle( "Select language" );
+                builder.setSingleChoiceItems( language, checkItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        languageDialog.setText( language[which] );
+                        if (language[which].equals( "English" )) {
+
+                            context = LocalHelperLanguage.setLocale( getActivity(), "en" );
+                            resources = context.getResources();
+
+                        }
+                        if (language[which].equals( "غريس" )) {
+
+                            context = LocalHelperLanguage.setLocale( getActivity(), "egy" );
+                            resources = context.getResources();
+
+                        }
+
+                    }
+                } ).setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                } );
+
+                builder.create().show();
+            }
+        } );
 
         myPosts = view.findViewById(R.id.my_post);
         myPosts.setVisibility(View.INVISIBLE);
