@@ -127,13 +127,14 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
                 btnLogout(mUsername);
             }
         });
+        mEmail = mFirebaseUser.getEmail();
         myPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
+//                MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.activity_home_container, myMealsFragment);
+//                transaction.replace(R.id.activity_home_container, myMealsFragment);
                 transaction.commit();
             }
         });

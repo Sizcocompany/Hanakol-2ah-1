@@ -358,18 +358,20 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
 import com.example.hanakol_2ah.models.RatingMeals;
+import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -381,7 +383,8 @@ public class SelectedItemFragment extends Fragment {
 //    i changed the name of that fragment from single view fragment into selected item fragment to be more detailed;
 
     private ImageView selected_item_photo, favorites_icon, share_icon;
-    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date, meal_edit_text_view;
+    private TextView selected_item_name, selected_item_steps, selected_item_ingredients, selected_item_owner_name, meal_creation_date, number_of_votes;
+    public static TextView meal_edit_text_view;
     private RatingBar meal_rating_Bar;
     private List<ListMealsFragmentContainer> fragmentList;
     public static final String EXTRA_NAME = "com.examples.hanakol-2ah.EXTRA_NAME";
@@ -393,6 +396,7 @@ public class SelectedItemFragment extends Fragment {
     private View view;
     private int MEAL_FAVORITES_CONDITION;
     DatabaseReference databaseRef;
+    private int numberOfDocuments;
     StorageReference storageRef;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mFirebaseAuth;
@@ -400,10 +404,18 @@ public class SelectedItemFragment extends Fragment {
     private DocumentReference documentReference;
     private String IMAGE_URL, child, MEAL_NAME, MEAL_DESCRIPTION, MEAL_STEP, MEAL_OWNER_EMAIL, MEAL_CREATION_DATE;
     private Float MEAL_RATE_BAR;
+    private double MEALRATE;
+    private int NUMBER_OF_VOTES;
+    private double TOTAL_RATES = 0;
+    private int visibility;
 
     Uri imageurl;
     Boolean isImageAdded = false;
     private int REQUEST_CODE_IMAGE = 101;
+
+    //--------------------------------------Firebase-Realtime-------------------------------------------
+    private DatabaseReference mDatabase;
+//--------------------------------------------------------------------------------------------------
 
 
     @Nullable
@@ -422,6 +434,12 @@ public class SelectedItemFragment extends Fragment {
         meal_creation_date = view.findViewById(R.id.upload_date_txt);
         share_icon = view.findViewById(R.id.share_icon);
         meal_edit_text_view = view.findViewById(R.id.meal_edit_text_view);
+        number_of_votes = view.findViewById(R.id.number_of_votes);
+
+//------------------------------------firebase-Realtime---------------------------------------------
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+//--------------------------------------------------------------------------------------------------
+
 
         myFavoritesFragment = new MyFavoritesFragment();
 
@@ -444,17 +462,43 @@ public class SelectedItemFragment extends Fragment {
             meal_creation_date.setText(bundle.getString("MEAL_CREATION_DATE"));
             MEAL_CREATION_DATE = bundle.getString("MEAL_CREATION_DATE");
             MEAL_FAVORITES_CONDITION = bundle.getInt("MEAL_FAVORITES_CONDITION");
+            visibility = bundle.getInt("VISIBILTY");
             child = bundle.getString("CHILD");
         }
 
+        if(visibility == 0){
+            meal_edit_text_view.setVisibility(View.INVISIBLE);
+        }
+        else if (visibility == 1){
+            meal_edit_text_view.setVisibility(View.VISIBLE);
+        }
+
+        //-----------------------------------Get-Number-Of-Votes------------------------------------
+
+        getNumberofViewers(MEAL_NAME);
+
+        //------------------------------------------------------------------------------------------
+
+
+        if (!isLoggedIn()) {
+            meal_rating_Bar.setIsIndicator(true);
+        }
 
         meal_rating_Bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                Float MEALRATE = meal_rating_Bar.getRating();
-                UpdatData(child, (float) meal_rating_Bar.getRating(), MEAL_NAME);
-                addRating(db, onGetMealSenderEmail(), MEAL_NAME, 15, MEALRATE);
+                MEALRATE = meal_rating_Bar.getRating();
+
+                sendUserRate(onUserID(), MEAL_NAME, onGetMealSenderEmail(), String.valueOf(MEALRATE));
+
+
+                getNumberofViewers(MEAL_NAME);
+//                UpdatData(child, (float) meal_rating_Bar.getRating(), MEAL_NAME, getNumberofViewers(MEAL_NAME));
+                getNumberofRates(MEAL_NAME);
+
+                onStart();
+//                addRating(db, onGetMealSenderEmail(), MEAL_NAME, getRating(db, onGetMealSenderEmail(), MEAL_NAME),MEALRATE);
             }
         });
 
@@ -475,7 +519,7 @@ public class SelectedItemFragment extends Fragment {
                     handleFavoriteIcon(view);
 
                     addFavoritesItems(db, selected_item_name.getText().toString(), IMAGE_URL, selected_item_ingredients.getText().toString(), selected_item_steps.getText().toString()
-                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString(), meal_creation_date.getText().toString(), 1, 0);
+                            , meal_rating_Bar.getRating(), selected_item_owner_name.getText().toString(), meal_creation_date.getText().toString(), 1, NUMBER_OF_VOTES);
 
                 }
 
@@ -544,12 +588,6 @@ public class SelectedItemFragment extends Fragment {
         return view;
     }
 
-    private void UpdatData(String child, double newRate, String mealName) {
-        DocumentReference meal = db.collection(child).document(mealName);
-        meal.update("mealRate", newRate);
-
-    }
-
     private void handleFavoriteIcon(View view) {
         MyFavoritesFragment myFavoritesFragment = new MyFavoritesFragment();
         myFavoritesFragment.favoriteImage_favorite_fragment = view.findViewById(R.id.favorites_icon);
@@ -575,7 +613,12 @@ public class SelectedItemFragment extends Fragment {
     }
 
 
-    private void addFavoritesItems(final FirebaseFirestore db, final String mealName, final String imageUri, final String mealDescription, final String mealSteps, final Float mealRate, final String mealOwnerName, final String mealDateCreation, final int favoriteCondition, final int mealTotalRateNum) {
+    //------------------------------Add-Favorite-Item-----------------------------------------------
+    private void addFavoritesItems(final FirebaseFirestore db, final String mealName
+            , final String imageUri, final String mealDescription
+            , final String mealSteps, final Float mealRate
+            , final String mealOwnerName, final String mealDateCreation
+            , final int favoriteCondition, final int mealTotalVotes) {
 
         HashMap hashMap = new HashMap();
         hashMap.put("MealName", mealName);
@@ -586,9 +629,9 @@ public class SelectedItemFragment extends Fragment {
         hashMap.put("MealRate", mealRate);
         hashMap.put("MealSenderEmail", onGetMealSenderEmail());
         hashMap.put("MealCreationDate", mealDateCreation);
-        hashMap.put("MealTotalRateNum", mealTotalRateNum);
+        hashMap.put("MealTotalVotes", mealTotalVotes);
 
-        Meals meals = new Meals(mealDescription, imageUri, mealName, mealRate, mealSteps, mealOwnerName, mealDateCreation, mealTotalRateNum);
+        Meals meals = new Meals(mealDescription, imageUri, mealName, mealRate, mealSteps, mealOwnerName, mealDateCreation, mealTotalVotes);
         meals.setMealSender(onGetMealSenderEmail());
         CollectionReference notebookRef = db.collection("favorites");
 
@@ -602,50 +645,134 @@ public class SelectedItemFragment extends Fragment {
 
     }
 
-    private void addRating(final FirebaseFirestore db, final String sender_rating_email, final String mealName, final int rateNumber, final double rateAvarage) {
-
-        HashMap hashMap = new HashMap();
-        hashMap.put("MealRate", mealName);
-        hashMap.put("RateNumber", rateNumber);
-        hashMap.put("RateAvarage", rateAvarage);
-        hashMap.put("SenderRatingEmail", sender_rating_email);
-
-        RatingMeals ratingMeals = new RatingMeals(sender_rating_email, mealName, rateNumber, rateAvarage);
-        CollectionReference notebookRef = db.collection("meal_rating");
+    //----------------------------------------------------------------------------------------------
 
 
-        notebookRef.document(mealName).collection(sender_rating_email).document("rate").set(ratingMeals).addOnSuccessListener(new OnSuccessListener<Void>() {
+    //------------------------------Set-Firebase-Realtime-------------------------------------------
+    private void sendUserRate(String userID, String mealName, String userEmail, String mealRate) {
+        RatingMeals ratingMeals = new RatingMeals(userID, mealName, userEmail, mealRate);
+
+        mDatabase.child("hanakol-aeh")
+                .child(child)
+                .child(mealName)
+                .child(userID)
+                .setValue(ratingMeals);
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+    //-------------------------------Get-Firebase-Realtime------------------------------------------
+    private int getNumberofViewers(String mealName) {
+
+        FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("hanakol-aeh")
+                .child(child)
+                .child(mealName)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            NUMBER_OF_VOTES = (int) dataSnapshot.getChildrenCount();
+                            number_of_votes.setText(String.valueOf(NUMBER_OF_VOTES));
+//                            UpdatData(child, MEALRATE, MEAL_NAME, (int) dataSnapshot.getChildrenCount());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+        return NUMBER_OF_VOTES;
+    }
+    //----------------------------------------------------------------------------------------------
+
+    double avg;
+
+    //-------------------------------Get-Firebase-Realtime------------------------------------------
+    private double getNumberofRates(final String mealName) {
+
+        com.google.firebase.database.Query rating = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("hanakol-aeh")
+                .child(child)
+                .child(mealName)
+                .orderByChild("mealName").equalTo(mealName);
+        rating.addValueEventListener(new ValueEventListener() {
+            int count = 0;
+            double sum = 0.0;
+
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RatingMeals ratingMeals = dataSnapshot.getValue(RatingMeals.class);
+                    sum += Double.parseDouble(ratingMeals.getRateNumber());
+                    count++;
+                }
 
-                Toast.makeText(getActivity(), "Thanks For your Rating :) ", Toast.LENGTH_LONG).show();
+                avg = sum / count;
+                DocumentReference mealDocumentReference = db.collection(child).document(mealName);
+                mealDocumentReference.update("mealRate", avg);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
+        return avg;
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(visibility == 0){
+            meal_edit_text_view.setVisibility(View.INVISIBLE);
+        }
+        else if (visibility == 1){
+            meal_edit_text_view.setVisibility(View.VISIBLE);
+        }
     }
 
-    public void getTotalRatingNumber(final FirebaseFirestore db, final String sender_rating_email, final String mealName, final int rateNumber, final double rateAvarage) {
-        final int[] count = {0};
-        db.collection("meal_rating").document(mealName).collection(sender_rating_email)
-                .whereEqualTo("rate", true)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+    private String onUserID() {
+        FirebaseAuth mFirebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient;
+        String mUserID = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .enableAutoManage(getActivity() /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                count[0]++;
-                            }
-                        } else {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser == null) {
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUserID = mFirebaseUser.getUid();
 
-                        }
-                    }
-                });
+            }
+        } catch (Exception e) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUserID = mFirebaseUser.getUid();
 
+            }
+        }
 
+        return mUserID;
     }
-
 
     private String onGetMealSenderEmail() {
         FirebaseAuth mFirebaseAuth;
@@ -680,6 +807,7 @@ public class SelectedItemFragment extends Fragment {
         return mUsername;
     }
 
+
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
         fragmentTransaction.addToBackStack(null);
@@ -709,6 +837,19 @@ public class SelectedItemFragment extends Fragment {
 
         // Return the resultant string
         return string;
+    }
+
+    private boolean isLoggedIn() {
+
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if (mFirebaseUser != null) {
+            return true;
+        }
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 
 

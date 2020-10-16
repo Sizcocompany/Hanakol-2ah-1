@@ -4,8 +4,6 @@
     package="com.example.hanakol_2ah">
     <!-- Facebook -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
@@ -21,13 +19,23 @@
         android:theme="@style/AppTheme">
 
 
+        <!--        <meta-data-->
+        <!--            android:name="com.facebook.sdk.ApplicationId"-->
+        <!--            android:value="@string/facebook_app_id"-->
+        <!--            tools:replace="android:value"-->
+        <!--            />-->
+
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"
+            />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
-            tools:replace="android:value" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            tools:replace="android:value"
+             />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -45,11 +53,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
-
-
-
 
 
         <activity android:name=".activities.SplashActivity">

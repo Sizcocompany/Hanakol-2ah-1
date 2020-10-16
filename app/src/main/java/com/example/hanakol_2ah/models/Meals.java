@@ -119,13 +119,13 @@ public class Meals {
     private String mealOwner;
     private String mealSender;
     private String mealCreationDate;
-    private  int mealTotalRateNum;
+    private  int mealTotalVotes;
 
     public Meals() {
     }
 
 
-    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate , int mealTotalRateNum ) {
+    public Meals(String description, String imageURL, String mealName, Float mealRate, String steps, String mealOwner, String mealCreationDate , int mealTotalVotes) {
         MealName = mealName;
         Description = description;
         Steps = steps;
@@ -133,7 +133,7 @@ public class Meals {
         MealRate = mealRate;
         this.mealOwner = mealOwner;
         this.mealCreationDate = mealCreationDate;
-        this.mealTotalRateNum = mealTotalRateNum;
+        this.mealTotalVotes = mealTotalVotes;
     }
 
     public String getMealCreationDate() {
@@ -200,11 +200,11 @@ public class Meals {
         this.mealSender = mealSender;
     }
 
-    public int getMealTotalRateNum() {
-        return mealTotalRateNum;
+    public int getMealTotalVotes() {
+        return mealTotalVotes;
     }
 
-    public void setMealTotalRateNum(int mealTotalRateNum) {
-        this.mealTotalRateNum = mealTotalRateNum;
+    public void setMealTotalVotes(int mealTotalVotes) {
+        this.mealTotalVotes = mealTotalVotes;
     }
 }

@@ -65,7 +65,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/shapeedittext"
-                    android:hint="Name "
+                    android:hint="@string/name_EN"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
                     android:textColorHighlight="@color/colorWhite"
@@ -128,7 +128,7 @@
                     android:layout_marginTop="62dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/shapebutton"
-                    android:text="upload"
+                    android:text="@string/upload_EN"
                     android:textAllCaps="false" />
 
 
