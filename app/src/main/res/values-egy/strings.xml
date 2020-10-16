@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hanakol ايه</string>
+    <string name="search_your_recipes">سيبشسيب</string>
+    <string name="meal_categories">شسيبثص</string>
+    <string name="facebook_app_id">631002550922018</string>
+    <string name="fb_login_protocol_scheme">fb631002550922018</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">سيبلسي</string>
+    <string name="description">صثقصثقسيب</string>
+    <string name="steps">يبل</string>
+    <string name="_0_0">0.0 %</string>
+    <string name="login_signup">شسيبشيبل</string>
+    <string name="add_new_meal">قلشسيشس</string>
+    <string name="password">لشسيبلشس</string>
+    <string name="remember_me">شسيبسي</string>
+        <string name="my_posts">ضصث</string>
+    <string name="language">سيبل</string>
+    <string name="help">شسي</string>
+    <string name="logout">شيل</string>
+    <string name="OK">شسيب</string>
+    <string name="name_EN">شسيب</string>
+    <string name="upload_EN">شسيب</string>
+</resources>

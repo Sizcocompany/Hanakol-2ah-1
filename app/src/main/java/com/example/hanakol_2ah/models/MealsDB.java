@@ -20,16 +20,11 @@ import java.util.Random;
 
 public class MealsDB {
 
-
-    private ListenerRegistration noteListener;
-
-
     public void getMealsData(final ImageView ImageURL, final TextView MealName, final TextView Description, final TextView Steps, final RatingBar MealRate, String child) {
         final ArrayList<Meals> mealsArrayList = new ArrayList<>();
 
 
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-//        CollectionReference studentsCollectionReference = rootRef.collection(child);
         CollectionReference studentsCollectionReference = rootRef.collection("meals-database").document(child).collection("data");
         studentsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

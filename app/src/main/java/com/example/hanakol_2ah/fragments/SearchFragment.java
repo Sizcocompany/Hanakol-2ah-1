@@ -35,8 +35,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef;
-    private CollectionReference notebookRef2;
+    private CollectionReference mealRef;
     DocumentReference docRef;
     private MealAdapter adapter;
     private String child = "breakfast";
@@ -47,9 +46,6 @@ public class SearchFragment extends Fragment {
 
 
     private EditText meal_search_tv;
-    private RecyclerView recyclerView;
-    private MealAdapter movieAdapter;
-    private List<Meals> movieList;
     //----------------------------------------------------------------------------------------------
     private TextView breackfast_search_Click, lunch_search_Click, dinner_search_Click, juice_search_Click, desserts_search_Click;
     //----------------------------------------------------------------------------------------------
@@ -92,17 +88,15 @@ public class SearchFragment extends Fragment {
                 Query query;
 
                 if (s.toString().isEmpty()) {
-                    notebookRef = db.collection(child);
-//                    notebookRef = db.collection("meals-database").document(child).collection("data");
-                    query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+                    mealRef = db.collection(child);
+                    query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
                     options = new FirestoreRecyclerOptions.Builder<Meals>()
                             .setQuery(query, Meals.class)
                             .build();
                 } else {
 
-                    notebookRef = db.collection(child);
-//                    notebookRef = db.collection("meals-database").document(child).collection("data");
-                    query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+                    mealRef = db.collection(child);
+                    query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
                 }
 
                 options = new FirestoreRecyclerOptions.Builder<Meals>()
@@ -111,7 +105,6 @@ public class SearchFragment extends Fragment {
 
 
                 docRef = db.collection(child).document("mealName");
-//                docRef = db.collection("meals-database").document(child).collection("data").document("mealName");
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
@@ -253,9 +246,9 @@ public class SearchFragment extends Fragment {
 
     private void setUpRecyclerView(View v, final String child) {
 
-        notebookRef = db.collection(child);
+        mealRef = db.collection(child);
 //        notebookRef = db.collection("meals-database").document(child).collection("data");
-        Query query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+        Query query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
         options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();
