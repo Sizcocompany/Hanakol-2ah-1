@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,10 +18,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder>   {
+public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.NoteHolder> {
     private OnItemClickListener listener;
     private List<Meals> mealsListFiltered;
     private List<Meals> mealsList;
@@ -42,7 +39,7 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
         holder.ingredients_item_recycler.setText(meals.getDescription());
         holder.steps_item_recycler.setText(meals.getSteps());
         holder.meal_rating_Bar.setRating(meals.getMealRate());
-        holder.owner_name_item_recycler.setText( meals.getMealOwner());
+        holder.owner_name_item_recycler.setText(meals.getMealOwner());
         holder.meal_creation_date.setText(meals.getMealCreationDate());
         Picasso.get().load(meals.getImageURL()).into(holder.mealImageView);
 
@@ -62,8 +59,8 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
 
 
     class NoteHolder extends RecyclerView.ViewHolder {
-        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler, owner_name_item_recycler , meal_creation_date;
-        private ImageView mealImageView ,FAVORITES_ICON;
+        private TextView name_item_recycler, ingredients_item_recycler, steps_item_recycler, owner_name_item_recycler, meal_creation_date;
+        private ImageView mealImageView, FAVORITES_ICON;
         private RatingBar meal_rating_Bar;
 
         public NoteHolder(View itemView) {
@@ -77,8 +74,6 @@ public class MealAdapter extends FirestoreRecyclerAdapter<Meals, MealAdapter.Not
             owner_name_item_recycler = itemView.findViewById(R.id.meal_owner_name_item_recycler);
             meal_creation_date = itemView.findViewById(R.id.upload_date_txt);
             FAVORITES_ICON = itemView.findViewById(R.id.favorites_icon);
-
-
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

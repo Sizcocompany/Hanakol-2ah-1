@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.fragments.MyMealsFragment;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,14 +26,13 @@ import com.squareup.picasso.Picasso;
 import static com.example.hanakol_2ah.activities.HomeActivity.login_txt_btn;
 
 public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
-    private ImageView ic_menu_close;
     private ImageView user_profile_pic;
     private TextView user_profile_name;
     private TextView language;
     private TextView info;
     private View logout;
     private Toolbar toolbar;
-    private  View myPosts ;
+    private View myPosts;
 
     private String mUsername;
     private String mEmail;
@@ -53,7 +51,6 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
 
 
 //    ImageViews
-        ic_menu_close = view.findViewById(R.id.ic_menu_close);
         user_profile_pic = view.findViewById(R.id.user_profile_pic);
 //     Toolbar
         toolbar = view.findViewById(R.id.toolBar);
@@ -87,7 +84,7 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
                 login_txt_btn.setVisibility(View.INVISIBLE);
 //                mUsername = mFirebaseUser.getDisplayName();
 //                if(mUsername ==null){
-                    mUsername = mFirebaseUser.getEmail();
+                mUsername = mFirebaseUser.getEmail();
 //                }
                 mUsername = mFirebaseUser.getDisplayName();
                 if (mFirebaseUser.getPhotoUrl() != null) {
@@ -139,19 +136,6 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
             }
         });
 
-        ic_menu_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.fragment_slide_in, R.anim.fragment_slide_in);
-                transaction.hide(FragmentSideMenu.this);
-                transaction.commit();
-                FragmentSideMenu.this.onStop();
-
-
-            }
-        });
-
 
         return view;
     }
@@ -166,7 +150,7 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
         user_profile_pic.setImageResource(R.drawable.ic_user_pic);
         user_profile_name.setText("User Name");
         myPosts.setVisibility(View.INVISIBLE);
-        Toast.makeText(getActivity(), "See you later chief "+Username +":)", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "See you later chief " + Username + ":)", Toast.LENGTH_LONG).show();
 
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fragment_slide_in, R.anim.fragment_slide_in);

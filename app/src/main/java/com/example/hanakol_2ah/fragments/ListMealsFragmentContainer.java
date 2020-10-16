@@ -32,7 +32,7 @@ import java.util.List;
 public class ListMealsFragmentContainer extends Fragment implements AdapterView.OnItemSelectedListener {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef;
+    private CollectionReference mealsRef;
     private MealAdapter adapter;
     private View view;
     private Spinner spinner;
@@ -95,18 +95,18 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
 
     private void setUpRecyclerView(View v, final String child ) {
 
-        notebookRef = db.collection(child);
+        mealsRef = db.collection(child);
 //        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query;
         if (MEAL_SORTING_CONDITION == 0) {
-            query = notebookRef.orderBy("mealName", Query.Direction.ASCENDING);
+            query = mealsRef.orderBy("mealName", Query.Direction.ASCENDING);
             FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                     .setQuery(query, Meals.class)
                     .build();
             adapter = new MealAdapter(getActivity().getApplicationContext(), options);
 
         } else if (MEAL_SORTING_CONDITION == 1){
-            query = notebookRef.orderBy("mealName", Query.Direction.DESCENDING);
+            query = mealsRef.orderBy("mealName", Query.Direction.DESCENDING);
             FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                     .setQuery(query, Meals.class)
                     .build();

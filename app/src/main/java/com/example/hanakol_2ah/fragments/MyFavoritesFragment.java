@@ -54,13 +54,10 @@ public class MyFavoritesFragment extends Fragment {
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
 
-//        favoriteImage_favorite_fragment =view.findViewById(R.id.favorites_icon);
-
         this.view = view;
 
         senderEmail = onGetMealSenderEmail();
         selectedItemFragment = new SelectedItemFragment();
-//        onGetbreakfastList(view , "Breakfast");
         if(mFirebaseUser!=null) {
             setUpRecyclerView(view, child, senderEmail);
         }
@@ -80,7 +77,6 @@ public class MyFavoritesFragment extends Fragment {
     private void setUpRecyclerView(View v, String child, String senderEmail) {
 
         notebookRef = db.collection(child);
-//        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query = notebookRef.whereEqualTo("mealSender", senderEmail);
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
@@ -148,8 +144,6 @@ public class MyFavoritesFragment extends Fragment {
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
                 // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
             } else {
                 mUsername = mFirebaseUser.getEmail();
 
@@ -166,18 +160,5 @@ public class MyFavoritesFragment extends Fragment {
         return mUsername;
     }
 
-//    private void handleFavoriteIcon(View view) {
-//        MyFavoritesFragment myFavorites = new MyFavoritesFragment();
-//        if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_icon)) {
-//            favorites_icon.setImageResource(R.drawable.ic_favorite_done);
-//            myFavorites.favoriteImage_favorite_fragment = view.findViewById(R.id.favorites_icon);
-//            myFavorites.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_done);
-//        } else if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_done)) {
-//            favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
-//            // deleteFromFavirotes();
-//
-//        }
-//
-//    }
 
 }

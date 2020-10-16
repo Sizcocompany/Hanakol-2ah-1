@@ -24,6 +24,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 tools:context=".activities.AddActivity">
+                <ImageView
+                    android:id="@+id/close_btn_addfragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="left"
+                    />
+
 
                 <ImageView
                     android:id="@+id/logo_Image"
@@ -136,7 +144,3 @@
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
-
-
-
-

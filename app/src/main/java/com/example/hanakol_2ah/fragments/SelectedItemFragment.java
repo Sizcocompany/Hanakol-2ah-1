@@ -494,11 +494,9 @@ public class SelectedItemFragment extends Fragment {
 
 
                 getNumberofViewers(MEAL_NAME);
-//                UpdatData(child, (float) meal_rating_Bar.getRating(), MEAL_NAME, getNumberofViewers(MEAL_NAME));
                 getNumberofRates(MEAL_NAME);
 
                 onStart();
-//                addRating(db, onGetMealSenderEmail(), MEAL_NAME, getRating(db, onGetMealSenderEmail(), MEAL_NAME),MEALRATE);
             }
         });
 
@@ -534,7 +532,6 @@ public class SelectedItemFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.activity_home_container, fragment);
                 fragmentTransaction.commit();
-//                proceedWithBack();
 
             }
         });
@@ -598,7 +595,6 @@ public class SelectedItemFragment extends Fragment {
         } else {
             favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
             myFavoritesFragment.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_icon);
-            // deleteFromFavirotes();
 
         }
 
@@ -756,8 +752,6 @@ public class SelectedItemFragment extends Fragment {
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
                 // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
             } else {
                 mUserID = mFirebaseUser.getUid();
 
@@ -789,8 +783,6 @@ public class SelectedItemFragment extends Fragment {
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
                 // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
             } else {
                 mUsername = mFirebaseUser.getEmail();
 

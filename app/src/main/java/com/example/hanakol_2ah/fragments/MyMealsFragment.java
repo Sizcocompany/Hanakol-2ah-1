@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,21 +28,26 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MyMealsFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyMealsFragment extends Fragment  {
     private String child = "breakfast";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef;
+    private CollectionReference mealsRef;
     private MealAdapter adapter;
     private View view;
+    private Spinner spinner;
     private LinearLayout child_linear;
     private SelectedItemFragment selectedItemFragment;
+    private int MEAL_SORTING_CONDITION;
     private String userName;
 
     //----------------------------------------------------------------------------------------------
     private TextView breackfast_search_Click, lunch_search_Click, dinner_search_Click, juice_search_Click, desserts_search_Click;
     //----------------------------------------------------------------------------------------------
 
-    public MyMealsFragment( String userName) {
+    public MyMealsFragment(String userName) {
 
         this.userName = userName;
     }
@@ -51,13 +60,12 @@ public class MyMealsFragment extends Fragment {
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
         this.view = view;
 
+        spinner = view.findViewById(R.id.spinner_sorting);
+spinner.setVisibility(View.INVISIBLE);
 
         child_linear = view.findViewById(R.id.child_linear);
         child_linear.setVisibility(View.VISIBLE);
         selectedItemFragment = new SelectedItemFragment();
-//        meal_edit_text_view = view.findViewById(R.id.meal_edit_text_view);
-//        meal_edit_text_view.setVisibility(View.VISIBLE);
-//        onGetbreakfastList(view , "Breakfast");
 
 
         setUpRecyclerView(view, child, userName);
@@ -69,8 +77,6 @@ public class MyMealsFragment extends Fragment {
                 getFragmentManager().beginTransaction().remove(MyMealsFragment.this).commitAllowingStateLoss();
             }
         });
-
-
 
 
         //        --------------------------------meals_search_Click----------------------------------------
@@ -152,31 +158,35 @@ public class MyMealsFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
         return view;
     }
 
 
     private void setUpRecyclerView(View v, final String child, String userName) {
 
-        notebookRef = db.collection(child);
-//        notebookRef = db.collection("meals-database").document(child).collection("data");
-        Query query = notebookRef.whereEqualTo("mealOwner", userName);
-        FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
-                .setQuery(query, Meals.class)
-                .build();
-        adapter = new MealAdapter(getActivity().getApplicationContext(), options);
+        mealsRef = db.collection(child);
+        Query query;
+        if (MEAL_SORTING_CONDITION == 0) {
+            query = mealsRef.whereEqualTo("mealOwner", userName)
+                    .orderBy("mealName", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
+                    .setQuery(query, Meals.class)
+                    .build();
+            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
+        } else if (MEAL_SORTING_CONDITION == 1) {
+            query = mealsRef.whereEqualTo("mealOwner", userName)
+                    .orderBy("mealName", Query.Direction.DESCENDING);
+            FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
+                    .setQuery(query, Meals.class)
+                    .build();
+            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
+        }
+
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        onStart();
 
 
         adapter.setOnItemClickListener(new MealAdapter.OnItemClickListener() {
@@ -192,7 +202,7 @@ public class MyMealsFragment extends Fragment {
                 bundle.putString("MEAL_RATE", meal.getMealRate().toString());
                 bundle.putString("MEAL_OWNER_EMAIL", meal.getMealOwner());
                 bundle.putString("MEAL_CREATED_DATE", meal.getMealCreationDate());
-                bundle.putInt("VISIBILTY" , 1);
+                bundle.putInt("VISIBILTY", 1);
                 bundle.putString("CHILD", child);
 
                 FragmentTransaction(selectedItemFragment, bundle);
@@ -200,8 +210,6 @@ public class MyMealsFragment extends Fragment {
             }
         });
     }
-
-
 
 
     @Override
@@ -224,4 +232,6 @@ public class MyMealsFragment extends Fragment {
         fragmentTransaction.commit();
         fragment.setArguments(bundle);
     }
+
+
 }

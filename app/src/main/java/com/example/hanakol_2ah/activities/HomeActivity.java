@@ -51,9 +51,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     //toolbar
     private ImageView ic_menu;
     SearchFragment searchFragment;
-
     private CardView open_search_fragment_card_view;
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Query query;
     private MealAdapter adapter;
@@ -67,8 +65,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     private String mEmail;
     private String mPhotoUrl;
     private GoogleApiClient mGoogleApiClient;
-
-//--------------------------------------------------------------------------------------------------
 
 //--------------------------------------Drawer-Layout-----------------------------------------------
 
@@ -145,7 +141,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
             }
         });
 
-        if(isLoggedIn() != true){
+        if (isLoggedIn() != true) {
             add_new_meal_tv_btn.setVisibility(View.INVISIBLE);
         }
         add_new_meal_tv_btn.setOnClickListener(new View.OnClickListener() {
@@ -191,11 +187,8 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.activity_home_container, fragment);
                 transaction.commit();
-
-
             }
         });
-
 
     }
 
@@ -203,9 +196,8 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     protected void onStart() {
         super.onStart();
 
-
+        // to set home activte updated with all actions in side menu
         try {
-
 
             mGoogleApiClient = new GoogleApiClient.Builder(this.getApplicationContext())
                     .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -261,15 +253,9 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
         mEmail = firebaseUser.getEmail();
 
-
-
-
-
-
-
-
     }
 
+    // to add new fragment
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_home_container, fragment);
@@ -302,7 +288,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
 
     private void handleMenuAction() {
         toggleDrawer(false);
@@ -354,26 +339,20 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         logOut = findViewById(R.id.log_out_side_menu_linear_layout);
 
 
-    myPosts.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        myPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.activity_home_container, myMealsFragment);
-            transaction.commit();
-        }
-    });
+                MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.activity_home_container, myMealsFragment);
+                transaction.commit();
 
-
+                drawerLayout.closeDrawer(Gravity.LEFT);
 
 
-
-
-
-
-
-
+            }
+        });
 //        aboutUs.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -392,17 +371,14 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Controller.getInstance(HomeActivity.this).btnLogout("sasassa" , fragmentSideMenu , mGoogleApiClient);
-//                Controller.getInstance(HomeActivity.this).showLogOutDialog(HomeActivity.this, true);
                 btnLogout();
+                drawerLayout.closeDrawer(Gravity.LEFT);
             }
         });
 
     }
 
-
     public void btnLogout() {
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

@@ -30,12 +30,11 @@ public class EditItemFragment extends Fragment {
     private List<ListMealsFragmentContainer> fragmentList;
     private String imageUri, child;
     private String IMAGE_URL, MEAL_NAME, MEAL_DESCRIPTION, MEAL_STEP, MEAL_OWNER_EMAIL, MEAL_CREATION_DATE;
-    private Float MEAL_RATE_BAR;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private View view;
 
 
-    public EditItemFragment(String child){
+    public EditItemFragment(String child) {
         this.child = child;
     }
 
@@ -69,13 +68,12 @@ public class EditItemFragment extends Fragment {
             MEAL_OWNER_EMAIL = bundle.getString("MEAL_OWNER_EMAIL");
             meal_creation_date.setText(bundle.getString("MEAL_CREATION_DATE"));
             MEAL_CREATION_DATE = bundle.getString("MEAL_CREATION_DATE");
-//            child = bundle.getString("CHILD");
         }
 
         save_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdatData(child , MEAL_NAME);
+                UpdatData(child, MEAL_NAME);
             }
         });
 
@@ -87,7 +85,6 @@ public class EditItemFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.activity_home_container, fragment);
                 fragmentTransaction.commit();
-//                proceedWithBack();
 
             }
         });
@@ -96,10 +93,9 @@ public class EditItemFragment extends Fragment {
         return view;
     }
 
-    private void UpdatData(String child , String mealName) {
+    private void UpdatData(String child, String mealName) {
         DocumentReference meal = db.collection(child).document(mealName);
 
-//        meal.update("mealName", selected_item_name.getText().toString());
         meal.update("description", selected_item_ingredients.getText().toString());
         meal.update("steps", selected_item_steps.getText().toString());
 
