@@ -36,41 +36,36 @@ public class MyFavoritesFragment extends Fragment {
     private SelectedItemFragment selectedItemFragment;
     private String senderEmail;
     public static ImageView favoriteImage_favorite_fragment;
-    private final int  MEAL_FAVORITES_CONDITION =1 ;
+    private final int MEAL_FAVORITES_CONDITION = 1;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_meals_list_container, container, false);
-        ImageView back_image_button = view.findViewById(R.id.back_click_image);
-
+        final View view = inflater.inflate( R.layout.fragment_meals_list_container, container, false );
+        ImageView back_image_button = view.findViewById( R.id.back_click_image );
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
 
-//        favoriteImage_favorite_fragment =view.findViewById(R.id.favorites_icon);
-
         this.view = view;
 
         senderEmail = onGetMealSenderEmail();
         selectedItemFragment = new SelectedItemFragment();
-//        onGetbreakfastList(view , "Breakfast");
-        if(mFirebaseUser!=null) {
-            setUpRecyclerView(view, child, senderEmail);
+        if (mFirebaseUser != null) {
+            setUpRecyclerView( view, child, senderEmail );
         }
 
-        back_image_button.setOnClickListener(new View.OnClickListener() {
+        back_image_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(MyFavoritesFragment.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove( MyFavoritesFragment.this ).commitAllowingStateLoss();
             }
-        });
+        } );
 
 
         return view;
@@ -79,36 +74,35 @@ public class MyFavoritesFragment extends Fragment {
 
     private void setUpRecyclerView(View v, String child, String senderEmail) {
 
-        notebookRef = db.collection(child);
-//        notebookRef = db.collection("meals-database").document(child).collection("data");
-        Query query = notebookRef.whereEqualTo("mealSender", senderEmail);
+        notebookRef = db.collection( child );
+        Query query = notebookRef.whereEqualTo( "mealSender", senderEmail );
         FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
-                .setQuery(query, Meals.class)
+                .setQuery( query, Meals.class )
                 .build();
-        adapter = new MealAdapter(getActivity().getApplicationContext(),options);
-        RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        adapter = new MealAdapter( getActivity().getApplicationContext(), options );
+        RecyclerView recyclerView = v.findViewById( R.id.container_recyclerview );
+        recyclerView.setHasFixedSize( true );
+        recyclerView.setLayoutManager( new LinearLayoutManager( getContext() ) );
+        recyclerView.setAdapter( adapter );
 
 
-        adapter.setOnItemClickListener(new MealAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener( new MealAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                Meals meal = documentSnapshot.toObject(Meals.class);
+                Meals meal = documentSnapshot.toObject( Meals.class );
                 Bundle bundle = new Bundle();
-                bundle.putString("MEAL_NAME", meal.getMealName());
-                bundle.putString("MEAL_DESCRIPTION", meal.getDescription());
-                bundle.putString("MEAL_STEP", meal.getSteps());
-                bundle.putString("MEAL_IMAGE_URI", meal.getImageURL());
-                bundle.putString("MEAL_RATE", meal.getMealRate().toString());
-                bundle.putString("MEAL_OWNER_EMAIL",  meal.getMealOwner());
-                bundle.putString("MEAL_CREATION_DATE" , meal.getMealCreationDate());
-                FragmentTransaction(selectedItemFragment, bundle);
+                bundle.putString( "MEAL_NAME", meal.getMealName() );
+                bundle.putString( "MEAL_DESCRIPTION", meal.getDescription() );
+                bundle.putString( "MEAL_STEP", meal.getSteps() );
+                bundle.putString( "MEAL_IMAGE_URI", meal.getImageURL() );
+                bundle.putString( "MEAL_RATE", meal.getMealRate().toString() );
+                bundle.putString( "MEAL_OWNER_EMAIL", meal.getMealOwner() );
+                bundle.putString( "MEAL_CREATION_DATE", meal.getMealCreationDate() );
+                FragmentTransaction( selectedItemFragment, bundle );
 
             }
-        });
+        } );
     }
 
 
@@ -127,10 +121,10 @@ public class MyFavoritesFragment extends Fragment {
 
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_home_container, fragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace( R.id.activity_home_container, fragment );
+        fragmentTransaction.addToBackStack( null );
         fragmentTransaction.commit();
-        fragment.setArguments(bundle);
+        fragment.setArguments( bundle );
     }
 
     private String onGetMealSenderEmail() {
@@ -139,17 +133,15 @@ public class MyFavoritesFragment extends Fragment {
         GoogleApiClient mGoogleApiClient;
         String mUsername = "UserName";
         try {
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                    .enableAutoManage(getActivity() /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+            mGoogleApiClient = new GoogleApiClient.Builder( getActivity() )
+                    .enableAutoManage( getActivity() /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */ )
+                    .addApi( Auth.GOOGLE_SIGN_IN_API )
                     .build();
 
             mFirebaseAuth = FirebaseAuth.getInstance();
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser == null) {
                 // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
             } else {
                 mUsername = mFirebaseUser.getEmail();
 
@@ -165,19 +157,5 @@ public class MyFavoritesFragment extends Fragment {
 
         return mUsername;
     }
-
-//    private void handleFavoriteIcon(View view) {
-//        MyFavoritesFragment myFavorites = new MyFavoritesFragment();
-//        if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_icon)) {
-//            favorites_icon.setImageResource(R.drawable.ic_favorite_done);
-//            myFavorites.favoriteImage_favorite_fragment = view.findViewById(R.id.favorites_icon);
-//            myFavorites.favoriteImage_favorite_fragment.setImageResource(R.drawable.ic_favorite_done);
-//        } else if (favorites_icon.getDrawable() != getResources().getDrawable(R.drawable.ic_favorite_done)) {
-//            favorites_icon.setImageResource(R.drawable.ic_favorite_icon);
-//            // deleteFromFavirotes();
-//
-//        }
-//
-//    }
 
 }

@@ -68,8 +68,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     private String mPhotoUrl;
     private GoogleApiClient mGoogleApiClient;
 
-//--------------------------------------------------------------------------------------------------
-
 //--------------------------------------Drawer-Layout-----------------------------------------------
 
     private DrawerLayout drawerLayout;
@@ -191,11 +189,8 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.activity_home_container, fragment);
                 transaction.commit();
-
-
             }
         });
-
 
     }
 
@@ -203,9 +198,8 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     protected void onStart() {
         super.onStart();
 
-
+        // to set home activte updated with all actions in side menu
         try {
-
 
             mGoogleApiClient = new GoogleApiClient.Builder(this.getApplicationContext())
                     .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -261,15 +255,9 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
         mEmail = firebaseUser.getEmail();
 
-
-
-
-
-
-
-
     }
 
+    // to add new fragment
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_home_container, fragment);
@@ -302,7 +290,6 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
 
     private void handleMenuAction() {
         toggleDrawer(false);
@@ -362,18 +349,12 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.activity_home_container, myMealsFragment);
             transaction.commit();
+
+            drawerLayout.closeDrawer(Gravity.LEFT);
+
+
         }
     });
-
-
-
-
-
-
-
-
-
-
 //        aboutUs.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -392,17 +373,14 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Controller.getInstance(HomeActivity.this).btnLogout("sasassa" , fragmentSideMenu , mGoogleApiClient);
-//                Controller.getInstance(HomeActivity.this).showLogOutDialog(HomeActivity.this, true);
                 btnLogout();
+                drawerLayout.closeDrawer(Gravity.LEFT);
             }
         });
 
     }
 
-
     public void btnLogout() {
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

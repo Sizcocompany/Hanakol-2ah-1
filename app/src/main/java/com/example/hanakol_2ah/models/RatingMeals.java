@@ -5,7 +5,6 @@ public class RatingMeals {
     private String rateNumber;
     private String sender_rating_email;
     private String sender_id;
-//    private int numberOfVotes;
 
     public RatingMeals() {
     }

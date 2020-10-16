@@ -30,7 +30,6 @@ public class EditItemFragment extends Fragment {
     private List<ListMealsFragmentContainer> fragmentList;
     private String imageUri, child;
     private String IMAGE_URL, MEAL_NAME, MEAL_DESCRIPTION, MEAL_STEP, MEAL_OWNER_EMAIL, MEAL_CREATION_DATE;
-    private Float MEAL_RATE_BAR;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private View view;
 
@@ -55,6 +54,7 @@ public class EditItemFragment extends Fragment {
         meal_creation_date = view.findViewById(R.id.upload_date_txt);
         selected_item_photo = view.findViewById(R.id.selected_item_image_iv);
 
+        // to get recieevd  data and set it
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
             Picasso.get().load(bundle.getString("MEAL_IMAGE_URI")).into(selected_item_photo);
@@ -98,7 +98,6 @@ public class EditItemFragment extends Fragment {
 
     private void UpdatData(String child , String mealName) {
         DocumentReference meal = db.collection(child).document(mealName);
-
 //        meal.update("mealName", selected_item_name.getText().toString());
         meal.update("description", selected_item_ingredients.getText().toString());
         meal.update("steps", selected_item_steps.getText().toString());

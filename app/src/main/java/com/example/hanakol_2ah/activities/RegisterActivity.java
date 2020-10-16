@@ -23,7 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText rName, rEmail, rPassword, rPasswordConfirm;
     Button registerAccount;
-//    ProgressBar rProgressBar;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
@@ -35,18 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-        rName = findViewById(R.id.registerName);
-        rEmail = findViewById(R.id.registerEmail);
-        rPassword = findViewById(R.id.registerPassword);
-        rPasswordConfirm = findViewById(R.id.registerConfirmPass);
-        registerAccount = findViewById(R.id.registerButton);
-//        rProgressBar = findViewById(R.id.progress_bar);
-
-
-
-
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        rName = findViewById( R.id.registerName );
+        rEmail = findViewById( R.id.registerEmail );
+        rPassword = findViewById( R.id.registerPassword );
+        rPasswordConfirm = findViewById( R.id.registerConfirmPass );
+        registerAccount = findViewById( R.id.registerButton );
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
 
 
