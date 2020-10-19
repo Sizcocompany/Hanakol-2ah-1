@@ -51,9 +51,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     //toolbar
     private ImageView ic_menu;
     SearchFragment searchFragment;
-
     private CardView open_search_fragment_card_view;
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Query query;
     private MealAdapter adapter;
@@ -143,7 +141,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
             }
         });
 
-        if(isLoggedIn() != true){
+        if (isLoggedIn() != true) {
             add_new_meal_tv_btn.setVisibility(View.INVISIBLE);
         }
         add_new_meal_tv_btn.setOnClickListener(new View.OnClickListener() {
@@ -341,20 +339,20 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         logOut = findViewById(R.id.log_out_side_menu_linear_layout);
 
 
-    myPosts.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        myPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.activity_home_container, myMealsFragment);
-            transaction.commit();
+                MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.activity_home_container, myMealsFragment);
+                transaction.commit();
 
-            drawerLayout.closeDrawer(Gravity.LEFT);
+                drawerLayout.closeDrawer(Gravity.LEFT);
 
 
-        }
-    });
+            }
+        });
 //        aboutUs.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

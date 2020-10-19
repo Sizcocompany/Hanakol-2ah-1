@@ -45,54 +45,53 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-            if (mFirebaseUser != null) {
-                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                finish();
-            }
-            registerAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String email = rEmail.getText().toString();
-                    String password = rPassword.getText().toString();
+        if (mFirebaseUser != null) {
+            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+            finish();
+        }
+        registerAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = rEmail.getText().toString();
+                String password = rPassword.getText().toString();
 
-                    //if the field is empty
-                    if (TextUtils.isEmpty(email)) {
-                        rEmail.setError("Enter the Email");
-                        return;
-                    }
-                    if (TextUtils.isEmpty(password)) {
-                        rPassword.setError("Enter the Password");
-                        return;
-                    }
-
-                    //if the lenght is shorter than 8 characters
-                    if (password.length() < 8) {
-                        rPassword.setError("The Password must be Longer than 8 Characters");
-                        return;
-                    }
-
-                    //register the email in firebase for the new comer
-                    mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Email Registered Successfully", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "ERROR" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-
-                        }
-                    });
-
-
+                //if the field is empty
+                if (TextUtils.isEmpty(email)) {
+                    rEmail.setError("Enter the Email");
+                    return;
                 }
-            });
+                if (TextUtils.isEmpty(password)) {
+                    rPassword.setError("Enter the Password");
+                    return;
+                }
+
+                //if the lenght is shorter than 8 characters
+                if (password.length() < 8) {
+                    rPassword.setError("The Password must be Longer than 8 Characters");
+                    return;
+                }
+
+                //register the email in firebase for the new comer
+                mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Email Registered Successfully", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "ERROR" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+
+
+            }
+        });
 
 
 
     }
 
 }
-

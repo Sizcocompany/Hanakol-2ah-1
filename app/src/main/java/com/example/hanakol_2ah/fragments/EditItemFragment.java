@@ -34,7 +34,7 @@ public class EditItemFragment extends Fragment {
     private View view;
 
 
-    public EditItemFragment(String child){
+    public EditItemFragment(String child) {
         this.child = child;
     }
 
@@ -54,7 +54,6 @@ public class EditItemFragment extends Fragment {
         meal_creation_date = view.findViewById(R.id.upload_date_txt);
         selected_item_photo = view.findViewById(R.id.selected_item_image_iv);
 
-        // to get recieevd  data and set it
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
             Picasso.get().load(bundle.getString("MEAL_IMAGE_URI")).into(selected_item_photo);
@@ -69,13 +68,12 @@ public class EditItemFragment extends Fragment {
             MEAL_OWNER_EMAIL = bundle.getString("MEAL_OWNER_EMAIL");
             meal_creation_date.setText(bundle.getString("MEAL_CREATION_DATE"));
             MEAL_CREATION_DATE = bundle.getString("MEAL_CREATION_DATE");
-//            child = bundle.getString("CHILD");
         }
 
         save_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdatData(child , MEAL_NAME);
+                UpdatData(child, MEAL_NAME);
             }
         });
 
@@ -87,7 +85,6 @@ public class EditItemFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.activity_home_container, fragment);
                 fragmentTransaction.commit();
-//                proceedWithBack();
 
             }
         });
@@ -96,9 +93,9 @@ public class EditItemFragment extends Fragment {
         return view;
     }
 
-    private void UpdatData(String child , String mealName) {
+    private void UpdatData(String child, String mealName) {
         DocumentReference meal = db.collection(child).document(mealName);
-//        meal.update("mealName", selected_item_name.getText().toString());
+
         meal.update("description", selected_item_ingredients.getText().toString());
         meal.update("steps", selected_item_steps.getText().toString());
 
