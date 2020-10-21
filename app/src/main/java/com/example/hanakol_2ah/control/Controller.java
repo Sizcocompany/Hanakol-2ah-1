@@ -3,25 +3,16 @@ package com.example.hanakol_2ah.control;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentTransaction;
-
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.user_interface.FragmentSideMenu;
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import static com.example.hanakol_2ah.activities.HomeActivity.login_txt_btn;
 
 public class Controller {
 

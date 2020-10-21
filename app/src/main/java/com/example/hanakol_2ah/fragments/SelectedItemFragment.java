@@ -192,7 +192,7 @@
 ////
 ////        } else {
 ////
-////            if (getActivity() instanceof HomeActivity || getActivity() instanceof HomeActivity) {
+////            if (getActivity() instanceof HomeBaseActivity || getActivity() instanceof HomeBaseActivity) {
 ////                getActivity().moveTaskToBack( true );
 ////            } else {
 ////                super.getActivity().onBackPressed();

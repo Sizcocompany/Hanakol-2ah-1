@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
-import static com.example.hanakol_2ah.activities.HomeActivity.login_txt_btn;
+import static com.example.hanakol_2ah.activities.HomeBaseActivity.login_txt_btn;
 
 public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
     private ImageView user_profile_pic;
@@ -51,91 +51,91 @@ public class FragmentSideMenu extends Fragment implements GoogleApiClient.OnConn
 
 
 //    ImageViews
-        user_profile_pic = view.findViewById(R.id.user_profile_pic);
-//     Toolbar
-        toolbar = view.findViewById(R.id.toolBar);
-//     Layout
-        logout = view.findViewById(R.id.log_out_side_menu_linear_layout);
-//        TextView
-        user_profile_name = view.findViewById(R.id.user_profile_name);
-
-        myPosts = view.findViewById(R.id.my_post);
-        myPosts.setVisibility(View.INVISIBLE);
-        logout.setVisibility(View.INVISIBLE);
-        //initialize Google Api Client
-        try {
-
-
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
-                    .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API)
-                    .build();
-
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser == null) {
-                user_profile_name.setText("User Name");
-                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
-                logout.setVisibility(View.INVISIBLE);
-                myPosts.setVisibility(View.INVISIBLE);
-            } else {
-                logout.setVisibility(View.VISIBLE);
-                myPosts.setVisibility(View.VISIBLE);
-                login_txt_btn.setVisibility(View.INVISIBLE);
+//        user_profile_pic = view.findViewById(R.id.user_profile_pic);
+////     Toolbar
+//        toolbar = view.findViewById(R.id.toolBar);
+////     Layout
+//        logout = view.findViewById(R.id.log_out_side_menu_linear_layout);
+////        TextView
+//        user_profile_name = view.findViewById(R.id.user_profile_name);
+//
+//        myPosts = view.findViewById(R.id.my_post);
+//        myPosts.setVisibility(View.INVISIBLE);
+//        logout.setVisibility(View.INVISIBLE);
+//        //initialize Google Api Client
+//        try {
+//
+//
+//            mGoogleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
+//                    .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+//                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+//                    .build();
+//
+//            mFirebaseAuth = FirebaseAuth.getInstance();
+//            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+//            if (mFirebaseUser == null) {
+//                user_profile_name.setText("User Name");
+//                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+//                logout.setVisibility(View.INVISIBLE);
+//                myPosts.setVisibility(View.INVISIBLE);
+//            } else {
+//                logout.setVisibility(View.VISIBLE);
+//                myPosts.setVisibility(View.VISIBLE);
+//                login_txt_btn.setVisibility(View.INVISIBLE);
+////                mUsername = mFirebaseUser.getDisplayName();
+////                if(mUsername ==null){
+//                mUsername = mFirebaseUser.getEmail();
+////                }
 //                mUsername = mFirebaseUser.getDisplayName();
-//                if(mUsername ==null){
-                mUsername = mFirebaseUser.getEmail();
+//                if (mFirebaseUser.getPhotoUrl() != null) {
+//                    mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+//                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
 //                }
-                mUsername = mFirebaseUser.getDisplayName();
-                if (mFirebaseUser.getPhotoUrl() != null) {
-                    mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
-                }
-                user_profile_name.setText(mUsername);
-
-
-            }
-        } catch (Exception e) {
-            logout.setVisibility(View.VISIBLE);
-            myPosts.setVisibility(View.VISIBLE);
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser != null) {
-                mUsername = mFirebaseUser.getDisplayName();
-                mEmail = mFirebaseUser.getEmail();
-                if (mFirebaseUser.getPhotoUrl() != null) {
-                    mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
-                }
-                user_profile_name.setText(mUsername);
-            } else {
-                user_profile_name.setText("User Name");
-                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
-                logout.setVisibility(View.INVISIBLE);
-                myPosts.setVisibility(View.INVISIBLE);
-
-            }
-        }
-
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnLogout(mUsername);
-            }
-        });
-        mEmail = mFirebaseUser.getEmail();
-        myPosts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//                transaction.replace(R.id.activity_home_container, myMealsFragment);
-                transaction.commit();
-            }
-        });
-
+//                user_profile_name.setText(mUsername);
+//
+//
+//            }
+//        } catch (Exception e) {
+//            logout.setVisibility(View.VISIBLE);
+//            myPosts.setVisibility(View.VISIBLE);
+//            mFirebaseAuth = FirebaseAuth.getInstance();
+//            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+//            if (mFirebaseUser != null) {
+//                mUsername = mFirebaseUser.getDisplayName();
+//                mEmail = mFirebaseUser.getEmail();
+//                if (mFirebaseUser.getPhotoUrl() != null) {
+//                    mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+//                    Picasso.get().load(mPhotoUrl).into(user_profile_pic);
+//                }
+//                user_profile_name.setText(mUsername);
+//            } else {
+//                user_profile_name.setText("User Name");
+//                user_profile_pic.setImageResource(R.drawable.ic_user_pic);
+//                logout.setVisibility(View.INVISIBLE);
+//                myPosts.setVisibility(View.INVISIBLE);
+//
+//            }
+//        }
+//
+//
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btnLogout(mUsername);
+//            }
+//        });
+//        mEmail = mFirebaseUser.getEmail();
+//        myPosts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+////                MyMealsFragment myMealsFragment = new MyMealsFragment("breakfast" , mEmail );
+//                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+////                transaction.replace(R.id.activity_home_container, myMealsFragment);
+//                transaction.commit();
+//            }
+//        });
+//
 
         return view;
     }

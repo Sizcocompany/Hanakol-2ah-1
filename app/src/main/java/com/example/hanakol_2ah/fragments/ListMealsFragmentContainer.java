@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeBaseActivity;
 import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -52,6 +53,8 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
         this.view = view;
 
+        ((HomeBaseActivity) getActivity()).showHideToolBar(false);
+
         spinner = view.findViewById(R.id.spinner_sorting);
 
         selectedItemFragment = new SelectedItemFragment();
@@ -65,7 +68,9 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((HomeBaseActivity) getActivity()).showHideToolBar(true);
                 getParentFragmentManager().beginTransaction().remove(ListMealsFragmentContainer.this).commitAllowingStateLoss();
+
             }
         });
 
@@ -204,4 +209,5 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }
