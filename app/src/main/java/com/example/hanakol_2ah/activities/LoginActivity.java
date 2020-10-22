@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,21 +15,25 @@ import androidx.annotation.Nullable;
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.authentication.FacebookAuthenticationClass;
 import com.example.hanakol_2ah.authentication.FirebaseAuthenticationClass;
-import com.example.hanakol_2ah.authentication.GoogleAuthenticationClass;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends HomeBaseActivity {
 
@@ -58,7 +63,7 @@ public class LoginActivity extends HomeBaseActivity {
 
 
     private FacebookAuthenticationClass facebookAuthenticationClass;
-    private GoogleAuthenticationClass googleAuthenticationClass;
+    //    private GoogleAuthenticationClass googleAuthenticationClass;
     private FirebaseAuthenticationClass firebaseAuthenticationClass;
 
 
@@ -90,8 +95,8 @@ public class LoginActivity extends HomeBaseActivity {
 
 //   Creat object for googleAuthenticationClass
 
-        googleAuthenticationClass = new GoogleAuthenticationClass(googleSignInBtn, googleSignInOptions
-                , googleSignInClient, googleApiClient, LoginActivity.this, firebaseAuth);
+//        googleAuthenticationClass = new GoogleAuthenticationClass(googleSignInBtn, googleSignInOptions
+//                , googleSignInClient, googleApiClient, LoginActivity.this, firebaseAuth);
 //  ------------------------------------------------------------------------------------------------
 
 //   Creat object for firebaseAuthenticationClass
@@ -118,10 +123,15 @@ public class LoginActivity extends HomeBaseActivity {
 
         googleSignInBtn = findViewById(R.id.button_google_sign_in);
 
-        googleSignInOptions = googleAuthenticationClass.getGoogleSignInOptions(getString(R.string.default_web_client_id));
-        googleSignInClient = googleAuthenticationClass.getGoogleSignInClient(googleSignInOptions);
+//        googleSignInOptions = googleAuthenticationClass.getGoogleSignInOptions(getString(R.string.default_web_client_id));
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build();
 
-        GoogleSignInAccount signInGoogleAccount = googleAuthenticationClass.getGoogleSignInAccount();
+//        googleSignInClient = googleAuthenticationClass.getGoogleSignInClient(googleSignInOptions);
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+//        GoogleSignInAccount signInGoogleAccount = googleAuthenticationClass.getGoogleSignInAccount();
 
 
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +140,6 @@ public class LoginActivity extends HomeBaseActivity {
                 Intent signin = googleSignInClient.getSignInIntent();
 
                 startActivityForResult(signin, GOOGLE_SIGN_IN_CODE);
-                finish();
             }
         });
 
@@ -189,12 +198,47 @@ public class LoginActivity extends HomeBaseActivity {
 
         // islam
 
+//        if (requestCode == GOOGLE_SIGN_IN_CODE) {
+//
+//            Task<GoogleSignInAccount> signInTask = googleAuthenticationClass.googleSignInAccountTask(data);
+//
+//            googleAuthenticationClass.signIn(signInTask);
+//        }
+
+
         if (requestCode == GOOGLE_SIGN_IN_CODE) {
 
-            Task<GoogleSignInAccount> signInTask = googleAuthenticationClass.googleSignInAccountTask(data);
+            Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-            googleAuthenticationClass.signIn(signInTask);
+            try {
+                GoogleSignInAccount signInacc = signInTask.getResult(ApiException.class);
+
+                AuthCredential authCredential = GoogleAuthProvider.getCredential(signInacc.getIdToken(), null);
+
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        Toast.makeText(getApplicationContext(), "Signed In successfully ", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+//                        updateUI(user);
+                        startActivity(new Intent(getApplicationContext(), HomeBaseActivity.class));
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+            } catch (ApiException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Error happened please try again alter ", Toast.LENGTH_SHORT).show();
+            }
         }
+
+
     }
 
 

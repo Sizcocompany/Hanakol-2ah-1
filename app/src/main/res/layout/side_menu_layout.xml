@@ -3,6 +3,7 @@
     android:layout_width="300dp"
     android:layout_height="match_parent"
     android:background="@color/colorWhiteDark"
+    android:clickable="false"
     android:orientation="vertical"
     android:paddingTop="40dp">
 
@@ -82,8 +83,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="invisible">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -108,13 +108,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="invisible">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_language" />
+            android:src="@drawable/ic_language"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="match_parent"
@@ -122,6 +122,53 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="@string/language"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />

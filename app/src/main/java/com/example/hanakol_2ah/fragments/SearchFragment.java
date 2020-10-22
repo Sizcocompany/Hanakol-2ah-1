@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeBaseActivity;
 import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -53,6 +54,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
         this.view = view;
+        ((HomeBaseActivity) getActivity()).showHideToolBar(false);
+
         selectedItemFragment = new SelectedItemFragment();
         meal_search_tv = view.findViewById(R.id.meal_search_tv);
 
@@ -64,6 +67,7 @@ public class SearchFragment extends Fragment {
         ic_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((HomeBaseActivity) getActivity()).showHideToolBar(true);
                 getParentFragmentManager().beginTransaction().remove(SearchFragment.this).commitAllowingStateLoss();
             }
         });
