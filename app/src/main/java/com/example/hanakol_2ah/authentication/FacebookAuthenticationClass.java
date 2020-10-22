@@ -4,16 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.hanakol_2ah.R;
-import com.example.hanakol_2ah.activities.HomeActivity;
+import com.example.hanakol_2ah.activities.HomeBaseActivity;
 import com.example.hanakol_2ah.activities.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -41,8 +38,9 @@ public class FacebookAuthenticationClass {
     final CallbackManager callbackManager;
 
 
-    public FacebookAuthenticationClass( String TAG, FirebaseAuth firebaseAuth,
-                                       Context context, LoginButton login,  ImageView profile, CallbackManager callbackManager ) {
+    public FacebookAuthenticationClass(String TAG, FirebaseAuth firebaseAuth
+            , Context context, LoginButton login, ImageView profile
+            , CallbackManager callbackManager) {
         this.TAG = TAG;
         this.firebaseAuth = firebaseAuth;
         this.context = context;
@@ -52,13 +50,19 @@ public class FacebookAuthenticationClass {
 
     }
 
-    public void FacebookRegisterationCallback() {
+    public void facebookRegisterationCallback(final Context context, final String name) {
 
         login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "onSuccess" + loginResult);
                 handleFacebookToken(loginResult.getAccessToken());
+                Intent intent = new Intent(context, HomeBaseActivity.class);
+                Toast.makeText(context, "Welcome chief " + name, Toast.LENGTH_SHORT).show();
+                context.startActivity(intent);
+
+
+
             }
 
             @Override
@@ -73,6 +77,7 @@ public class FacebookAuthenticationClass {
 
             }
         });
+
 
     }
 
@@ -96,7 +101,7 @@ public class FacebookAuthenticationClass {
     }
 
 
-    public FirebaseAuth.AuthStateListener GetAuthStateListener(){
+    public FirebaseAuth.AuthStateListener GetAuthStateListener() {
 
         return new FirebaseAuth.AuthStateListener() {
             @Override
@@ -111,7 +116,7 @@ public class FacebookAuthenticationClass {
         };
     }
 
-    public   AccessTokenTracker GetAccessTokenTracker(){
+    public AccessTokenTracker GetAccessTokenTracker() {
 
         return new AccessTokenTracker() {
             @Override
@@ -124,10 +129,7 @@ public class FacebookAuthenticationClass {
     }
 
 
-
-
-
-    public  void updateUI(FirebaseUser user) {
+    public void updateUI(FirebaseUser user) {
         if (user != null) {
 //            info.setText(user.getDisplayName());
             if (user.getPhotoUrl() != null) {
@@ -143,7 +145,6 @@ public class FacebookAuthenticationClass {
             profile.setImageResource(R.drawable.com_facebook_auth_dialog_background);
         }
     }
-
 
 
 }

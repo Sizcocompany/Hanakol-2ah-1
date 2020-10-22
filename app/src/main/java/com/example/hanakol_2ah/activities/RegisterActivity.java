@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         if (mFirebaseUser != null) {
-            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+            startActivity(new Intent(RegisterActivity.this, HomeBaseActivity.class));
             finish();
         }
         registerAccount.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Email Registered Successfully", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeBaseActivity.class));
                         } else {
                             Toast.makeText(RegisterActivity.this, "ERROR" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }

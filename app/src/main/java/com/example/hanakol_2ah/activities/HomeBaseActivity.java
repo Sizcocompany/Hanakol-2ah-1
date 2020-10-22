@@ -43,7 +43,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 
 
-public class HomeActivity extends ToolBarActivity implements TextView.OnEditorActionListener, GoogleApiClient.OnConnectionFailedListener {
+public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEditorActionListener, GoogleApiClient.OnConnectionFailedListener {
     ListMealsFragmentContainer fragment;
     public static TextView login_txt_btn;
     private Boolean Visablilety;
@@ -51,13 +51,17 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     //toolbar
     private ImageView ic_menu;
     SearchFragment searchFragment;
-    private CardView open_search_fragment_card_view;
+    private ImageView open_search_fragment_iv;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Query query;
     private MealAdapter adapter;
     private Fragment selectedItemFragment;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+
+    private long backPressedTime;
+    private boolean isMenuOpen;
+
 
 //-------------------------------------------SideMenu-----------------------------------------------
 
@@ -83,7 +87,13 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+
+
+        setContentView(R.layout.activity_home_base);
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -98,7 +108,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         final CardView favoritesCardView = findViewById(R.id.favoritesLayoutClick);
         login_txt_btn = findViewById(R.id.login_txt_btn);
         toolbar.setVisibility(View.VISIBLE);
-        open_search_fragment_card_view = findViewById(R.id.open_search_fragment);
+        open_search_fragment_iv = findViewById(R.id.open_search_fragment);
         searchFragment = new SearchFragment();
         selectedItemFragment = new SelectedItemFragment();
 
@@ -109,7 +119,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         hanakoleh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, RandomMealsActivity.class);
+                Intent intent = new Intent(HomeBaseActivity.this, RandomMealsActivity.class);
                 startActivity(intent);
             }
 //
@@ -136,7 +146,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         login_txt_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(HomeBaseActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -147,7 +157,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         add_new_meal_tv_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AddActivity.class);
+                Intent intent = new Intent(HomeBaseActivity.this, AddActivity.class);
                 startActivity(intent);
             }
         });
@@ -156,19 +166,22 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         ic_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                setSideMenuData();
                 handleMenuAction();
 
             }
         });
 
 
-        open_search_fragment_card_view.setOnClickListener(new View.OnClickListener() {
+        open_search_fragment_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchFragment searchFragment = new SearchFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_up);
-                transaction.replace(R.id.activity_home_container, searchFragment);
+                transaction.replace(R.id.activity_home_container, searchFragment,"fragment");
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -177,16 +190,19 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
 
     public void onClickCardviews(CardView cardView, final String string, final int MEAL_FAVORITES_CONDITION) {
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment = new ListMealsFragmentContainer(string);
-                Bundle bundle = new Bundle();
-                bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
-                FragmentTransaction(fragment, bundle);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.activity_home_container, fragment);
-                transaction.commit();
+                if(!isMenuOpen) {
+                    fragment = new ListMealsFragmentContainer(string);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
+                    FragmentTransaction(fragment, bundle);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.activity_home_container, fragment, "fragment");
+                    transaction.commit();
+                }
             }
         });
 
@@ -197,6 +213,10 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         super.onStart();
 
         // to set home activte updated with all actions in side menu
+        setSideMenuData();
+    }
+
+    private void setSideMenuData() {
         try {
 
             mGoogleApiClient = new GoogleApiClient.Builder(this.getApplicationContext())
@@ -250,15 +270,17 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
             }
         }
 
-
-        mEmail = firebaseUser.getEmail();
-
+        try {
+            mEmail = firebaseUser.getEmail();
+        } catch (Exception e) {
+            mEmail = "userName";
+        }
     }
 
     // to add new fragment
     private void FragmentTransaction(Fragment fragment, Bundle bundle) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_home_container, fragment);
+        fragmentTransaction.replace(R.id.activity_home_container, fragment, "fragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         fragment.setArguments(bundle);
@@ -312,8 +334,10 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
                     }
                 }, isCloseDelayed ? DRAWER_CLOSE_DELAY : 0);
 
+                isMenuOpen = false;
             } else {
                 drawerLayout.openDrawer(Gravity.RIGHT);
+                isMenuOpen = true;
             }
         } else {
             if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -324,8 +348,10 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
                     }
                 }, isCloseDelayed ? DRAWER_CLOSE_DELAY : 0);
 
+                isMenuOpen = false;
             } else {
                 drawerLayout.openDrawer(Gravity.LEFT);
+                isMenuOpen = true;
             }
         }
     }
@@ -337,6 +363,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
         myPosts = findViewById(R.id.my_post);
         changeLanguage = (LinearLayout) findViewById(R.id.language_Linear);
         logOut = findViewById(R.id.log_out_side_menu_linear_layout);
+        aboutUs = findViewById(R.id.about_Linear);
 
 
         myPosts.setOnClickListener(new View.OnClickListener() {
@@ -345,7 +372,7 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
                 MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.activity_home_container, myMealsFragment);
+                transaction.replace(R.id.activity_home_container, myMealsFragment,"fragment");
                 transaction.commit();
 
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -353,20 +380,21 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
 
             }
         });
-//        aboutUs.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-////                startActivity(new  In);
-//            }
-//        });
-//
-//        changeLanguage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+              int x;
+            }
+        });
+
+        changeLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int x;
+            }
+        });
 //
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -397,5 +425,115 @@ public class HomeActivity extends ToolBarActivity implements TextView.OnEditorAc
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public String onGetOwnerName(FirebaseAuth firebaseAuth, GoogleApiClient googleApiClient) {
+        FirebaseAuth mFirebaseAuth2 = firebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient = googleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser == null) {
+                mUsername = "Dear chief";
+                // Not signed in, launch the Sign In activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+            } else {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth2 = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth2.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getDisplayName();
+
+            }
+        }
+
+        return mUsername;
+    }
+
+    public String onGetOwnerName() {
+        FirebaseAuth mFirebaseAuth;
+        FirebaseUser mFirebaseUser;
+        GoogleApiClient mGoogleApiClient;
+        String mUsername = "UserName";
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API)
+                    .build();
+
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser == null) {
+                // Not signed in, launch the Sign In activity
+            } else {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        } catch (Exception e) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if (mFirebaseUser != null) {
+                mUsername = mFirebaseUser.getEmail();
+
+            }
+        }
+
+        return mUsername;
+    }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+
+
+            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawerLayout.closeDrawer(Gravity.RIGHT);
+                    }
+                }, false ? DRAWER_CLOSE_DELAY : 0);
+
+            } else {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                    }
+                }, false ? DRAWER_CLOSE_DELAY : 0);
+            }
+
+
+        if (getSupportFragmentManager().getFragments().size()>0) {
+
+            getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size()-1)).commit();
+
+                showHideToolBar(true);
+        }else if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            finish();
+            return;
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        }
+        backPressedTime = System.currentTimeMillis();
+
+    }
+
+    public void showHideToolBar(boolean show){
+        toolbar.setVisibility(show? View.VISIBLE:View.GONE);
     }
 }

@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddActivity extends HomeBaseActivity implements AdapterView.OnItemSelectedListener {
 
     private ImageView mealImage, closeIcon;
     private EditText name, description, steps;
@@ -93,7 +93,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddActivity.this, HomeActivity.class);
+                Intent intent = new Intent(AddActivity.this, HomeBaseActivity.class);
                 startActivity(intent);
             }
         });
@@ -181,7 +181,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                startActivity(new Intent(getApplicationContext(), HomeBaseActivity.class));
                                 Toast.makeText(AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG).show();
                             }
                         });
@@ -228,35 +228,5 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         // TODO Auto-generated method stub
     }
 
-    private String onGetOwnerName() {
-        FirebaseAuth mFirebaseAuth;
-        FirebaseUser mFirebaseUser;
-        GoogleApiClient mGoogleApiClient;
-        String mUsername = "UserName";
-        try {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .enableAutoManage(this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API)
-                    .build();
-
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser == null) {
-                // Not signed in, launch the Sign In activity
-            } else {
-                mUsername = mFirebaseUser.getEmail();
-
-            }
-        } catch (Exception e) {
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser != null) {
-                mUsername = mFirebaseUser.getEmail();
-
-            }
-        }
-
-        return mUsername;
-    }
 
 }

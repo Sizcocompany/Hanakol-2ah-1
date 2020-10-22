@@ -7,8 +7,6 @@
     android:paddingTop="40dp">
 
 
-
-
     <ImageView
         android:id="@+id/user_profile_pic"
         android:layout_width="100dp"
