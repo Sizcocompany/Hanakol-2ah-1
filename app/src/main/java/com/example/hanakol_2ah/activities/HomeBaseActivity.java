@@ -3,6 +3,8 @@ package com.example.hanakol_2ah.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -92,8 +95,21 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
 
-
         setContentView(R.layout.activity_home_base);
+
+
+// initiate a video view
+        VideoView simpleVideoView = (VideoView) findViewById(R.id.videoView);
+        simpleVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+        simpleVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.background));
+        simpleVideoView.start();
+
+
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -180,7 +196,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
                 SearchFragment searchFragment = new SearchFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_up);
-                transaction.replace(R.id.activity_home_container, searchFragment,"fragment");
+                transaction.replace(R.id.activity_home_container, searchFragment, "fragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -194,7 +210,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isMenuOpen) {
+//                if (!isMenuOpen) {
                     fragment = new ListMealsFragmentContainer(string);
                     Bundle bundle = new Bundle();
                     bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
@@ -202,7 +218,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.activity_home_container, fragment, "fragment");
                     transaction.commit();
-                }
+//                }
             }
         });
 
@@ -372,7 +388,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
 
                 MyMealsFragment myMealsFragment = new MyMealsFragment(mEmail);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.activity_home_container, myMealsFragment,"fragment");
+                transaction.replace(R.id.activity_home_container, myMealsFragment, "fragment");
                 transaction.commit();
 
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -384,7 +400,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
             @Override
             public void onClick(View view) {
 
-              int x;
+                int x;
             }
         });
 
@@ -493,36 +509,36 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
     }
 
 
-
-
     @Override
     public void onBackPressed() {
 
 
-            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawerLayout.closeDrawer(Gravity.RIGHT);
-                    }
-                }, false ? DRAWER_CLOSE_DELAY : 0);
+        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+                    isMenuOpen = false;
+                }
+            }, false ? DRAWER_CLOSE_DELAY : 0);
 
-            } else {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawerLayout.closeDrawer(Gravity.LEFT);
-                    }
-                }, false ? DRAWER_CLOSE_DELAY : 0);
-            }
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    isMenuOpen = true;
+                }
+            }, false ? DRAWER_CLOSE_DELAY : 0);
+        }
 
 
-        if (getSupportFragmentManager().getFragments().size()>0) {
+        if (getSupportFragmentManager().getFragments().size() > 0) {
 
-            getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size()-1)).commit();
+            getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)).commit();
 
-                showHideToolBar(true);
-        }else if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            showHideToolBar(true);
+        } else if (backPressedTime + 2000 > System.currentTimeMillis()) {
             finish();
             return;
         } else {
@@ -533,7 +549,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
 
     }
 
-    public void showHideToolBar(boolean show){
-        toolbar.setVisibility(show? View.VISIBLE:View.GONE);
+    public void showHideToolBar(boolean show) {
+        toolbar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

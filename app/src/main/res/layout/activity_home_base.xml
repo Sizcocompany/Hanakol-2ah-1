@@ -70,10 +70,12 @@
                                 android:orientation="vertical">
 
 
-                                <View
+                                <VideoView
+                                    android:id="@+id/videoView"
                                     android:layout_width="match_parent"
                                     android:layout_height="210dp"
-                                    android:background="@drawable/background_1" />
+
+                                    />
 
                                 <TextView
                                     android:id="@+id/login_txt_btn"
@@ -84,7 +86,7 @@
                                     android:layout_marginStart="250dp"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginEnd="12dp"
-                                    android:layout_marginBottom="150dp"
+                                    android:layout_marginBottom="180dp"
                                     android:gravity="right"
                                     android:text="@string/login_signup"
                                     android:textColor="@color/colorWhite"
