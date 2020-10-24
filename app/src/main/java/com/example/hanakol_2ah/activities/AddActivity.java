@@ -1,6 +1,8 @@
 package com.example.hanakol_2ah.activities;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,15 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanakol_2ah.R;
 import com.example.hanakol_2ah.models.Meals;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -69,7 +66,7 @@ public class AddActivity extends HomeBaseActivity implements AdapterView.OnItemS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        mealImage = findViewById(R.id.logo_Image);
+        mealImage = findViewById(R.id.meal_image );
         name = findViewById(R.id.et_eatname);
         description = findViewById(R.id.et_description);
         steps = findViewById(R.id.et_steps);
@@ -101,6 +98,7 @@ public class AddActivity extends HomeBaseActivity implements AdapterView.OnItemS
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                intent.putExtra( Intent.EXTRA_ALLOW_MULTIPLE , true );
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, REQUEST_CODE_IMAGE);
@@ -205,15 +203,14 @@ public class AddActivity extends HomeBaseActivity implements AdapterView.OnItemS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_IMAGE && data != null) {
-            {
+        if (requestCode == REQUEST_CODE_IMAGE  && data != null) {
+
                 imageurl = data.getData();
                 isImageAdded = true;
                 mealImage.setImageURI(imageurl);
 
             }
         }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

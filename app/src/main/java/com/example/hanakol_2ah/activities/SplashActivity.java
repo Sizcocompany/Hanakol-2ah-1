@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        logo = findViewById(R.id.logo_Image);
+        logo = findViewById(R.id.meal_image );
         welcome_tv = findViewById(R.id.welcome_tv);
 
         new Handler().postDelayed(new Runnable() {
