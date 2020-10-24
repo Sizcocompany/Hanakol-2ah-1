@@ -36,12 +36,12 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/def_large_text_size"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
+                android:textSize="@dimen/def_large_text_size" />
 
 
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="def_edit_text_size">14sp</dimen>
+    <dimen name="progress_dialog_padding">30dp</dimen>
+    <dimen name="button_min_height">50dp</dimen>
+    <dimen name="button_text_size">19sp</dimen>
+    <dimen name="viewing_data_padding">10dip</dimen>
+    <dimen name="list_text_size">16sp</dimen>
+    <dimen name="def_small0_text_size">12sp</dimen>
+    <dimen name="def_small1_text_size">14sp</dimen>
+    <dimen name="def_small2_text_size">15sp</dimen>
+    <dimen name="def_medium_text_size">20sp</dimen>
+    <dimen name="def_large_text_size">26sp</dimen>
+    <dimen name="header_title_text_size">20sp</dimen>
+    <dimen name="header_action_text_size">14sp</dimen>
+
+    <dimen name="login_edit_text_padding">30dp</dimen>
+
+    <dimen name="margin">5dp</dimen>
+    <dimen name="margin_x">10dp</dimen>
+    <dimen name="margin_2x">15dp</dimen>
+    <dimen name="margin_3x">20dp</dimen>
+
+</resources>

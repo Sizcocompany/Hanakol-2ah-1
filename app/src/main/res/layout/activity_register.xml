@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/gradient"
+    android:background="@color/graylight"
     android:gravity="center"
-    tools:context=".activities.RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.RegisterActivity">
 
 
     <TextView
@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Create New Account"
-        android:textColor="@color/colorWhiteDark"
-        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/def_large_text_size"
         android:textStyle="bold" />
 
 
@@ -31,7 +31,8 @@
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="@color/colorPrimaryText"
-        android:textColorHint="@color/colorWhiteDark" />
+        android:textColorHint="@color/colorWhiteDark"
+        android:textSize="@dimen/def_medium_text_size" />
 
 
     <EditText
@@ -46,7 +47,8 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/colorPrimaryText"
-        android:textColorHint="@color/colorWhiteDark" />
+        android:textColorHint="@color/colorWhiteDark"
+        android:textSize="@dimen/def_medium_text_size" />
 
     <EditText
         android:id="@+id/registerConfirmPass"
@@ -60,7 +62,8 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/colorPrimaryText"
-        android:textColorHint="@color/colorWhiteDark" />
+        android:textColorHint="@color/colorWhiteDark"
+        android:textSize="@dimen/def_medium_text_size" />
 
     <EditText
         android:id="@+id/registerEmail"
@@ -74,7 +77,8 @@
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="@color/colorPrimaryText"
-        android:textColorHint="@color/colorWhiteDark" />
+        android:textColorHint="@color/colorWhiteDark"
+        android:textSize="@dimen/def_medium_text_size" />
 
     <Button
         android:id="@+id/registerButton"
@@ -86,6 +90,7 @@
         android:background="@drawable/shapebutton"
         android:padding="1dp"
         android:text="Register"
+        android:textAllCaps="false"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -99,9 +104,9 @@
         android:background="@drawable/shapebutton"
         android:padding="1dp"
         android:text="Cancel"
+        android:textAllCaps="false"
         android:textSize="20dp"
         android:textStyle="bold" />
-
 
 
     <ProgressBar

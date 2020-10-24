@@ -48,9 +48,11 @@ import java.util.Locale;
 
 public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEditorActionListener, GoogleApiClient.OnConnectionFailedListener {
     ListMealsFragmentContainer fragment;
-    public static TextView login_txt_btn;
+    public static TextView login_txt_btn, add_new_meal_tv_btn;
     private Boolean Visablilety;
     private Toolbar toolbar;
+
+
     //toolbar
     private ImageView ic_menu;
     SearchFragment searchFragment;
@@ -130,7 +132,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        final TextView add_new_meal_tv_btn = findViewById(R.id.TV_add_new_meal);
+        add_new_meal_tv_btn = findViewById(R.id.TV_add_new_meal);
         TextView hanakoleh = findViewById(R.id.hanakolehTextView);
         hanakoleh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,13 +213,13 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
             @Override
             public void onClick(View v) {
 //                if (!isMenuOpen) {
-                    fragment = new ListMealsFragmentContainer(string);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
-                    FragmentTransaction(fragment, bundle);
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.activity_home_container, fragment, "fragment");
-                    transaction.commit();
+                fragment = new ListMealsFragmentContainer(string);
+                Bundle bundle = new Bundle();
+                bundle.putInt("MEAL_FAVORITES_CONDITION", MEAL_FAVORITES_CONDITION);
+                FragmentTransaction(fragment, bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.activity_home_container, fragment, "fragment");
+                transaction.commit();
 //                }
             }
         });
@@ -430,6 +432,7 @@ public class HomeBaseActivity extends ToolBarActivity implements TextView.OnEdit
         firebaseAuth.signOut();
         LoginManager.getInstance().logOut();
         login_txt_btn.setVisibility(View.VISIBLE);
+        add_new_meal_tv_btn.setVisibility(View.INVISIBLE);
         user_profile_pic.setImageResource(R.drawable.ic_user_pic);
         user_profile_name.setText("User Name");
         myPosts.setVisibility(View.INVISIBLE);

@@ -19,8 +19,8 @@
     <string name="my_posts">My Posts</string>
     <string name="language">Language</string>
     <string name="help">Help</string>
-    <string name="logout">logOut</string>
+    <string name="logout">Log Out</string>
     <string name="OK">OK</string>
     <string name="name_EN">Name</string>
-    <string name="upload_EN">upload</string>
+    <string name="upload_EN">Upload</string>
 </resources>

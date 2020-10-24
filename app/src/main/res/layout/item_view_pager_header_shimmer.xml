@@ -59,7 +59,7 @@
                             android:gravity="right"
                             android:hint="Error"
                             android:text="TextView"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/def_medium_text_size"
                             android:textStyle="bold" />
 
                         <RatingBar
@@ -78,7 +78,7 @@
                             android:gravity="right"
                             android:hint="Error"
                             android:text="TextView"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/def_small2_text_size"
                             android:textStyle="bold" />
 
                         <TextView
