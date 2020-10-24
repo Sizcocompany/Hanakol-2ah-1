@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeBaseActivity;
 import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,12 +31,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
-import java.util.List;
-
 public class SearchFragment extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference mealRef;
+    private CollectionReference mealsRef;
     DocumentReference docRef;
     private MealAdapter adapter;
     private String child = "breakfast";
@@ -55,6 +54,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
         this.view = view;
+        ((HomeBaseActivity) getActivity()).showHideToolBar(false);
+
         selectedItemFragment = new SelectedItemFragment();
         meal_search_tv = view.findViewById(R.id.meal_search_tv);
 
@@ -66,6 +67,7 @@ public class SearchFragment extends Fragment {
         ic_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((HomeBaseActivity) getActivity()).showHideToolBar(true);
                 getParentFragmentManager().beginTransaction().remove(SearchFragment.this).commitAllowingStateLoss();
             }
         });
@@ -88,15 +90,15 @@ public class SearchFragment extends Fragment {
                 Query query;
 
                 if (s.toString().isEmpty()) {
-                    mealRef = db.collection(child);
-                    query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
+                    mealsRef = db.collection(child);
+                    query = mealsRef.orderBy("mealName", Query.Direction.ASCENDING);
                     options = new FirestoreRecyclerOptions.Builder<Meals>()
                             .setQuery(query, Meals.class)
                             .build();
                 } else {
 
-                    mealRef = db.collection(child);
-                    query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
+                    mealsRef = db.collection(child);
+                    query = mealsRef.orderBy("mealName", Query.Direction.ASCENDING);
                 }
 
                 options = new FirestoreRecyclerOptions.Builder<Meals>()
@@ -246,9 +248,8 @@ public class SearchFragment extends Fragment {
 
     private void setUpRecyclerView(View v, final String child) {
 
-        mealRef = db.collection(child);
-//        notebookRef = db.collection("meals-database").document(child).collection("data");
-        Query query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
+        mealsRef = db.collection(child);
+        Query query = mealsRef.orderBy("mealName", Query.Direction.ASCENDING);
         options = new FirestoreRecyclerOptions.Builder<Meals>()
                 .setQuery(query, Meals.class)
                 .build();

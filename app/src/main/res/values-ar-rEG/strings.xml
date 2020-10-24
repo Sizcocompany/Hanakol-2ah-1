@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hanakol ايه</string>
+    <string name="search_your_recipes" translatable="false">Search Your Recipes…</string>
+    <string name="meal_categories" translatable="false">Meal Categories</string>
+    <string name="facebook_app_id">631002550922018</string>
+    <string name="fb_login_protocol_scheme">fb631002550922018</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome" translatable="false">مرحباً</string>
+    <string name="description" translatable="false">المكونات</string>
+    <string name="steps" translatable="false">الخطوات</string>
+    <string name="_0_0">0.0 %</string>
+    <string name="login_signup" translatable="false">تسجيل الدخول</string>
+    <string name="add_new_meal" translatable="false">اضافه وجبه جديده</string>
+    <string name="password" translatable="false">كلمه السر</string>
+    <string name="remember_me" translatable="false">تزكرني دوماً</string>
+    <string name="my_posts">منشوراتي</string>
+    <string name="language">اللغه</string>
+    <string name="help">المساعدة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="OK">موافق</string>
+    <string name="name">الاسم</string>
+    <string name="upload">نشر</string>
+</resources>

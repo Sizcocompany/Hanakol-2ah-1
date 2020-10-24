@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanakol_2ah.R;
+import com.example.hanakol_2ah.activities.HomeBaseActivity;
 import com.example.hanakol_2ah.adapters.MealAdapter;
 import com.example.hanakol_2ah.models.Meals;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,7 +33,7 @@ import java.util.List;
 public class ListMealsFragmentContainer extends Fragment implements AdapterView.OnItemSelectedListener {
     private String child;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference mealRef;
+    private CollectionReference mealsRef;
     private MealAdapter adapter;
     private View view;
     private Spinner spinner;
@@ -52,19 +53,24 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
         ImageView back_image_button = view.findViewById(R.id.back_click_image);
         this.view = view;
 
+        ((HomeBaseActivity) getActivity()).showHideToolBar(false);
+
         spinner = view.findViewById(R.id.spinner_sorting);
 
         selectedItemFragment = new SelectedItemFragment();
-        // to set received  items
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
             MEAL_FAVORITES_CONDITION = bundle.getInt("MEAL_FAVORITES_CONDITION");
         }
+//        setUpRecyclerView(view, child);
+
 
         back_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((HomeBaseActivity) getActivity()).showHideToolBar(true);
                 getParentFragmentManager().beginTransaction().remove(ListMealsFragmentContainer.this).commitAllowingStateLoss();
+
             }
         });
 
@@ -94,23 +100,25 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
 
     private void setUpRecyclerView(View v, final String child ) {
 
-        mealRef = db.collection(child);
+        mealsRef = db.collection(child);
+//        notebookRef = db.collection("meals-database").document(child).collection("data");
         Query query;
         if (MEAL_SORTING_CONDITION == 0) {
-            query = mealRef.orderBy("mealName", Query.Direction.ASCENDING);
+            query = mealsRef.orderBy("mealName", Query.Direction.ASCENDING);
             FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                     .setQuery(query, Meals.class)
                     .build();
             adapter = new MealAdapter(getActivity().getApplicationContext(), options);
 
         } else if (MEAL_SORTING_CONDITION == 1){
-            query = mealRef.orderBy("mealName", Query.Direction.DESCENDING);
+            query = mealsRef.orderBy("mealName", Query.Direction.DESCENDING);
             FirestoreRecyclerOptions<Meals> options = new FirestoreRecyclerOptions.Builder<Meals>()
                     .setQuery(query, Meals.class)
                     .build();
             adapter = new MealAdapter(getActivity().getApplicationContext(), options);
 
         }
+//            adapter = new MealAdapter(getActivity().getApplicationContext(), options);
         RecyclerView recyclerView = v.findViewById(R.id.container_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -191,6 +199,8 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
                 break;
 
         }
+//        this.MEAL_SORTING_CONDITION = MEAL_SORTING_CONDITION;
+        // Showing selected spinner item
         onStart();
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
     }
@@ -199,4 +209,5 @@ public class ListMealsFragmentContainer extends Fragment implements AdapterView.
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }

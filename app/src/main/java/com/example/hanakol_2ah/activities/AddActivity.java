@@ -1,4 +1,3 @@
-
 package com.example.hanakol_2ah.activities;
 
 import android.content.Intent;
@@ -41,7 +40,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddActivity extends HomeBaseActivity implements AdapterView.OnItemSelectedListener {
 
     private ImageView mealImage, closeIcon;
     private EditText name, description, steps;
@@ -68,48 +67,48 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_add );
-        mealImage = findViewById( R.id.logo_Image );
-        name = findViewById( R.id.et_eatname );
-        description = findViewById( R.id.et_description );
-        steps = findViewById( R.id.et_steps );
-        tvProgress = findViewById( R.id.textview_progress );
-        progressBar = findViewById( R.id.progress_bar );
-        uploadbtn = findViewById( R.id.upload_butn );
-        spinner = (Spinner) findViewById( R.id.spinner );
-        tvProgress.setVisibility( View.GONE );
-        progressBar.setVisibility( View.GONE );
-        storageRef = FirebaseStorage.getInstance().getReference().child( "MealImages" );
-        closeIcon = findViewById( R.id.close_btn_addfragment );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add);
+        mealImage = findViewById(R.id.logo_Image);
+        name = findViewById(R.id.et_eatname);
+        description = findViewById(R.id.et_description);
+        steps = findViewById(R.id.et_steps);
+        tvProgress = findViewById(R.id.textview_progress);
+        progressBar = findViewById(R.id.progress_bar);
+        uploadbtn = findViewById(R.id.upload_butn);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        tvProgress.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        storageRef = FirebaseStorage.getInstance().getReference().child("MealImages");
+        closeIcon = findViewById(R.id.close_btn_addfragment);
 
 
         // to set time and date in adding Meal
         final Calendar calendar = Calendar.getInstance();
-        final String Day = String.valueOf( calendar.get( Calendar.DAY_OF_MONTH ) );
-        final String Month = String.valueOf( calendar.get( Calendar.MONTH ) );
-        final String year = String.valueOf( calendar.get( Calendar.YEAR ) );
+        final String Day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        final String Month = String.valueOf(calendar.get(Calendar.MONTH));
+        final String year = String.valueOf(calendar.get(Calendar.YEAR));
 
 
-        closeIcon.setOnClickListener( new View.OnClickListener() {
+        closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddActivity.this, HomeActivity.class);
+                Intent intent = new Intent(AddActivity.this, HomeBaseActivity.class);
                 startActivity(intent);
             }
-        } );
-        mealImage.setOnClickListener( new View.OnClickListener() {
+        });
+        mealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setType( "image/*" );
-                intent.setAction( Intent.ACTION_GET_CONTENT );
-                startActivityForResult( intent, REQUEST_CODE_IMAGE );
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_CODE_IMAGE);
             }
-        } );
+        });
 
         // Adding Meal
-        uploadbtn.setOnClickListener( new View.OnClickListener() {
+        uploadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String meatName = name.getText().toString();
@@ -120,32 +119,32 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 if (isImageAdded != false && meatName != null && meatDescription != null && meatSteps != null) {
 
 
-                    uploadMeal( db, meatName, meatDescription, meatSteps, Float.parseFloat( "0.00" ), mealCreationDate, child, favorite_CONDITION, 0 );
+                    uploadMeal(db, meatName, meatDescription, meatSteps, Float.parseFloat("0.00"), mealCreationDate, child, favorite_CONDITION, 0);
                 }
 
             }
-        } );
+        });
 
 
         // Spinner click listener
-        spinner.setOnItemSelectedListener( this );
+        spinner.setOnItemSelectedListener(this);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add( "Breakfast" );
-        categories.add( "Lunch" );
-        categories.add( "Dinner" );
-        categories.add( "Desserts" );
-        categories.add( "Juices" );
+        categories.add("Breakfast");
+        categories.add("Lunch");
+        categories.add("Dinner");
+        categories.add("Desserts");
+        categories.add("Juices");
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, categories );
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinner.setAdapter( dataAdapter );
+        spinner.setAdapter(dataAdapter);
 
 
     }
@@ -155,62 +154,62 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             , final String mealCreationDate, final String child, final int favorite_CONDITION, final int mealTotalVotes) {
 
 
-        tvProgress.setVisibility( View.VISIBLE );
-        progressBar.setVisibility( View.VISIBLE );
-        databaseRef = FirebaseDatabase.getInstance().getReference().child( "Meal" ).child( child );
+        tvProgress.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("Meal").child(child);
         final String key = databaseRef.push().getKey();
-        storageRef.child( key + "jpg" ).putFile( imageurl ).addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageRef.child(key + "jpg").putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                storageRef.child( key + "jpg" ).getDownloadUrl().addOnSuccessListener( new OnSuccessListener<Uri>() {
+                storageRef.child(key + "jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         HashMap hashMap = new HashMap();
-                        hashMap.put( "MealName", mealName );
-                        hashMap.put( "Description", mealDescription );
-                        hashMap.put( "Steps", mealSteps );
-                        hashMap.put( "ImageURL", uri.toString() );
-                        hashMap.put( "MealRate", mealRate );
-                        hashMap.put( "MealCreationdate", mealCreationDate );
-                        hashMap.put( "MealTotalVotes", mealTotalVotes );
+                        hashMap.put("MealName", mealName);
+                        hashMap.put("Description", mealDescription);
+                        hashMap.put("Steps", mealSteps);
+                        hashMap.put("ImageURL", uri.toString());
+                        hashMap.put("MealRate", mealRate);
+                        hashMap.put("MealCreationdate", mealCreationDate);
+                        hashMap.put("MealTotalVotes", mealTotalVotes);
 
-                        Meals meals = new Meals( mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName(), mealCreationDate, mealTotalVotes );
+                        Meals meals = new Meals(mealDescription, uri.toString(), mealName, mealRate, mealSteps, onGetOwnerName(), mealCreationDate, mealTotalVotes);
 
-                        CollectionReference notebookRef = db.collection( child );
+                        CollectionReference notebookRef = db.collection(child);
 
-                        notebookRef.document( mealName ).set( meals ).addOnSuccessListener( new OnSuccessListener<Void>() {
+                        notebookRef.document(mealName).set(meals).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                startActivity( new Intent( getApplicationContext(), HomeActivity.class ) );
-                                Toast.makeText( AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG ).show();
+                                startActivity(new Intent(getApplicationContext(), HomeBaseActivity.class));
+                                Toast.makeText(AddActivity.this, "Data successfully upload", Toast.LENGTH_LONG).show();
                             }
-                        } );
+                        });
 //
                     }
-                } );
+                });
 
             }
-        } ).addOnProgressListener( new OnProgressListener<UploadTask.TaskSnapshot>() {
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
 
                 double progress = (taskSnapshot.getBytesTransferred() * 100) / taskSnapshot.getTotalByteCount();
-                progressBar.setProgress( (int) progress );
-                tvProgress.setText( progress + " %" );
+                progressBar.setProgress((int) progress);
+                tvProgress.setText(progress + " %");
             }
-        } );
+        });
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_IMAGE && data != null) {
             {
                 imageurl = data.getData();
                 isImageAdded = true;
-                mealImage.setImageURI( imageurl );
+                mealImage.setImageURI(imageurl);
 
             }
         }
@@ -219,45 +218,15 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-        String item = parent.getItemAtPosition( position ).toString().toLowerCase();
+        String item = parent.getItemAtPosition(position).toString().toLowerCase();
         this.child = item;
         // Showing selected spinner item
-        Toast.makeText( parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT ).show();
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
 
-    private String onGetOwnerName() {
-        FirebaseAuth mFirebaseAuth;
-        FirebaseUser mFirebaseUser;
-        GoogleApiClient mGoogleApiClient;
-        String mUsername = "UserName";
-        try {
-            mGoogleApiClient = new GoogleApiClient.Builder( this )
-                    .enableAutoManage( this /* FragmentActivity */, (GoogleApiClient.OnConnectionFailedListener) this /* OnConnectionFailedListener */ )
-                    .addApi( Auth.GOOGLE_SIGN_IN_API )
-                    .build();
-
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser == null) {
-                // Not signed in, launch the Sign In activity
-            } else {
-                mUsername = mFirebaseUser.getEmail();
-
-            }
-        } catch (Exception e) {
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            if (mFirebaseUser != null) {
-                mUsername = mFirebaseUser.getEmail();
-
-            }
-        }
-
-        return mUsername;
-    }
 
 }

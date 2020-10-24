@@ -64,7 +64,7 @@
         </activity>
 
         <activity android:name=".activities.RegisterActivity"></activity>
-        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.HomeBaseActivity"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.RandomMealsActivity"></activity>
         <activity android:name=".activities.AddActivity"></activity>

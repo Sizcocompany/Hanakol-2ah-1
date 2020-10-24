@@ -13,30 +13,44 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
+            android:layout_height="?actionBarSize"
             android:background="@drawable/gradient"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/back_click_image"
-                android:layout_width="match_parent"
+                android:layout_marginStart="15dp"
+                android:paddingEnd="5dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:layout_weight="5"
                 android:src="@drawable/ic_arrow_back_black_24dp" />
 
+
+
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryLight"
+
+                />
 
             <Spinner
                 android:id="@+id/spinner_sorting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center" />
 
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimaryLight" />
 
         <LinearLayout
             android:id="@+id/child_linear"

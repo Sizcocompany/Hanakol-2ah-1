@@ -10,7 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="?actionBarSize"
         android:background="@drawable/gradient" />
 
     <LinearLayout
@@ -52,6 +52,7 @@
         <RatingBar
             android:id="@+id/meal_rating_Bar"
             android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:numStars="5" />
@@ -82,7 +83,7 @@
                 android:layout_weight="1"
                 android:text="Created By: "
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="12sp"
+                android:textSize="@dimen/def_small0_text_size"
                 android:textStyle="bold" />
 
 
@@ -95,7 +96,7 @@
                 android:layout_weight="1"
                 android:text="ownerName: "
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="12sp"
+                android:textSize="@dimen/def_small0_text_size"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -109,7 +110,7 @@
             android:layout_marginTop="10dp"
             android:text="date"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="12sp"
+            android:textSize="@dimen/def_small0_text_size"
             android:textStyle="bold" />
 
         <EditText
@@ -120,7 +121,7 @@
             android:layout_marginTop="10dp"
             android:text="My Meal Name"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="25sp"
+            android:textSize="@dimen/def_large_text_size"
             android:textStyle="bold" />
 
 

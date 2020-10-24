@@ -3,11 +3,9 @@
     android:layout_width="300dp"
     android:layout_height="match_parent"
     android:background="@color/colorWhiteDark"
+    android:clickable="false"
     android:orientation="vertical"
     android:paddingTop="40dp">
-
-
-
 
     <ImageView
         android:id="@+id/user_profile_pic"
@@ -16,6 +14,7 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_user_pic" />
 
+
     <TextView
         android:id="@+id/user_profile_name"
         android:layout_width="match_parent"
@@ -23,17 +22,21 @@
         android:gravity="center"
         android:text="User Name"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textSize="@dimen/header_title_text_size"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimaryText" />
 
     <LinearLayout
         android:id="@+id/my_post"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
@@ -44,13 +47,48 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:gravity="center"
+            android:gravity="left"
             android:text="@string/my_posts"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/list_text_size"
             android:textStyle="bold" />
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/about_Linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="left"
+            android:text="@string/help"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/list_text_size"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimaryText" />
 
 
     <LinearLayout
@@ -58,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
@@ -70,37 +108,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:gravity="left"
             android:text="@string/logout"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/list_text_size"
             android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/about_Linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="invisible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_help" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/help"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
 
     </LinearLayout>
 
@@ -109,26 +122,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="invisible">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_language" />
+            android:src="@drawable/ic_language"
+            android:visibility="invisible" />
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:gravity="left"
             android:text="@string/language"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
+            android:textSize="@dimen/list_text_size"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
     </LinearLayout>
+<ImageView
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:layout_gravity="center"
+    android:src="@drawable/logo"/>
 
 </LinearLayout>
