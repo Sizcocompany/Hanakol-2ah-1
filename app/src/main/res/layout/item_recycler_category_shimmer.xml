@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Breakfast"
+                        android:text="@string/breakfast"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />
@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Lunch"
+                        android:text="@string/lunch"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />
@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Dinner"
+                        android:text="@string/dinner"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />
@@ -177,7 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Favorites"
+                        android:text="@string/favorites"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />
@@ -217,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Juices"
+                        android:text="@string/juices"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />
@@ -257,7 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Desserts"
+                        android:text="@string/desserts"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/def_small1_text_size"
                         android:textStyle="bold" />

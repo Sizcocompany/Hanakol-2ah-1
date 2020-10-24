@@ -1,26 +1,30 @@
 <resources>
     <string name="app_name">Hanakol ايه</string>
-    <string name="search_your_recipes">Search Your Recipes…</string>
-    <string name="meal_categories">Meal Categories</string>
+    <string name="search_your_recipes" translatable="false">Search Your Recipes…</string>
+    <string name="meal_categories" translatable="false">Meal Categories</string>
     <string name="facebook_app_id">631002550922018</string>
     <string name="fb_login_protocol_scheme">fb631002550922018</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome">Welcome</string>
-    <string name="description">Description</string>
-    <string name="steps">Steps</string>
+    <string name="welcome" translatable="false">Welcome</string>
+    <string name="description" translatable="false">Description</string>
+    <string name="steps" translatable="false">Steps</string>
     <string name="_0_0">0.0 %</string>
-    <string name="upload_AR">اضافه</string>
-    <string name="name_AR">مرحبا بك</string>
-    <string name="login_signup">login/signup</string>
-    <string name="add_new_meal">Add new meal</string>
-    <string name="password">Password</string>
-    <string name="remember_me">Remember Me</string>
+    <string name="login_signup" translatable="false">login/signup</string>
+    <string name="add_new_meal" translatable="false">Add new meal</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="remember_me" translatable="false">Remember Me</string>
     <string name="my_posts">My Posts</string>
     <string name="language">Language</string>
     <string name="help">Help</string>
     <string name="logout">Log Out</string>
     <string name="OK">OK</string>
-    <string name="name_EN">Name</string>
-    <string name="upload_EN">Upload</string>
+    <string name="name">Name</string>
+    <string name="upload">Upload</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="favorites">Favorites</string>
+    <string name="juices">Juices</string>
+    <string name="desserts">Desserts</string>
 </resources>
