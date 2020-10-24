@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,6 +75,13 @@ public class EditItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 UpdatData(child, MEAL_NAME);
+                Toast.makeText(getActivity(), "Updated successfully", Toast.LENGTH_SHORT).show();
+
+                ListMealsFragmentContainer fragment = new ListMealsFragmentContainer(child);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.activity_home_container, fragment);
+                fragmentTransaction.commit();
+
             }
         });
 

@@ -61,7 +61,7 @@ public class LoginActivity extends HomeBaseActivity {
     private EditText firebaseEmail, firebasePass;
     private TextView forgetPass;
 
-
+    ImageView closeIcon;
     private FacebookAuthenticationClass facebookAuthenticationClass;
     //    private GoogleAuthenticationClass googleAuthenticationClass;
     private FirebaseAuthenticationClass firebaseAuthenticationClass;
@@ -71,6 +71,16 @@ public class LoginActivity extends HomeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        closeIcon = findViewById(R.id.close_btn_login);
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, HomeBaseActivity.class);
+                startActivity(intent);
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -151,7 +161,6 @@ public class LoginActivity extends HomeBaseActivity {
         firebaseEmail = findViewById(R.id.editTextTextPersonName);
         firebasePass = findViewById(R.id.editTextTextPassword);
         forgetPass = findViewById(R.id.forget);
-
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override

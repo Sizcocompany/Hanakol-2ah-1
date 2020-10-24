@@ -68,7 +68,8 @@
                 android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Breakfast"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/def_small1_text_size" />
 
             <TextView
                 android:id="@+id/lunch_search_Click"
@@ -81,7 +82,8 @@
                 android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Lunch"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/def_small1_text_size" />
 
             <TextView
                 android:id="@+id/dinner_search_Click"
@@ -94,7 +96,8 @@
                 android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Dinner"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/def_small1_text_size" />
 
             <TextView
                 android:id="@+id/juice_search_Click"
@@ -107,7 +110,8 @@
                 android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Juices"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/def_small1_text_size" />
 
             <TextView
                 android:id="@+id/desserts_search_Click"
@@ -120,7 +124,8 @@
                 android:background="@color/endblue"
                 android:gravity="center"
                 android:text="Desserts"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/def_small1_text_size" />
 
         </LinearLayout>
 

@@ -13,8 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
+            android:layout_height="?actionBarSize"
             android:background="@drawable/gradient"
             android:orientation="horizontal">
 

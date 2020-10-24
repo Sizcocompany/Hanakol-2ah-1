@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,37 +8,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="285dp"
-                android:background="@drawable/gradient"/>
+                android:layout_height="?actionBarSize"
+                android:background="@drawable/gradient" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 tools:context=".activities.AddActivity">
+
                 <ImageView
                     android:id="@+id/close_btn_addfragment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_close"
                     android:layout_gravity="left"
-                    />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_close" />
 
 
                 <ImageView
                     android:id="@+id/logo_Image"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="65dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="30dp"
                     android:src="@drawable/ic_imageview" />
 
 
@@ -73,11 +75,12 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/shapeedittext"
-                    android:hint="@string/name_EN"
+                    android:hint="@string/name"
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
                     android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorPrimaryDark" />
+                    android:textColorHint="@color/colorWhiteDark"
+                    android:textSize="@dimen/def_medium_text_size" />
 
                 <EditText
                     android:id="@+id/et_description"
@@ -91,7 +94,8 @@
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
                     android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorPrimaryDark" />
+                    android:textColorHint="@color/colorWhiteDark"
+                    android:textSize="@dimen/def_medium_text_size" />
 
                 <EditText
                     android:id="@+id/et_steps"
@@ -105,7 +109,8 @@
                     android:padding="5dp"
                     android:textColor="@color/colorPrimaryText"
                     android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorPrimaryDark" />
+                    android:textColorHint="@color/colorWhiteDark"
+                    android:textSize="@dimen/def_medium_text_size" />
 
 
                 <TextView
@@ -136,8 +141,9 @@
                     android:layout_marginTop="62dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/shapebutton"
-                    android:text="@string/upload_EN"
-                    android:textAllCaps="false" />
+                    android:text="@string/upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/def_medium_text_size" />
 
 
             </LinearLayout>

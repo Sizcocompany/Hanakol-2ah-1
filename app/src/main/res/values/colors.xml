@@ -6,12 +6,17 @@
     <color name="colorAccent">#448AFF</color>
     <color name="colorNull">#00000000</color>
     <color name="colorPrimaryText">#212121</color>
+    <color name="colorPrimaryTextWhite">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorWhiteDark">#DBDBDB</color>
     <color name="colorPrimaryLight">#B3E5FC</color>
     <color name="colorBackground">#F4F7F7</color>
     <color name="signupColor">#066e8a</color>
     <color name="colorToolBar">#0bafe6</color>
+
+
+
+    <color name="colorCardView">#fafafa</color>
 
 
 

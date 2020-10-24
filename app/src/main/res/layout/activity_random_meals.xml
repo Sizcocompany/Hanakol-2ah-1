@@ -1,153 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhiteDark">
+    android:background="@color/graylight">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/back_click_image"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:layout_gravity="left"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
-
-        <RatingBar
-            android:id="@+id/randomratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:numStars="5" />
-
-        <ImageView
-            android:id="@+id/imageViewMeal"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/shapeedittext"/>
-
-        <TextView
-            android:id="@+id/textViewاسم"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryText"
-            android:background="@drawable/shapeedittext"
-            android:padding="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView2خطوات"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryText"
-            android:background="@drawable/shapeedittext"
-            android:padding="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="right"/>
-
-        <TextView
-            android:id="@+id/textViewوصف"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimaryText"
-            android:background="@drawable/shapeedittext"
-            android:padding="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="right"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@drawable/gradient" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-
-
-
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/colorWhiteDark"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/buttonUploadbreakfastData"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/shapebutton"
                 android:gravity="center"
-                android:text="Breakfast"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/buttonUploadLaunchData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/shapebutton"
-                android:gravity="center"
-                android:text="Lunch"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/buttonUploadDinnerData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/shapebutton"
-                android:gravity="center"
-                android:text="Dinner"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/buttonUploadJuicesData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/shapebutton"
-                android:gravity="center"
-                android:text="Juices"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/buttonUploadDessertsData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/shapebutton"
-                android:gravity="center"
-                android:text="Desserts"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
+                android:orientation="vertical">
 
 
+                <ImageView
+                    android:id="@+id/back_click_image"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+                <RatingBar
+                    android:id="@+id/randomratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:numStars="5" />
+
+                <ImageView
+                    android:id="@+id/imageViewMeal"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/shapeedittext" />
+
+                <TextView
+                    android:id="@+id/textViewاسم"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/shapeedittext"
+                    android:gravity="right"
+                    android:padding="2dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/def_small0_text_size" />
+
+                <TextView
+                    android:id="@+id/textView2خطوات"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/shapeedittext"
+                    android:gravity="right"
+                    android:padding="2dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/def_small0_text_size" />
+
+                <TextView
+                    android:id="@+id/textViewوصف"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/shapeedittext"
+                    android:gravity="right"
+                    android:padding="2dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/def_small0_text_size" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorWhiteDark"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/buttonUploadbreakfastData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapebutton"
+                        android:gravity="center"
+                        android:text="Breakfast"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/def_small0_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/buttonUploadLaunchData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapebutton"
+                        android:gravity="center"
+                        android:text="Lunch"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/def_small0_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/buttonUploadDinnerData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapebutton"
+                        android:gravity="center"
+                        android:text="Dinner"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/def_small0_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/buttonUploadJuicesData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapebutton"
+                        android:gravity="center"
+                        android:text="Juices"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/def_small0_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/buttonUploadDessertsData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapebutton"
+                        android:gravity="center"
+                        android:text="Desserts"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/def_small0_text_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>
